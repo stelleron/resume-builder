@@ -18,14 +18,18 @@ function App() {
 
     return (
       <>
-        <h1>Resume Builder</h1>
-        <form onSubmit={handleSubmit}>
-          <label>Name</label><br></br>
-          <input type="text" name="name" onChange={handleInputChange}></input>
-        </form>
-        <div>
-          <h2>Resume Contents</h2>
-          <div>{resumeData.name}</div>
+        <div className='resume-builder-app'>
+          <form onSubmit={handleSubmit}>
+            <h1>Resume Builder</h1>
+            <div className='resume-element'>
+              <label className='resume-input-label'>Name</label>
+              <input className='resume-input' type="text" name="name" onChange={handleInputChange}></input>
+            </div>
+          </form>
+          <div className='resume-display'>
+            <h1>Resume Contents</h1>
+            <div>{resumeData.name}</div>
+          </div>
         </div>
       </>
     );
