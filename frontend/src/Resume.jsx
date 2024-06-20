@@ -105,22 +105,34 @@ function ResumeSections() {
     )
 }
 
-function CompileResume() {
+function FunctionButtons() {
     return (
-        <button>Compile Resume</button>
+        <div>
+            <button>Compile Resume</button>
+            <button>Download Resume</button>
+        </div>
+    )
+}
+
+function ResumePreview() {
+    return (
+        <div id="resume-preview">
+            Hello World
+        </div>
     )
 }
 
 
-function ResumePreview() {
+function Resume() {
     return (
     <>
         <h1> Resume Generator </h1>
+        <ResumePreview/>
         <ResumeHeader/>
         <ResumeSections/>
-        <CompileResume/>
+        <FunctionButtons/>
     </>
     )
 }
 
-export default ResumePreview
+export default Resume
