@@ -144,8 +144,6 @@ function ResumeSections() {
     } 
 
     const isUnique = (new_experience) => {
-        console.log(experiences)
-        console.log(new_experience)
         return !experiences.includes(new_experience)
     }
 
@@ -169,12 +167,23 @@ function ResumeSections() {
         exitClick()
     }   
 
+    const handleDeleteSection = function(section_id){
+        const updatedSections = experiences.filter(section => section.section_id != section_id)
+        console.log(updatedSections)
+        setExperiences(updatedSections)
+        return
+    }
+
     return (
         <div>
             <h2 id="resume-section-title">Sections</h2>
-            {experiences.map((section) => (
-                <ResumeExperience section_id={section.section_id} section_name={section.section_name}/>
+            {experiences.map((section, index) => (
+                <div>
+                    <ResumeExperience section_id={index + 1} section_name={section.section_name}/>
+                    <button onClick={() => handleDeleteSection(section.section_id)}>Delete Section</button>
+                </div>
             ))}
+            <br></br>
             <button onClick={handleClick}>Add Resume Section</button>
             <div id="resume-section-modal" className="modal">
                 <div id="resume-section-modal-content" className="modal-content">
@@ -217,6 +226,7 @@ function Resume() {
         <ResumePreview/>
         <ResumeHeader/>
         <ResumeSections/>
+        <br></br>
         <FunctionButtons/>
     </>
     )
