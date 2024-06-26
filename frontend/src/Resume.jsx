@@ -54,7 +54,7 @@ const resume_html = [
 function ResumeHeader() {
     return (
       <form>
-        <h3>Resume Header</h3>
+        <h2>Resume Header</h2>
         <label htmlFor="name">Name</label><br></br>
         <input type="text" id="name" name="name"></input><br></br>
 
@@ -73,7 +73,59 @@ function ResumeHeader() {
     )
 }
 
+function ResumeExperience(props) {
+    const componentId = "resume-experience-modal-" + props.section_id
+
+    const handleClick = () => {
+        var modal = document.getElementById(componentId);
+        modal.style.display = "block";
+    }
+
+    const exitClick = () => {
+        var modal = document.getElementById(componentId);
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        var modal = document.getElementById(componentId);
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+    } 
+
+    const addResumeExperience = function(event) {
+        event.preventDefault();
+        exitClick()
+    }
+
+    return (
+        <div className="resume-section-experience">
+            <h3>{props.section_id}. {props.section_name}</h3>
+            <button onClick={handleClick}>Add Experience</button>
+            <div id={componentId} className="modal">
+                <div className="modal-content">
+                    <span className="close" onClick={exitClick}>&times;</span>
+                    <form onSubmit={addResumeExperience}>
+                        <label htmlFor="exp-title">Experience Title</label><br></br>
+                        <input type="text" name="exp-title"></input><br></br>
+                        <label htmlFor="exp-subtitle">Experience Subtitle</label><br></br>
+                        <input type="text" name="exp-subtitle"></input><br></br>
+                        <label htmlFor="exp-period">Time Period</label><br></br>
+                        <input type="text" name="exp-period"></input><br></br>
+                        <input type="submit" value="Create"></input>
+                    </form>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 function ResumeSections() {
+    // Define state variables for the form inputs
+    const [id, setId] = useState(1)
+    const [name, setName] = useState('');
+    const [experiences, setExperiences] = useState([]);
+
     const handleClick = () => {
         var modal = document.getElementById("resume-section-modal");
         modal.style.display = "block";
@@ -91,14 +143,49 @@ function ResumeSections() {
         }
     } 
 
+    const isUnique = (new_experience) => {
+        console.log(experiences)
+        console.log(new_experience)
+        return !experiences.includes(new_experience)
+    }
+
+    const validateInput = function(e) {
+        setName(e.target.value)
+        if (!isUnique(e.target.value)) {
+            e.target.setCustomValidity('No duplicates allowed');
+        } else {
+            e.target.setCustomValidity('')
+        }
+    }
+
+    const addResumeSection = function(event) {
+        event.preventDefault();
+        setExperiences([...experiences, {
+            section_id: id,
+            section_name: name}
+        ])
+        setName("")
+        setId(id + 1)
+        exitClick()
+    }   
+
     return (
         <div>
-            <h3>Resume Section</h3>
+            <h2 id="resume-section-title">Sections</h2>
+            {experiences.map((section) => (
+                <ResumeExperience section_id={section.section_id} section_name={section.section_name}/>
+            ))}
             <button onClick={handleClick}>Add Resume Section</button>
             <div id="resume-section-modal" className="modal">
-                <div id="resume-section-modal-content">
+                <div id="resume-section-modal-content" className="modal-content">
                     <span className="close" onClick={exitClick}>&times;</span>
-                    <p>Some text in the Modal..</p>
+                    <form onSubmit={addResumeSection}>
+                        <label htmlFor="name">Section Name</label><br></br>
+                        <input type="text" name="name" 
+                               value={name} 
+                               onChange={(e) => validateInput(e)} required></input><br></br>
+                        <input type="submit" value="Create"></input>
+                    </form>
                 </div>
             </div>
         </div>
