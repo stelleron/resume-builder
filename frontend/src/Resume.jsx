@@ -73,8 +73,15 @@ function ResumeHeader() {
     )
 }
 
+function ResumeBulletPoint() {
+    return (
+        <h1>Taking a sheet</h1>
+    )
+}
+
 function ResumeExperience(props) {
     const componentId = "resume-experience-modal-" + props.section_id
+    const [bulletPointList, setBulletPointList] = useState([])
 
     const handleClick = () => {
         var modal = document.getElementById(componentId);
@@ -98,6 +105,10 @@ function ResumeExperience(props) {
         exitClick()
     }
 
+    const addBulletPoint = function() {
+        setBulletPointList([...bulletPointList, 1])
+    }
+
     return (
         <div className="resume-section-experience">
             <h3>{props.section_id}. {props.section_name}</h3>
@@ -112,6 +123,10 @@ function ResumeExperience(props) {
                         <input type="text" name="exp-subtitle"></input><br></br>
                         <label htmlFor="exp-period">Time Period</label><br></br>
                         <input type="text" name="exp-period"></input><br></br>
+                        {bulletPointList.map((point, index) => (
+                            <ResumeBulletPoint></ResumeBulletPoint>
+                        ))}
+                        <input type="button" value="Add Bullet Point" onClick={addBulletPoint}></input>
                         <input type="submit" value="Create"></input>
                     </form>
                 </div>
