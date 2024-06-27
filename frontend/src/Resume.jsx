@@ -73,14 +73,6 @@ function ResumeHeader() {
     )
 }
 
-function ResumeBulletPoint(props) {
-    return (
-        <div>
-            <label>Bullet Point {props.point_id}</label><br></br>
-            <input type="text"></input>
-        </div>
-    )
-}
 
 function ResumeExperience(props) {
     const componentId = "resume-experience-modal-" + props.section_id
@@ -138,7 +130,7 @@ function ResumeExperience(props) {
         <div className="resume-section-experience">
             <h3>{props.section_id}. {props.section_name}</h3>
             {experiences.map((experience, index) => (
-                <div><strong> {experience.title} </strong>, <em> {experience.sub_title} </em>   {experience.time_period} </div>
+                <div><strong> {experience.title}</strong>, <em> {experience.sub_title} </em><br></br>{experience.time_period} </div>
             ))}
             <button onClick={handleClick}>Add Experience</button>
             <div id={componentId} className="modal">
@@ -152,7 +144,10 @@ function ResumeExperience(props) {
                         <label htmlFor="exp-period">Time Period</label><br></br>
                         <input type="text" name="exp-period" onChange={(e) => validateExpTimePeriodInput(e)} required></input><br></br>
                         {bulletPointList.map((point, index) => (
-                            <ResumeBulletPoint point_id={index}></ResumeBulletPoint>
+                            <div>
+                                <label>Bullet Point {index + 1}</label><br></br>
+                                <input type="text"></input>
+                            </div>
                         ))}
                         <input type="button" value="Add Bullet Point" onClick={addBulletPoint}></input>
                         <input type="submit" value="Create"></input>
