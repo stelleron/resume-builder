@@ -86,6 +86,9 @@ function ResumeExperience(props) {
     const componentId = "resume-experience-modal-" + props.section_id
     const [bulletPointList, setBulletPointList] = useState([])
     const [experiences, setExperiences] = useState([])
+    const [expTitle, setExpTitle] = useState("")
+    const [expSubTitle, setExpSubTitle] = useState("")
+    const [expTimePeriod, setExpTimePeriod] = useState("")
 
     const handleClick = () => {
         var modal = document.getElementById(componentId);
@@ -104,9 +107,26 @@ function ResumeExperience(props) {
         }
     } 
 
+    const validateExpTitleInput = function(event) {
+        setExpTitle(event.target.value)
+    }
+
+    const validateExpSubtitleInput = function(event) {
+        setExpSubTitle(event.target.value)
+    }
+
+    const validateExpTimePeriodInput= function(event) {
+        setExpTimePeriod(event.target.value)
+    }
+
     const addResumeExperience = function(event) {
         event.preventDefault();
         setBulletPointList([])
+        setExperiences([...experiences, {
+            title: expTitle,
+            sub_title: expSubTitle,
+            time_period: expTimePeriod
+        }])
         exitClick()
     }
 
@@ -117,17 +137,20 @@ function ResumeExperience(props) {
     return (
         <div className="resume-section-experience">
             <h3>{props.section_id}. {props.section_name}</h3>
+            {experiences.map((experience, index) => (
+                <div><strong> {experience.title} </strong>, <em> {experience.sub_title} </em>   {experience.time_period} </div>
+            ))}
             <button onClick={handleClick}>Add Experience</button>
             <div id={componentId} className="modal">
                 <div className="modal-content">
                     <span className="close" onClick={exitClick}>&times;</span>
                     <form onSubmit={addResumeExperience}>
                         <label htmlFor="exp-title">Experience Title</label><br></br>
-                        <input type="text" name="exp-title"></input><br></br>
+                        <input type="text" name="exp-title" onChange={(e) => validateExpTitleInput(e)} required></input><br></br>
                         <label htmlFor="exp-subtitle">Experience Subtitle</label><br></br>
-                        <input type="text" name="exp-subtitle"></input><br></br>
+                        <input type="text" name="exp-subtitle" onChange={(e) => validateExpSubtitleInput(e)} required></input><br></br>
                         <label htmlFor="exp-period">Time Period</label><br></br>
-                        <input type="text" name="exp-period"></input><br></br>
+                        <input type="text" name="exp-period" onChange={(e) => validateExpTimePeriodInput(e)} required></input><br></br>
                         {bulletPointList.map((point, index) => (
                             <ResumeBulletPoint point_id={index}></ResumeBulletPoint>
                         ))}
