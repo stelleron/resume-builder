@@ -151,7 +151,13 @@ function ResumeSections() {
     } 
 
     const isUnique = (new_experience) => {
-        return !experiences.includes(new_experience)
+        let unique = true
+        experiences.forEach((experience, inśex) => {
+            if (experience.section_name === new_experience) {
+                unique = false
+            }
+        })
+        return unique
     }
 
     const validateInput = function(e) {
