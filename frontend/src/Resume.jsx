@@ -73,15 +73,19 @@ function ResumeHeader() {
     )
 }
 
-function ResumeBulletPoint() {
+function ResumeBulletPoint(props) {
     return (
-        <h1>Taking a sheet</h1>
+        <div>
+            <label>Bullet Point {props.point_id}</label><br></br>
+            <input type="text"></input>
+        </div>
     )
 }
 
 function ResumeExperience(props) {
     const componentId = "resume-experience-modal-" + props.section_id
     const [bulletPointList, setBulletPointList] = useState([])
+    const [experiences, setExperiences] = useState([])
 
     const handleClick = () => {
         var modal = document.getElementById(componentId);
@@ -102,6 +106,7 @@ function ResumeExperience(props) {
 
     const addResumeExperience = function(event) {
         event.preventDefault();
+        setBulletPointList([])
         exitClick()
     }
 
@@ -124,7 +129,7 @@ function ResumeExperience(props) {
                         <label htmlFor="exp-period">Time Period</label><br></br>
                         <input type="text" name="exp-period"></input><br></br>
                         {bulletPointList.map((point, index) => (
-                            <ResumeBulletPoint></ResumeBulletPoint>
+                            <ResumeBulletPoint point_id={index}></ResumeBulletPoint>
                         ))}
                         <input type="button" value="Add Bullet Point" onClick={addBulletPoint}></input>
                         <input type="submit" value="Create"></input>
@@ -145,7 +150,7 @@ function ResumeSections() {
     const [mode, setMode] = useState(NONE_MODE)
     const [id, setId] = useState(1)
     const [name, setName] = useState('');
-    const [experiences, setExperiences] = useState([]);
+    const [sections, setSections] = useState([]);
 
     const handleClick = () => {
         var modal = document.getElementById("resume-section-modal");
@@ -167,7 +172,7 @@ function ResumeSections() {
 
     const isUnique = (new_experience) => {
         let unique = true
-        experiences.forEach((experience, inśex) => {
+        sections.forEach((experience, index) => {
             if (experience.section_name === new_experience) {
                 unique = false
             }
@@ -187,14 +192,14 @@ function ResumeSections() {
     const addResumeSection = function(event) {
         event.preventDefault();
         if (mode === NEW_MODE) {
-            setExperiences([...experiences, {
+            setSections([...sections, {
                 section_id: id,
                 section_name: name}
             ])
         } else if (mode === EDIT_MODE) {
-            const updatedSections = experiences
+            const updatedSections = sections
             updatedSections[idx].section_name = name
-            setExperiences(updatedSections)
+            setSections(updatedSections)
         }
 
         setName("")
@@ -211,16 +216,16 @@ function ResumeSections() {
     }
 
     const handleDeleteSection = function(section_id){
-        const updatedSections = experiences.filter(section => section.section_id != section_id)
+        const updatedSections = sections.filter(section => section.section_id != section_id)
         console.log(updatedSections)
-        setExperiences(updatedSections)
+        setSections(updatedSections)
         return
     }
 
     return (
         <div>
             <h2 id="resume-section-title">Sections</h2>
-            {experiences.map((section, index) => (
+            {sections.map((section, index) => (
                 <div>
                     <ResumeExperience section_id={index + 1} section_name={section.section_name}/>
                     <button onClick={() => handleEditSection(index)}>Edit Section</button>
