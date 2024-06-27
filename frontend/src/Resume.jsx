@@ -167,6 +167,10 @@ function ResumeSections() {
         exitClick()
     }   
 
+    const handleEditSection = function(event) {
+        
+    }
+
     const handleDeleteSection = function(section_id){
         const updatedSections = experiences.filter(section => section.section_id != section_id)
         console.log(updatedSections)
@@ -180,6 +184,7 @@ function ResumeSections() {
             {experiences.map((section, index) => (
                 <div>
                     <ResumeExperience section_id={index + 1} section_name={section.section_name}/>
+                    <button onClick={() => handleEditSection(section.section_id)}>Edit Section</button>
                     <button onClick={() => handleDeleteSection(section.section_id)}>Delete Section</button>
                 </div>
             ))}
