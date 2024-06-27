@@ -122,6 +122,12 @@ function ResumeExperience(props) {
 
 function ResumeSections() {
     // Define state variables for the form inputs
+    const NONE_MODE = 0
+    const EDIT_MODE = 1
+    const NEW_MODE = 2
+
+    const [idx, setIdx] = useState(0)
+    const [mode, setMode] = useState(NONE_MODE)
     const [id, setId] = useState(1)
     const [name, setName] = useState('');
     const [experiences, setExperiences] = useState([]);
@@ -129,6 +135,7 @@ function ResumeSections() {
     const handleClick = () => {
         var modal = document.getElementById("resume-section-modal");
         modal.style.display = "block";
+        setMode(NEW_MODE)
     }
 
     const exitClick = () => {
@@ -158,17 +165,28 @@ function ResumeSections() {
 
     const addResumeSection = function(event) {
         event.preventDefault();
-        setExperiences([...experiences, {
-            section_id: id,
-            section_name: name}
-        ])
+        if (mode === NEW_MODE) {
+            setExperiences([...experiences, {
+                section_id: id,
+                section_name: name}
+            ])
+        } else if (mode === EDIT_MODE) {
+            const updatedSections = experiences
+            updatedSections[idx].section_name = name
+            setExperiences(updatedSections)
+        }
+
         setName("")
         setId(id + 1)
+        setMode(NONE_MODE)
         exitClick()
     }   
 
-    const handleEditSection = function(event) {
-        
+    const handleEditSection = function(idx) {
+        var modal = document.getElementById("resume-section-modal");
+        modal.style.display = "block";
+        setMode(EDIT_MODE)
+        setIdx(idx)
     }
 
     const handleDeleteSection = function(section_id){
@@ -184,7 +202,7 @@ function ResumeSections() {
             {experiences.map((section, index) => (
                 <div>
                     <ResumeExperience section_id={index + 1} section_name={section.section_name}/>
-                    <button onClick={() => handleEditSection(section.section_id)}>Edit Section</button>
+                    <button onClick={() => handleEditSection(index)}>Edit Section</button>
                     <button onClick={() => handleDeleteSection(section.section_id)}>Delete Section</button>
                 </div>
             ))}
