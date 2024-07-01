@@ -80,6 +80,7 @@ function ResumeExperience(props) {
     const [experiences, setExperiences] = useState([])
     const [expTitle, setExpTitle] = useState("")
     const [expSubTitle, setExpSubTitle] = useState("")
+    const [expLocation, setExpLocation] = useState("")
     const [expTimePeriod, setExpTimePeriod] = useState("")
 
     const handleClick = () => {
@@ -107,7 +108,11 @@ function ResumeExperience(props) {
         setExpSubTitle(event.target.value)
     }
 
-    const validateExpTimePeriodInput= function(event) {
+    const validateExpLocationInput = function(event) {
+        setExpLocation(event.target.value)
+    }
+
+    const validateExpTimePeriodInput = function(event) {
         setExpTimePeriod(event.target.value)
     }
 
@@ -117,12 +122,14 @@ function ResumeExperience(props) {
         setExperiences([...experiences, {
             title: expTitle,
             sub_title: expSubTitle,
+            location: expLocation,
             time_period: expTimePeriod
         }])
         exitClick()
     }
 
     const handleBulletPointChange = function(id, p_value) {
+        /*
         setBulletPointList(
             bulletPointList.map(
                 bullet_point => {
@@ -130,6 +137,7 @@ function ResumeExperience(props) {
                 }
             )
         )
+        */
     }
 
     const addBulletPoint = function() {
@@ -144,7 +152,8 @@ function ResumeExperience(props) {
             <h3>{props.section_id}. {props.section_name}</h3>
             {experiences.map((experience, index) => (
                 <div>
-                    <div><strong> {experience.title}</strong>, <em> {experience.sub_title} </em><br></br>{experience.time_period} </div>
+                    <div><strong> {experience.title}</strong>, {experience.time_period} </div>
+                    <div>{experience.sub_title}, {experience.location}</div>
                 </div>
             ))}
             <button onClick={handleClick}>Add Experience</button>
@@ -155,7 +164,9 @@ function ResumeExperience(props) {
                         <label htmlFor="exp-title">Experience Title</label><br></br>
                         <input type="text" name="exp-title" onChange={(e) => validateExpTitleInput(e)} required></input><br></br>
                         <label htmlFor="exp-subtitle">Experience Subtitle</label><br></br>
-                        <input type="text" name="exp-subtitle" onChange={(e) => validateExpSubtitleInput(e)} required></input><br></br>
+                        <input type="text" name="exp-subtitle" onChange={(e) => validateExpSubtitleInput(e)}></input><br></br>
+                        <label htmlFor="exp-location">Location</label><br></br>
+                        <input type="text" name="exp-location" onChange={(e) => validateExpLocationInput(e)}></input><br></br>
                         <label htmlFor="exp-period">Time Period</label><br></br>
                         <input type="text" name="exp-period" onChange={(e) => validateExpTimePeriodInput(e)} required></input><br></br>
                         {bulletPointList.map((point) => (
