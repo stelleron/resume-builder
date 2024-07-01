@@ -137,6 +137,7 @@ function ResumeExperience(props) {
                 )
             )
         )
+        console.log(bulletPointList)
     }
 
     const addBulletPoint = function() {
