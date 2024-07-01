@@ -118,32 +118,31 @@ function ResumeExperience(props) {
 
     const addResumeExperience = function(event) {
         event.preventDefault();
-        setBulletPointList([])
         setExperiences([...experiences, {
             title: expTitle,
             sub_title: expSubTitle,
             location: expLocation,
-            time_period: expTimePeriod
+            time_period: expTimePeriod,
+            bullet_points: bulletPointList
         }])
+        setBulletPointList([])
         exitClick()
     }
 
     const handleBulletPointChange = function(id, p_value) {
-        /*
         setBulletPointList(
             bulletPointList.map(
-                bullet_point => {
+                (bullet_point) => (
                     bullet_point.id === id ? {...bulletPointList, value: p_value} : bullet_point
-                }
+                )
             )
         )
-        */
     }
 
     const addBulletPoint = function() {
         setBulletPointList([...bulletPointList, {
             id: bulletPointList.length + 1,
-            value: null
+            value: ""
         }])
     }
 
@@ -154,6 +153,13 @@ function ResumeExperience(props) {
                 <div>
                     <div><strong> {experience.title}</strong>, {experience.time_period} </div>
                     <div>{experience.sub_title}, {experience.location}</div>
+                    <ul>
+                    {experience.bullet_points.map(
+                        (bullet_point) => (
+                            <li>{bullet_point.value}</li>
+                        )
+                    )}
+                    </ul>
                 </div>
             ))}
             <button onClick={handleClick}>Add Experience</button>
@@ -169,10 +175,10 @@ function ResumeExperience(props) {
                         <input type="text" name="exp-location" onChange={(e) => validateExpLocationInput(e)}></input><br></br>
                         <label htmlFor="exp-period">Time Period</label><br></br>
                         <input type="text" name="exp-period" onChange={(e) => validateExpTimePeriodInput(e)} required></input><br></br>
-                        {bulletPointList.map((point) => (
+                        {bulletPointList.map((bullet_point) => (
                             <div>
-                                <label>Bullet Point {point.id}</label><br></br>
-                                <input type="text" value={point.value} onChange={(e) => handleBulletPointChange(point.id, e.target.value)}></input>
+                                <label>Bullet Point {bullet_point.id}</label><br></br>
+                                <input type="text" value={bullet_point.value} onChange={(e) => handleBulletPointChange(bullet_point.id, e.target.value)}></input>
                             </div>
                         ))}
                         <input type="button" value="Add Bullet Point" onClick={addBulletPoint}></input>
