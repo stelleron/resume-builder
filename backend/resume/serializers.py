@@ -16,7 +16,7 @@ class ExperienceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Experience
-        fields = ['id', 'title', 'sub_title', 'time_period', 'bullet_points']
+        fields = ['id', 'title', 'sub_title', 'time_period', 'location', 'bullet_points']
 
 class SectionSerializer(serializers.ModelSerializer):
     experiences = ExperienceSerializer(many=True, read_only=True)

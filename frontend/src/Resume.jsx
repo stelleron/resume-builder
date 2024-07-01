@@ -122,15 +122,30 @@ function ResumeExperience(props) {
         exitClick()
     }
 
+    const handleBulletPointChange = function(id, p_value) {
+        setBulletPointList(
+            bulletPointList.map(
+                bullet_point => {
+                    bullet_point.id === id ? {...bulletPointList, value: p_value} : bullet_point
+                }
+            )
+        )
+    }
+
     const addBulletPoint = function() {
-        setBulletPointList([...bulletPointList, 1])
+        setBulletPointList([...bulletPointList, {
+            id: bulletPointList.length + 1,
+            value: null
+        }])
     }
 
     return (
         <div className="resume-section-experience">
             <h3>{props.section_id}. {props.section_name}</h3>
             {experiences.map((experience, index) => (
-                <div><strong> {experience.title}</strong>, <em> {experience.sub_title} </em><br></br>{experience.time_period} </div>
+                <div>
+                    <div><strong> {experience.title}</strong>, <em> {experience.sub_title} </em><br></br>{experience.time_period} </div>
+                </div>
             ))}
             <button onClick={handleClick}>Add Experience</button>
             <div id={componentId} className="modal">
@@ -143,10 +158,10 @@ function ResumeExperience(props) {
                         <input type="text" name="exp-subtitle" onChange={(e) => validateExpSubtitleInput(e)} required></input><br></br>
                         <label htmlFor="exp-period">Time Period</label><br></br>
                         <input type="text" name="exp-period" onChange={(e) => validateExpTimePeriodInput(e)} required></input><br></br>
-                        {bulletPointList.map((point, index) => (
+                        {bulletPointList.map((point) => (
                             <div>
-                                <label>Bullet Point {index + 1}</label><br></br>
-                                <input type="text"></input>
+                                <label>Bullet Point {point.id}</label><br></br>
+                                <input type="text" value={point.value} onChange={(e) => handleBulletPointChange(point.id, e.target.value)}></input>
                             </div>
                         ))}
                         <input type="button" value="Add Bullet Point" onClick={addBulletPoint}></input>
