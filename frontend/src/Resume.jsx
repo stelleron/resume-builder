@@ -118,8 +118,8 @@ function ResumeExperience(props) {
 
     const addResumeExperience = function(event) {
         event.preventDefault();
-        console.log(bulletPointList)
         setExperiences([...experiences, {
+            id: experiences.length + 1,
             title: expTitle,
             sub_title: expSubTitle,
             location: expLocation,
@@ -147,6 +147,11 @@ function ResumeExperience(props) {
         }])
     }
 
+    const deleteExperience = function(exp_id) {
+        const updatedExperiences = experiences.filter(exp => exp.id != exp_id)
+        setExperiences(updatedExperiences)
+    }
+
     return (
         <div className="resume-section-experience">
             <h3>{props.section_id}. {props.section_name}</h3>
@@ -161,6 +166,10 @@ function ResumeExperience(props) {
                         )
                     )}
                     </ul>
+                    <button>Edit Experience</button>
+                    <button onClick={() => deleteExperience(experience.id)}>Delete Experience</button>
+                    <br></br>
+                    <br></br>
                 </div>
             ))}
             <button onClick={handleClick}>Add Experience</button>
@@ -268,7 +277,6 @@ function ResumeSections() {
 
     const handleDeleteSection = function(section_id){
         const updatedSections = sections.filter(section => section.section_id != section_id)
-        console.log(updatedSections)
         setSections(updatedSections)
         return
     }
