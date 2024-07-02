@@ -118,6 +118,7 @@ function ResumeExperience(props) {
 
     const addResumeExperience = function(event) {
         event.preventDefault();
+        console.log(bulletPointList)
         setExperiences([...experiences, {
             title: expTitle,
             sub_title: expSubTitle,
@@ -133,11 +134,10 @@ function ResumeExperience(props) {
         setBulletPointList(
             bulletPointList.map(
                 (bullet_point) => (
-                    bullet_point.id === id ? {...bulletPointList, value: p_value} : bullet_point
+                    bullet_point.id === id ? {id: bullet_point.id, value: p_value} : bullet_point
                 )
             )
         )
-        console.log(bulletPointList)
     }
 
     const addBulletPoint = function() {
