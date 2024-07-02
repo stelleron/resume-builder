@@ -75,6 +75,14 @@ function ResumeHeader() {
 
 
 function ResumeExperience(props) {
+    const NONE_MODE = 0
+    const EDIT_MODE = 1
+    const NEW_MODE = 2
+
+    const [idx, setIdx] = useState(0)
+    const [mode, setMode] = useState(NONE_MODE)
+
+
     const componentId = "resume-experience-modal-" + props.section_id
     const [bulletPointList, setBulletPointList] = useState([])
     const [experiences, setExperiences] = useState([])
@@ -86,17 +94,20 @@ function ResumeExperience(props) {
     const handleClick = () => {
         var modal = document.getElementById(componentId);
         modal.style.display = "block";
+        setMode(NEW_MODE)
     }
 
     const exitClick = () => {
         var modal = document.getElementById(componentId);
         modal.style.display = "none";
+        setMode(NONE_MODE)
     }
 
     window.onclick = function(event) {
         var modal = document.getElementById(componentId);
         if (event.target == modal) {
           modal.style.display = "none";
+          setMode(NONE_MODE)
         }
     } 
 
@@ -118,14 +129,26 @@ function ResumeExperience(props) {
 
     const addResumeExperience = function(event) {
         event.preventDefault();
-        setExperiences([...experiences, {
-            id: experiences.length + 1,
-            title: expTitle,
-            sub_title: expSubTitle,
-            location: expLocation,
-            time_period: expTimePeriod,
-            bullet_points: bulletPointList
-        }])
+        if (mode === NEW_MODE) {
+            setExperiences([...experiences, {
+                id: experiences.length + 1,
+                title: expTitle,
+                sub_title: expSubTitle,
+                location: expLocation,
+                time_period: expTimePeriod,
+                bullet_points: bulletPointList
+            }])
+        } else if (mode === EDIT_MODE) {
+            const updatedExp = experiences
+            updatedExp[idx].title = expTitle
+            updatedExp[idx].sub_title = expSubTitle
+            updatedExp[idx].location  = expLocation
+            updatedExp[idx].time_period = expTimePeriod
+            updatedExp[idx].bullet_points = bulletPointList
+            setExperiences(updatedExp)
+        }
+
+        setMode(NONE_MODE)
         setBulletPointList([])
         exitClick()
     }
@@ -152,6 +175,25 @@ function ResumeExperience(props) {
         setExperiences(updatedExperiences)
     }
 
+    const deleteBulletPoint = function(bullet_point_id) {
+        const updatedBulletPoints = bulletPointList.filter(bp => bp.id != bullet_point_id)
+        setBulletPointList(
+            updatedBulletPoints.map(
+                (bullet_point, index) => (
+                    {id: index + 1, value: bullet_point.value}
+                )
+
+            )
+        )
+    }
+
+    const editExperience = function(idx) {
+        var modal = document.getElementById(componentId);
+        modal.style.display = "block";
+        setMode(EDIT_MODE)
+        setIdx(idx)
+    }
+
     return (
         <div className="resume-section-experience">
             <h3>{props.section_id}. {props.section_name}</h3>
@@ -166,7 +208,7 @@ function ResumeExperience(props) {
                         )
                     )}
                     </ul>
-                    <button>Edit Experience</button>
+                    <button onClick={() =>editExperience(index)}>Edit Experience</button>
                     <button onClick={() => deleteExperience(experience.id)}>Delete Experience</button>
                     <br></br>
                     <br></br>
@@ -187,7 +229,7 @@ function ResumeExperience(props) {
                         <input type="text" name="exp-period" onChange={(e) => validateExpTimePeriodInput(e)} required></input><br></br>
                         {bulletPointList.map((bullet_point) => (
                             <div>
-                                <label>Bullet Point {bullet_point.id}</label><br></br>
+                                <label>Bullet Point {bullet_point.id}</label><input type="button" value="Delete" onClick={()=>deleteBulletPoint(bullet_point.id)}></input><br></br>
                                 <input type="text" value={bullet_point.value} onChange={(e) => handleBulletPointChange(bullet_point.id, e.target.value)}></input>
                             </div>
                         ))}
