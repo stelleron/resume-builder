@@ -5,6 +5,7 @@ function ResumeBuilder() {
   return (
     <div class="section-box" id="resume-builder">
       <h1>Build-a-Resume: Your goto for building and customizing resumes!</h1>
+      <hr></hr>
       <form>
         <label>Name </label>
         <input type="text"></input><br></br>
@@ -29,6 +30,7 @@ function ResumePreview() {
   return (
     <div class="section-box" id="resume-preview">
       <h1>Resume Preview</h1>
+      <hr></hr>
     </div>
   )
 }

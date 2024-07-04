@@ -1,5 +1,5 @@
 body {
-  margin: 0px
+  margin: 0px;
 }
 
 #resume-cont {
@@ -13,10 +13,23 @@ body {
 }
 
 #resume-builder {
-  color: white;
-  background-color: black;
+  color: rgb(220, 220, 220);
+  background-color: #202020;
+}
+
+#resume-builder hr {
+  color: rgb(220, 220, 220);;
+}
+
+#resume-builder form {
+  display: table;
+}
+
+#resume-builder input {
+  width: 100%;
 }
 
 #resume-preview {
-
+  background-color: rgb(220, 220, 220);;
+  color: #202020;
 }
