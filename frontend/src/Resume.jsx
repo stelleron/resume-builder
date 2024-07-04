@@ -194,6 +194,10 @@ function ResumeExperience(props) {
         setIdx(idx)
     }
 
+    const handleBulletList = function() {
+
+    }
+
     return (
         <div className="resume-section-experience">
             <h3>{props.section_id}. {props.section_name}</h3>
@@ -215,6 +219,7 @@ function ResumeExperience(props) {
                 </div>
             ))}
             <button onClick={handleClick}>Add Experience</button>
+            <button onClick={handleBulletList}>Add Bullet List</button>
             <div id={componentId} className="modal">
                 <div className="modal-content">
                     <span className="close" onClick={exitClick}>&times;</span>

@@ -1,34 +1,44 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css"
+
+function ResumeBuilder() {
+  return (
+    <div class="section-box" id="resume-builder">
+      <h1>Build-a-Resume: Your goto for building and customizing resumes!</h1>
+      <form>
+        <label>Name </label>
+        <input type="text"></input><br></br>
+
+        <label>Phone Number </label>
+        <input type="text"></input><br></br>
+        
+        <label>E-Mail </label>
+        <input type="text"></input><br></br>
+
+        <label>LinkedIn </label>
+        <input type="text"></input><br></br>
+
+        <label>GitHub </label>
+        <input type="text"></input><br></br>
+      </form>
+    </div>
+  )
+}
+
+function ResumePreview() {
+  return (
+    <div class="section-box" id="resume-preview">
+      <h1>Resume Preview</h1>
+    </div>
+  )
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div id="resume-cont">
+        <ResumeBuilder/>
+        <ResumePreview/>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
   )
 }
 
