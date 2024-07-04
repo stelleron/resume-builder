@@ -72,10 +72,11 @@ function ResumeBuilder(props) {
   )
 }
 
-function ResumePreview() {
+function ResumePreview(props) {
   return (
     <div class="section-box" id="resume-preview">
       <h1>Resume Preview</h1>
+      <p>{props.resume_header.name}</p>
     </div>
   )
 }
@@ -96,7 +97,7 @@ function App() {
   return (
       <div id="resume-cont">
         <ResumeBuilder compileResume={compileResume}/>
-        <ResumePreview/>
+        <ResumePreview resume_header={rHead}/>
       </div>
   )
 }
