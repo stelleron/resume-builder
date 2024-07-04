@@ -73,10 +73,36 @@ function ResumeBuilder(props) {
 }
 
 function ResumePreview(props) {
+  const download_page = function() {
+    var prtContent = document.getElementById("resume-page");
+    var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+
+    WinPrint.document.write('<html><head><title>My Resume</title>');
+    WinPrint.document.write('<link rel="stylesheet" href="src/App.css" type="text/css" media="print">');
+    WinPrint.document.write('</head><body >');
+    WinPrint.document.write(prtContent.innerHTML);
+    WinPrint.document.write('</body></html>');
+    WinPrint.document.close();
+
+    WinPrint.onload = function() {
+      WinPrint.print();
+      WinPrint.close();
+  };
+  
+  }
+
   return (
     <div class="section-box" id="resume-preview">
-      <h1>Resume Preview</h1>
-      <p>{props.resume_header.name}</p>
+      <button onClick={download_page}>Download Resume</button>
+      <div id="resume-page">
+        <div className='resume-name'>{props.resume_header.name}</div>
+        <div>
+          <div>{props.resume_header.phone}</div>
+          <div>{props.resume_header.email}</div>
+          <div>{props.resume_header.linkedin}</div>
+          <div>{props.resume_header.github}</div>
+        </div>
+      </div>
     </div>
   )
 }
