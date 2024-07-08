@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import "./App.css"
+import SectionModal from './SectionModal'
 
 function ResumeBuilder(props) {
   const [name, setName] = useState("")
@@ -7,6 +8,8 @@ function ResumeBuilder(props) {
   const [email, setEmail] = useState("")
   const [linkedin, setLinkedin] = useState("")
   const [github, setGithub] = useState("")
+
+  const [showModal, setShowModal] = useState(false)
 
   const validateName = function(event) {
     setName(event.target.value)
@@ -33,13 +36,21 @@ function ResumeBuilder(props) {
     props.compileResume(name, phone, email, linkedin, github)
   }
 
+  const showSectionModal = function() {
+    setShowModal(true)
+  }
+
+  const hideSectionModal = function() {
+    setShowModal(false)
+  }
+
 
   return (
     <div className="section-box" id="resume-builder">
       <h1>Build-a-Resume</h1>
       <hr></hr>
       <h2>Resume Header</h2>
-      <form onSubmit={submitResume}>
+      <form onSubmit={submitResume} className='main-form'>
         <label>Name </label>
         <input type="text"
                value={name}
@@ -65,11 +76,14 @@ function ResumeBuilder(props) {
                value={github}
                onChange={(e)=>{validateGithub(e)}}></input><br></br><br></br>
 
-        <input type="button" value="Add Resume Section.."></input><br></br>
-
+        <input type="button" 
+               value="Add Resume Section"
+               onClick={showSectionModal}></input><br></br>
+              
         <input type="submit" 
                value="Compile Resume"></input>
       </form>
+      <SectionModal show={showModal} closeFunction={hideSectionModal}></SectionModal>
     </div>
   )
 }
