@@ -33,7 +33,7 @@ body {
 #resume-preview {
   color: #202020;
   margin: 0 auto;
-  padding: 0;
+  padding: 20px;
   background: rgb(204, 204, 204);
   display: flex;
   flex-direction: column;
@@ -62,6 +62,7 @@ body {
   padding: calc(var(--bleeding) + var(--margin));
   box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
   background: white;
+  font-family: "PT Serif", sans-serif; 
 }
 
 
@@ -85,4 +86,18 @@ body {
     margin: 0;
     overflow: hidden;
   }
+}
+
+.resume-name {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.resume-key-details {
+  font-size: 11pt;
+  display: inline-block; 
+}
+
+.multiline {
+  white-space: pre-wrap;
 }

@@ -97,11 +97,11 @@ function ResumePreview(props) {
       <div id="resume-page">
         <div class="page">
           <div className='resume-name'>{props.resume_header.name}</div>
-            <div>
-              <div>{props.resume_header.phone}</div>
-              <div>{props.resume_header.email}</div>
-              <div>{props.resume_header.linkedin}</div>
-              <div>{props.resume_header.github}</div>
+            <div className='resume-key-details'>
+              <span>{props.resume_header.phone} • </span>
+              <span>{props.resume_header.email} • </span>
+              <span>{props.resume_header.linkedin} • </span>
+              <span>{props.resume_header.github}</span>
             </div>
         </div>
       </div>
