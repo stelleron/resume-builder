@@ -98,9 +98,9 @@ function ResumePreview(props) {
         <div className="page">
           <div className='resume-name'>{props.resume_header.name}</div>
             <div className='resume-key-details'>
-              <span>{props.resume_header.phone} • </span>
-              <span>{props.resume_header.email} • </span>
-              <span>{props.resume_header.linkedin} • </span>
+              <span>{props.resume_header.phone}</span>
+              <span>{props.resume_header.email}</span>
+              <span>{props.resume_header.linkedin}</span>
               <span>{props.resume_header.github}</span>
             </div>
         </div>
@@ -113,11 +113,27 @@ function App() {
   const [rHead, setRHead] = useState({})
 
   const compileResume = function(name, phone, email, linkedin, github) {
+    let phone_str = phone
+    let email_str = email
+    let linkedin_str = linkedin
+
+    if (phone_str != "" && email_str != "") {
+      phone_str +=  " • "
+    }
+
+    if (email_str != "" && linkedin_str != "") {
+      email_str += " • "
+    }
+
+    if (linkedin_str != "" && github != "") {
+      linkedin_str += " • "
+    }
+
     setRHead({
       name: name,
-      phone: phone,
-      email: email,
-      linkedin: linkedin,
+      phone: phone_str,
+      email: email_str,
+      linkedin: linkedin_str,
       github: github
     })
   }
