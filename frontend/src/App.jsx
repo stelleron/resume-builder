@@ -36,7 +36,7 @@ function ResumeBuilder(props) {
 
   return (
     <div className="section-box" id="resume-builder">
-      <h1>Build-a-Resume: Your goto for building and customizing resumes!</h1>
+      <h1>Build-a-Resume</h1>
       <hr></hr>
       <h2>Resume Header</h2>
       <form onSubmit={submitResume}>
@@ -64,6 +64,8 @@ function ResumeBuilder(props) {
         <input type="text"  
                value={github}
                onChange={(e)=>{validateGithub(e)}}></input><br></br><br></br>
+
+        <input type="button" value="Add Resume Section.."></input><br></br>
 
         <input type="submit" 
                value="Compile Resume"></input>
