@@ -59,7 +59,7 @@ body {
   width: 210mm;
   font-size: 12pt;
   margin: 2em auto;
-  padding: calc(var(--bleeding) + var(--margin));
+  padding: calc(var(--bleeding) + var(--margin) - 20px);
   box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
   background: white;
   font-family: "PT Serif", sans-serif; 
