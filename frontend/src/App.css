@@ -26,10 +26,6 @@ body {
   display: table;
 }
 
-#resume-builder input {
-  width: 100%;
-}
-
 #resume-preview {
   color: #202020;
   margin: 0 auto;
@@ -107,10 +103,26 @@ label {
 }
 
 input[type=text] {
+  width: 100%;
   background-color:#202020;
   color: rgb(220, 220, 220);
   font-family: monospace;
   border: 2px solid #a8a8a8;
   border-radius: 4px;
   margin-top: 7.5px;
+  padding: 5px
+}
+
+input[type=submit] {
+  background-color:#202020;
+  color: rgb(220, 220, 220);
+  font-family: monospace;
+  border: 3px solid #a8a8a8;
+  border-radius: 10px;
+  width: 50%;
+  height: 40px;
+}
+
+input[type=submit]:active {
+
 }
