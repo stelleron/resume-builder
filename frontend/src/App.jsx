@@ -35,7 +35,7 @@ function ResumeBuilder(props) {
 
 
   return (
-    <div class="section-box" id="resume-builder">
+    <div className="section-box" id="resume-builder">
       <h1>Build-a-Resume: Your goto for building and customizing resumes!</h1>
       <hr></hr>
       <h2>Resume Header</h2>
@@ -92,10 +92,10 @@ function ResumePreview(props) {
   }
 
   return (
-    <div class="section-box" id="resume-preview">
+    <div className="section-box" id="resume-preview">
       <button onClick={download_page}>Download Resume</button>
       <div id="resume-page">
-        <div class="page">
+        <div className="page">
           <div className='resume-name'>{props.resume_header.name}</div>
             <div className='resume-key-details'>
               <span>{props.resume_header.phone} • </span>
