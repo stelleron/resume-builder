@@ -31,8 +31,12 @@ body {
 }
 
 #resume-preview {
-  background-color: rgb(220, 220, 220);;
   color: #202020;
+  margin: 0 auto;
+  padding: 0;
+  background: rgb(204, 204, 204);
+  display: flex;
+  flex-direction: column;
 }
 
 :root {
@@ -48,15 +52,7 @@ body {
   box-sizing: border-box;
 }
 
-body {
-  margin: 0 auto;
-  padding: 0;
-  background: rgb(204, 204, 204);
-  display: flex;
-  flex-direction: column;
-}
-
-#resume-page {
+.page {
   display: inline-block;
   position: relative;
   height: 297mm;
