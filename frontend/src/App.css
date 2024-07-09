@@ -55,6 +55,7 @@ body {
   background: rgb(204, 204, 204);
   display: flex;
   flex-direction: column;
+  padding-top: 0px;
 }
 
 :root {
