@@ -201,12 +201,17 @@ hr {
   text-align: center;
 }
 
+.overflow-box {
+  height: 450px;
+  overflow: auto;
+}
+
 table {
   width: 80%;
+  height: 80%;
   border: 3px solid #a8a8a8;
   background-color: rgb(20, 20, 20);
   margin-bottom: 15px;
-  height: 400px;
   margin: 0 auto;
   border-collapse: collapse;
 }

@@ -88,8 +88,12 @@ function SectionModal(props) {
                 <span className="close" onClick={exitFunction}>&times;</span>
                 <div className='modal-box'>
                     <h2>Resume Sections</h2>
+                    
                     {mode === NONE_MODE && 
+                    <div className='overflow-box'>
                     <table>
+                        <thead></thead>
+                        <tbody>
                         {
                             sectionNames.map((secName, index) => {
                                 if (secName === "(+) Add New Section") {
@@ -134,7 +138,9 @@ function SectionModal(props) {
                                 }
                             })
                         }
+                        </tbody>
                     </table>
+                    </div>
                     }
                     {mode === ADD_MODE &&
                     <div>
