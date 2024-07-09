@@ -29,7 +29,11 @@ function SectionModal(props) {
             updatedSecNames.splice(index, 1)
             setSectionNames(updatedSecNames)
         } else {
-            
+            for (let i = index; i < updatedSecNames.length - 1; i++) {
+                updatedSecNames[i] = updatedSecNames[i + 1]
+            }
+            updatedSecNames[updatedSecNames.length - 1] = ""
+            setSectionNames(updatedSecNames)
         }
     }
  
