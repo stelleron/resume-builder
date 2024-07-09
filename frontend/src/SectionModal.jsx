@@ -7,6 +7,8 @@ function SectionModal(props) {
     const [mode, setMode] = useState(NONE_MODE)
     const [sectionNames, setSectionNames] = useState(["(+) Add New Section", "", "", "", "", "", "", ""])
 
+    const [sName, setSName] = useState("")
+
 
     const changeMode = function(mode) {
         setMode(mode)
@@ -17,13 +19,19 @@ function SectionModal(props) {
         props.closeFunction()
     }
 
-    const addItem = function() {
+    const validateSecName = function(event) {
+        setSName(event.target.value)
+    }
+
+    const addItem = function(event) {
+        event.preventDefault()
         for (let i = 0; i < sectionNames.length; i++) {
             if (sectionNames[i] === "(+) Add New Section") {
                 let updatedSecNames = [...sectionNames];
                 updatedSecNames[i + 1] = "(+) Add New Section"
-                updatedSecNames[i] = "Fish"
+                updatedSecNames[i] = sName
                 setSectionNames(updatedSecNames)
+                setMode(NONE_MODE)
                 return
             }
         }
@@ -73,10 +81,12 @@ function SectionModal(props) {
                     }
                     {mode === ADD_MODE &&
                     <div>
-                        <form>
+                        <form onSubmit={addItem}>
                             <label>Section Name</label>
-                            <input type="text"></input>
-                            <input type="submit"></input>
+                            <input type="text"
+                                   onChange={validateSecName}></input>
+                            <input type="submit"
+                                   value="Create"></input>
                         </form>
                     </div>
                     }
