@@ -64,6 +64,9 @@ function SectionModal(props) {
                                                        onClick={()=>(changeMode(ADD_MODE))}>
                                                 </input>
                                             </td>
+                                            <td>
+                                                
+                                            </td>
                                         </tr>
                                     )
                                 } else {
@@ -71,6 +74,9 @@ function SectionModal(props) {
                                         <tr>
                                             <td>
                                                 {secName}
+                                            </td>
+                                            <td>
+                                                {secName != "" && <input type='button' value="-"></input>}
                                             </td>
                                         </tr>
                                     )
