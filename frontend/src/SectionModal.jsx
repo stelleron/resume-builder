@@ -23,8 +23,22 @@ function SectionModal(props) {
         setSName(event.target.value)
     }
 
+    const deleteItem = function(index) {
+        const updatedSecNames = [...sectionNames];
+        if (updatedSecNames.length > 8) {
+            updatedSecNames.splice(index, 1)
+            setSectionNames(updatedSecNames)
+        } else {
+            
+        }
+    }
+ 
     const addItem = function(event) {
         event.preventDefault()
+        if (sName === "") {
+            setMode(NONE_MODE)
+            return
+        }
         for (let i = 0; i < sectionNames.length; i++) {
             if (sectionNames[i] === "(+) Add New Section") {
                 let updatedSecNames = [...sectionNames];
@@ -32,6 +46,7 @@ function SectionModal(props) {
                 updatedSecNames[i] = sName
                 setSectionNames(updatedSecNames)
                 setMode(NONE_MODE)
+                setSName("")
                 return
             }
         }
@@ -54,7 +69,7 @@ function SectionModal(props) {
                     {mode === NONE_MODE && 
                     <table>
                         {
-                            sectionNames.map((secName) => {
+                            sectionNames.map((secName, index) => {
                                 if (secName === "(+) Add New Section") {
                                     return (
                                         <tr className="new-section-button">
@@ -76,7 +91,11 @@ function SectionModal(props) {
                                                 {secName}
                                             </td>
                                             <td>
-                                                {secName != "" && <input type='button' value="-"></input>}
+                                                {secName != "" && 
+                                                <input type='button' 
+                                                       value="-"
+                                                       onClick={() => (deleteItem(index))}></input>
+                                                }
                                             </td>
                                         </tr>
                                     )
