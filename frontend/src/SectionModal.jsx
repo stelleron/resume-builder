@@ -17,6 +17,18 @@ function SectionModal(props) {
         props.closeFunction()
     }
 
+    const addItem = function() {
+        for (let i = 0; i < sectionNames.length; i++) {
+            if (sectionNames[i] === "(+) Add New Section") {
+                let updatedSecNames = [...sectionNames];
+                updatedSecNames[i + 1] = "(+) Add New Section"
+                updatedSecNames[i] = "Fish"
+                setSectionNames(updatedSecNames)
+                return
+            }
+        }
+    }
+
     if (!props.show) {
         return (
             <>
@@ -33,13 +45,28 @@ function SectionModal(props) {
                     <h2>Resume Sections</h2>
                     <table>
                         {
-                            sectionNames.map((secName) => (
-                                <tr>
-                                    <td>
-                                        {secName}
-                                    </td>
-                                </tr>
-                            ))
+                            sectionNames.map((secName) => {
+                                if (secName === "(+) Add New Section") {
+                                    return (
+                                        <tr className="new-section-button">
+                                            <td>
+                                                <input type="button" 
+                                                       value={secName}
+                                                       onClick={addItem}>
+                                                </input>
+                                            </td>
+                                        </tr>
+                                    )
+                                } else {
+                                    return (
+                                        <tr>
+                                            <td>
+                                                {secName}
+                                            </td>
+                                        </tr>
+                                    )
+                                }
+                            })
                         }
                     </table>
                 </div>
