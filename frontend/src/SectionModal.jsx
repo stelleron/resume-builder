@@ -43,6 +43,7 @@ function SectionModal(props) {
                 <span className="close" onClick={exitFunction}>&times;</span>
                 <div className='modal-box'>
                     <h2>Resume Sections</h2>
+                    {mode === NONE_MODE && 
                     <table>
                         {
                             sectionNames.map((secName) => {
@@ -52,7 +53,7 @@ function SectionModal(props) {
                                             <td>
                                                 <input type="button" 
                                                        value={secName}
-                                                       onClick={addItem}>
+                                                       onClick={()=>(changeMode(ADD_MODE))}>
                                                 </input>
                                             </td>
                                         </tr>
@@ -69,6 +70,16 @@ function SectionModal(props) {
                             })
                         }
                     </table>
+                    }
+                    {mode === ADD_MODE &&
+                    <div>
+                        <form>
+                            <label>Section Name</label>
+                            <input type="text"></input>
+                            <input type="submit"></input>
+                        </form>
+                    </div>
+                    }
                 </div>
             </div>
         </div>
