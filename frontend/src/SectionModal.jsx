@@ -3,14 +3,21 @@ import { useState } from 'react'
 function SectionModal(props) {
     const NONE_MODE = 0
     const ADD_MODE = 1
+    const EDIT_MODE = 2
 
     const [mode, setMode] = useState(NONE_MODE)
     const [sectionNames, setSectionNames] = useState(["(+) Add New Section", "", "", "", "", "", "", ""])
 
     const [sName, setSName] = useState("")
+    const [idx, setIdx] = useState(-1)
 
 
     const changeMode = function(mode) {
+        setMode(mode)
+    }
+
+    const setEditMode = function(index, mode) {
+        setIdx(index)
         setMode(mode)
     }
 
@@ -35,6 +42,17 @@ function SectionModal(props) {
             updatedSecNames[updatedSecNames.length - 1] = ""
             setSectionNames(updatedSecNames)
         }
+    }
+
+    const editItem = function(event) {
+        event.preventDefault()
+        let updatedSecNames = [...sectionNames];
+        updatedSecNames[idx] = sName
+        setSectionNames(updatedSecNames)
+        setMode(NONE_MODE)
+        setSName("")
+        setIdx(-1)
+        return
     }
  
     const addItem = function(event) {
@@ -86,6 +104,9 @@ function SectionModal(props) {
                                             <td>
                                                 
                                             </td>
+                                            <td>
+
+                                            </td>
                                         </tr>
                                     )
                                 } else {
@@ -99,6 +120,13 @@ function SectionModal(props) {
                                                 <input type='button' 
                                                        value="-"
                                                        onClick={() => (deleteItem(index))}></input>
+                                                }
+                                            </td>
+                                            <td>
+                                                {secName != "" && 
+                                                <input type='button' 
+                                                       value="Edit"
+                                                       onClick={() => (setEditMode(index, EDIT_MODE))}></input>
                                                 }
                                             </td>
                                         </tr>
@@ -116,6 +144,17 @@ function SectionModal(props) {
                                    onChange={validateSecName}></input>
                             <input type="submit"
                                    value="Create"></input>
+                        </form>
+                    </div>
+                    }
+                    {mode === EDIT_MODE &&
+                    <div>
+                        <form onSubmit={(event) => (editItem(event))}>
+                            <label>Section Name</label>
+                            <input type="text"
+                                onChange={validateSecName}></input>
+                            <input type="submit"
+                                value="Edit"></input>
                         </form>
                     </div>
                     }
