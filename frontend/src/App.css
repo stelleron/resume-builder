@@ -192,7 +192,7 @@ hr {
   top: 50%;
   transform: translate(-50%, -50%);
   padding: 20px;
-  width: 35%; /* Could be more or less, depending on screen size */
+  width: 520px; /* Could be more or less, depending on screen size */
   overflow: hidden;
   border: 3px solid #a8a8a8;
 }
