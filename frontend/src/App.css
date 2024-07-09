@@ -3,6 +3,32 @@ body {
   font-family: monospace;
 }
 
+.page-header {
+  color: rgb(220, 220, 220);
+  background-color: #363636;
+
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+
+  display: flex;
+}
+
+.page-header-title {
+  margin: 0px;
+  float:left;
+  flex-grow: 1;
+  align-content: center;
+}
+
+.right-bar {
+  float: right
+}
+
+.bar-button {
+  margin-right: 20px;
+}
+
 #resume-cont {
   display: flex;
   justify-content: space-between;

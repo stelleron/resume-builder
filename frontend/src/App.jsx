@@ -47,8 +47,6 @@ function ResumeBuilder(props) {
 
   return (
     <div className="section-box" id="resume-builder">
-      <h1>Build-a-Resume</h1>
-      <hr></hr>
       <h2>Resume Header</h2>
       <form onSubmit={submitResume} className='main-form'>
         <label>Name </label>
@@ -155,10 +153,21 @@ function App() {
   }
 
   return (
-      <div id="resume-cont">
-        <ResumeBuilder compileResume={compileResume}/>
-        <ResumePreview resume_header={rHead}/>
-      </div>
+    <div>
+        <div className='page-header'>
+          <h1 className='page-header-title'>
+               Build-a-Resume
+          </h1>
+          <div className='right-bar'>
+              <input type='button' value="Compile" className='bar-button'></input>
+              <input type='button' value="Download" className='bar-button'></input>
+          </div>
+        </div>
+        <div id="resume-cont">
+          <ResumeBuilder compileResume={compileResume}/>
+          <ResumePreview resume_header={rHead}/>
+        </div>
+    </div>
   )
 }
 
