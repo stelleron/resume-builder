@@ -13,27 +13,31 @@ function ResumeBuilder(props) {
 
   const validateName = function(event) {
     setName(event.target.value)
+    props.store_resume(name, phone, email, linkedin, github)
   }
 
   const validatePhone = function(event) {
     setPhone(event.target.value)
+    props.store_resume(name, phone, email, linkedin, github)
   }
 
   const validateEmail = function(event) {
     setEmail(event.target.value)
+    props.store_resume(name, phone, email, linkedin, github)
   }
 
   const validateLinkedin = function(event) {
     setLinkedin(event.target.value)
+    props.store_resume(name, phone, email, linkedin, github)
   }
 
   const validateGithub = function(event) {
     setGithub(event.target.value)
+    props.store_resume(name, phone, email, linkedin, github)
   }
 
   const submitResume = function(event) {
     event.preventDefault();
-    props.compileResume(name, phone, email, linkedin, github)
   }
 
   const showSectionModal = function() {
@@ -107,7 +111,7 @@ function ResumePreview(props) {
 function App() {
   const [rHead, setRHead] = useState({})
 
-  const compileResume = function(name, phone, email, linkedin, github) {
+  const storeResume = function(name, phone, email, linkedin, github) {
     let phone_str = phone
     let email_str = email
     let linkedin_str = linkedin
@@ -131,6 +135,34 @@ function App() {
       linkedin: linkedin_str,
       github: github
     })
+  }
+
+  const compileResume = function(name, phone, email, linkedin, github) {
+    /*
+    let phone_str = phone
+    let email_str = email
+    let linkedin_str = linkedin
+
+    if (phone_str != "" && email_str != "") {
+      phone_str +=  " • "
+    }
+
+    if (email_str != "" && linkedin_str != "") {
+      email_str += " • "
+    }
+
+    if (linkedin_str != "" && github != "") {
+      linkedin_str += " • "
+    }
+
+    setRHead({
+      name: name,
+      phone: phone_str,
+      email: email_str,
+      linkedin: linkedin_str,
+      github: github
+    })
+    */
   }
   
   const downloadPage = function() {
@@ -162,7 +194,7 @@ function App() {
           </div>
         </div>
         <div id="resume-cont">
-          <ResumeBuilder compileResume={compileResume}/>
+          <ResumeBuilder store_resume={storeResume}/>
           <ResumePreview resume_header={rHead}/>
         </div>
     </div>
