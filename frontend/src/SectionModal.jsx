@@ -147,7 +147,7 @@ function SectionModal(props) {
                         <form onSubmit={addItem}>
                             <label>Section Name</label>
                             <input type="text"
-                                   onChange={validateSecName}></input>
+                                   onChange={validateSecName} required></input>
                             <input type="submit"
                                    value="Create"></input>
                         </form>
@@ -158,7 +158,7 @@ function SectionModal(props) {
                         <form onSubmit={(event) => (editItem(event))}>
                             <label>Section Name</label>
                             <input type="text"
-                                   onChange={validateSecName}></input>
+                                   onChange={validateSecName} required></input>
                             <input type="submit"
                                    value="Edit"></input>
                         </form>

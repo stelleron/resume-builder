@@ -317,3 +317,10 @@ tr:nth-child(even) {
 .resume-section-remove-item:hover {
   color: red;
 }
+
+.sections-drop-down-arrow {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}

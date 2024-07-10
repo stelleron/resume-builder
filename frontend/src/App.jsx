@@ -2,6 +2,31 @@ import { useState } from 'react'
 import "./App.css"
 import SectionModal from './SectionModal'
 
+function PreviewBox(props) {
+  const [dropDown, setDropDown] = useState(false)
+
+  const handleClick = function() {
+    if (dropDown) {
+      setDropDown(false)
+    } else {
+      setDropDown(true)
+    }
+  }
+  
+  if (dropDown) {
+    return (
+      <div>
+        <div className="resume-sections-column"> <span className='sections-drop-down-arrow' onClick={handleClick}>▼</span> {props.secName} <span className='resume-section-remove-item' onClick={() => props.removeResumeSection(props.index)}>(-)</span></div>
+        <div>pes</div>
+      </div>
+    )
+  } else {
+    return (
+      <div className="resume-sections-column"> <span className='sections-drop-down-arrow' onClick={handleClick}>▶</span> {props.secName} <span className='resume-section-remove-item' onClick={() => props.removeResumeSection(props.index)}>(-)</span></div>
+    )
+  }
+}
+
 function ResumeBuilder(props) {
   const [name, setName] = useState("")
   const [phone, setPhone] = useState("")
@@ -92,7 +117,7 @@ function ResumeBuilder(props) {
 
           {resumeSections.map((secName, index) => {
             return (
-              <div className="resume-sections-column">{secName} <span className='resume-section-remove-item' onClick={() => removeResumeSection(index)}>(-)</span></div>
+              <PreviewBox secName={secName} index={index} removeResumeSection={removeResumeSection}/>
             )
           })}
 
