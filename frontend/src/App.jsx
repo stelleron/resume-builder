@@ -46,9 +46,9 @@ function ResumeBuilder(props) {
   }
 
   const addResumeSectionFunc = function(s_name) {
-    setResumeSections([...resumeSections, s_name])
+    setResumeSections([...resumeSections, s_name.toUpperCase()])
     hideSectionModal()
-    props.store_resume(name, phone, email, linkedin, github, [...resumeSections, s_name])
+    props.store_resume(name, phone, email, linkedin, github, [...resumeSections, s_name.toUpperCase()])
   }
 
 
@@ -84,7 +84,9 @@ function ResumeBuilder(props) {
         <div className="resume-sections-table">
 
           {resumeSections.map((secName, index) => {
-              return (<div className="resume-sections-column">{secName}</div>)
+            return (
+              <div className="resume-sections-column">{secName}</div>
+            )
           })}
 
           <div className="resume-sections-column add-section-button" onClick={showSectionModal}> 
@@ -114,7 +116,10 @@ function ResumePreview(props) {
           </div>
           {props.resume_header.resumeSections != undefined &&
            props.resume_header.resumeSections.map((sName, index) => (
-            <div key={index}>{sName}</div>
+            <div class="resume-section">
+              <div class="resume-section-title">{sName}</div>
+              <hr></hr>
+            </div>
           ))}
         </div>
       </div>
