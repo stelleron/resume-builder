@@ -48,6 +48,7 @@ function ResumeBuilder(props) {
   const addResumeSectionFunc = function(name) {
     setResumeSections([...resumeSections, name])
     hideSectionModal()
+    console.log([...resumeSections, name])
   }
 
 
@@ -80,9 +81,19 @@ function ResumeBuilder(props) {
                value={github}
                onChange={(e)=>{validateGithub(e)}}></input><br></br><br></br>
 
-        <input type="button" 
-               value="Add Resume Section"
-               onClick={showSectionModal}></input><br></br>
+        <div class="resume-sections-table">
+
+          {resumeSections.map((secName, index) => {
+              return (<div class="resume-sections-column">{secName}</div>)
+          })}
+
+          <div className="resume-sections-column add-section-button" onClick={showSectionModal}> 
+               (+) Add Resume Section
+          </div>
+
+        </div>
+
+
       </form>
       <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc}></SectionModal>
     </div>

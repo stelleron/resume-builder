@@ -273,3 +273,28 @@ tr:nth-child(even) {
 .new-section-button:active {
   color: #a8a8a8;
 }
+
+.resume-sections-table {
+  margin-top: 20px;
+  font-size: 16px;
+  border-left: 6px solid #b7b7b7;
+}
+
+.resume-sections-column {
+  color:#202020;
+  background-color: #f3f3f3;
+  padding:7px;
+  padding-left: 15px;
+}
+
+.add-section-button {
+  background-color: #dbdbdb;
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.add-section-button:hover {
+  background-color: #9e9e9e;
+}
