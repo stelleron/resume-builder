@@ -58,6 +58,7 @@ body {
   padding-top: 0px;
 }
 
+/* Resume CSS */
 :root {
   --bleeding: 0.5cm;
   --margin: 1cm;
@@ -115,6 +116,8 @@ body {
   font-size: 11pt;
   display: inline-block; 
 }
+
+/* Resume CSS */
 
 .multiline {
   white-space: pre-wrap;
@@ -246,6 +249,11 @@ table {
 tr, td {
   height: 50px;
   font-size: 16px;
+}
+
+td:hover {
+  color: yellow;
+  cursor: pointer;
 }
 
 tr:nth-child(even) {

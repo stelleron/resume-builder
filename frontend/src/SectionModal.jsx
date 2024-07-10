@@ -116,7 +116,7 @@ function SectionModal(props) {
                                 } else {
                                     return (
                                         <tr>
-                                            <td>
+                                            <td onClick={() => props.addNewSectionFunction(secName)}>
                                                 {secName}
                                             </td>
                                             <td>

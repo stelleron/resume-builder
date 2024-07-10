@@ -8,6 +8,7 @@ function ResumeBuilder(props) {
   const [email, setEmail] = useState("")
   const [linkedin, setLinkedin] = useState("")
   const [github, setGithub] = useState("")
+  const [resumeSections, setResumeSections] = useState([])
 
   const [showModal, setShowModal] = useState(false)
 
@@ -36,16 +37,17 @@ function ResumeBuilder(props) {
     props.store_resume(name, phone, email, linkedin, event.target.value)
   }
 
-  const submitResume = function(event) {
-    event.preventDefault();
-  }
-
   const showSectionModal = function() {
     setShowModal(true)
   }
 
   const hideSectionModal = function() {
     setShowModal(false)
+  }
+
+  const addResumeSectionFunc = function(name) {
+    setResumeSections([...resumeSections, name])
+    hideSectionModal()
   }
 
 
@@ -82,7 +84,7 @@ function ResumeBuilder(props) {
                value="Add Resume Section"
                onClick={showSectionModal}></input><br></br>
       </form>
-      <SectionModal show={showModal} closeFunction={hideSectionModal}></SectionModal>
+      <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc}></SectionModal>
     </div>
   )
 }
