@@ -295,6 +295,17 @@ tr:nth-child(even) {
   padding-left: 15px;
 }
 
+.resume-experience-column {
+  color:#202020;
+  background-color: #dbdbdb;
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  padding: 5px;
+  padding-left: 25px;
+}
+
 .add-section-button {
   background-color: #dbdbdb;
   cursor: pointer;

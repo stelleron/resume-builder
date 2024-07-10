@@ -17,7 +17,7 @@ function PreviewBox(props) {
     return (
       <div>
         <div className="resume-sections-column"> <span className='sections-drop-down-arrow' onClick={handleClick}>▼</span> {props.secName} <span className='resume-section-remove-item' onClick={() => props.removeResumeSection(props.index)}>(-)</span></div>
-        <div>pes</div>
+        <div className="resume-experience-column">Add Resume Experience (+)</div>
       </div>
     )
   } else {
