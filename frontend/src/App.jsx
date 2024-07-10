@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import "./App.css"
 import SectionModal from './SectionModal'
+import ExperienceModal from './ExperienceModal'
 
 function PreviewBox(props) {
   const [dropDown, setDropDown] = useState(false)
@@ -17,7 +18,7 @@ function PreviewBox(props) {
     return (
       <div>
         <div className="resume-sections-column"> <span className='sections-drop-down-arrow' onClick={handleClick}>▼</span> {props.secName} <span className='resume-section-remove-item' onClick={() => props.removeResumeSection(props.index)}>(-)</span></div>
-        <div className="resume-experience-column">Add Resume Experience (+)</div>
+        <div className="resume-experience-column resume-add-experience-column" onClick={props.showExpModalFunc}>Add Resume Experience (+)</div>
       </div>
     )
   } else {
@@ -36,6 +37,7 @@ function ResumeBuilder(props) {
   const [resumeSections, setResumeSections] = useState([])
 
   const [showModal, setShowModal] = useState(false)
+  const [showExpModal, setShowExpModal] = useState(false)
 
   const validateName = function(event) {
     setName(event.target.value)
@@ -83,6 +85,14 @@ function ResumeBuilder(props) {
     props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
   }
 
+  const showExperienceModal = function() {
+    console.log("sadsa")
+    setShowExpModal(true)
+  }
+
+  const hideExperienceModal = function() {
+    setShowExpModal(false)
+  }
 
   return (
     <div className="section-box" id="resume-builder">
@@ -117,7 +127,7 @@ function ResumeBuilder(props) {
 
           {resumeSections.map((secName, index) => {
             return (
-              <PreviewBox secName={secName} index={index} removeResumeSection={removeResumeSection}/>
+              <PreviewBox secName={secName} index={index} removeResumeSection={removeResumeSection} showExpModalFunc={showExperienceModal}/>
             )
           })}
 
@@ -130,6 +140,7 @@ function ResumeBuilder(props) {
 
       </form>
       <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc}></SectionModal>
+      <ExperienceModal show={showExpModal} closeFunction={hideExperienceModal} />
     </div>
   )
 }

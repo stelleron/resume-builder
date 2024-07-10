@@ -303,7 +303,7 @@ tr:nth-child(even) {
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
   padding: 5px;
-  padding-left: 25px;
+  padding-left: 35px;
 }
 
 .add-section-button {
@@ -334,4 +334,15 @@ tr:nth-child(even) {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+}
+
+.resume-add-experience-column {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.resume-add-experience-column:hover {
+  background-color: #9e9e9e;
 }
