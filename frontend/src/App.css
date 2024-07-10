@@ -306,3 +306,14 @@ tr:nth-child(even) {
 .add-section-button:hover {
   background-color: #9e9e9e;
 }
+
+.resume-section-remove-item {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.resume-section-remove-item:hover {
+  color: red;
+}

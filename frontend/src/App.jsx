@@ -51,6 +51,13 @@ function ResumeBuilder(props) {
     props.store_resume(name, phone, email, linkedin, github, [...resumeSections, s_name.toUpperCase()])
   }
 
+  const removeResumeSection = function(idx) {
+    const updatedResumeSections = [...resumeSections];
+    updatedResumeSections.splice(idx, 1)
+    setResumeSections(updatedResumeSections)
+    props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
+  }
+
 
   return (
     <div className="section-box" id="resume-builder">
@@ -85,12 +92,12 @@ function ResumeBuilder(props) {
 
           {resumeSections.map((secName, index) => {
             return (
-              <div className="resume-sections-column">{secName}</div>
+              <div className="resume-sections-column">{secName} <span className='resume-section-remove-item' onClick={() => removeResumeSection(index)}>(-)</span></div>
             )
           })}
 
           <div className="resume-sections-column add-section-button" onClick={showSectionModal}> 
-               (+) Add Resume Section
+               Add Resume Section (+)
           </div>
 
         </div>
