@@ -14,27 +14,27 @@ function ResumeBuilder(props) {
 
   const validateName = function(event) {
     setName(event.target.value)
-    props.store_resume(event.target.value, phone, email, linkedin, github)
+    props.store_resume(event.target.value, phone, email, linkedin, github, resumeSections)
   }
 
   const validatePhone = function(event) {
     setPhone(event.target.value)
-    props.store_resume(name, event.target.value, email, linkedin, github)
+    props.store_resume(name, event.target.value, email, linkedin, github, resumeSections)
   }
 
   const validateEmail = function(event) {
     setEmail(event.target.value)
-    props.store_resume(name, phone, event.target.value, linkedin, github)
+    props.store_resume(name, phone, event.target.value, linkedin, github, resumeSections)
   }
 
   const validateLinkedin = function(event) {
     setLinkedin(event.target.value)
-    props.store_resume(name, phone, email, event.target.value, github)
+    props.store_resume(name, phone, email, event.target.value, github, resumeSections)
   }
 
   const validateGithub = function(event) {
     setGithub(event.target.value)
-    props.store_resume(name, phone, email, linkedin, event.target.value)
+    props.store_resume(name, phone, email, linkedin, event.target.value, resumeSections)
   }
 
   const showSectionModal = function() {
@@ -45,10 +45,10 @@ function ResumeBuilder(props) {
     setShowModal(false)
   }
 
-  const addResumeSectionFunc = function(name) {
-    setResumeSections([...resumeSections, name])
+  const addResumeSectionFunc = function(s_name) {
+    setResumeSections([...resumeSections, s_name])
     hideSectionModal()
-    console.log([...resumeSections, name])
+    props.store_resume(name, phone, email, linkedin, github, [...resumeSections, s_name])
   }
 
 
@@ -81,10 +81,10 @@ function ResumeBuilder(props) {
                value={github}
                onChange={(e)=>{validateGithub(e)}}></input><br></br><br></br>
 
-        <div class="resume-sections-table">
+        <div className="resume-sections-table">
 
           {resumeSections.map((secName, index) => {
-              return (<div class="resume-sections-column">{secName}</div>)
+              return (<div className="resume-sections-column">{secName}</div>)
           })}
 
           <div className="resume-sections-column add-section-button" onClick={showSectionModal}> 
@@ -106,12 +106,16 @@ function ResumePreview(props) {
       <div id="resume-page">
         <div className="page">
           <div className='resume-name'>{props.resume_header.name}</div>
-            <div className='resume-key-details'>
-              <span>{props.resume_header.phone}</span>
-              <span>{props.resume_header.email}</span>
-              <span>{props.resume_header.linkedin}</span>
-              <span>{props.resume_header.github}</span>
-            </div>
+          <div className='resume-key-details'>
+            <span>{props.resume_header.phone}</span>
+            <span>{props.resume_header.email}</span>
+            <span>{props.resume_header.linkedin}</span>
+            <span>{props.resume_header.github}</span>
+          </div>
+          {props.resume_header.resumeSections != undefined &&
+           props.resume_header.resumeSections.map((sName, index) => (
+            <div key={index}>{sName}</div>
+          ))}
         </div>
       </div>
     </div>
@@ -122,7 +126,7 @@ function App() {
   const [rHead, setRHead] = useState({})
   const [rData, setRData] = useState({})
 
-  const storeResume = function(name, phone, email, linkedin, github) {
+  const storeResume = function(name, phone, email, linkedin, github, resumeSections) {
     let phone_str = phone
     let email_str = email
     let linkedin_str = linkedin
@@ -144,7 +148,8 @@ function App() {
       phone: phone_str,
       email: email_str,
       linkedin: linkedin_str,
-      github: github
+      github: github,
+      resumeSections: resumeSections,
     })
   }
 
