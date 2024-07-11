@@ -56,6 +56,27 @@ function ExperienceModal(props) {
         }
     }
 
+    const editExperience= function(event) {
+        event.preventDefault()
+        let updatedExpNames = [...expNames];
+        updatedExpNames[idx] = {
+            title: expTitle,
+            sub_title: expSubTitle,
+            location: expLocation,
+            time_period: expTimePeriod,
+            bullet_points: bulletPoints
+        }
+        setExpNames(updatedExpNames)
+        setMode(NONE_MODE)
+        setExpTitle("")
+        setExpSubTitle("")
+        setExpTimePeriod("")
+        setExpLocation("")
+        setBulletPoints([])
+        setIdx(-1)
+        return
+    }
+
     const deleteItem = function(index) {
         const updatedExpNames = [...expNames];
         if (updatedExpNames.length > 8) {
@@ -157,7 +178,7 @@ function ExperienceModal(props) {
                                             }
                                             {expName != "" && expName.sub_title != "" &&
                                             <td onClick={() => props.addNewSectionFunction(expName)}>
-                                                {expName.title}, {expName.subTitle}
+                                                {expName.title}, {expName.sub_title}
                                             </td>
                                             }
                                             <td>
@@ -218,6 +239,44 @@ function ExperienceModal(props) {
 
                                 <input type="button" value="Add Bullet Point" onClick={addBulletPoint}></input>
                                 <input type="submit" value="Create"></input>
+                            </form>
+                        </div>
+                    }
+                    {mode == EDIT_MODE && 
+                        <div>
+                            <form onSubmit={editExperience}>
+                                <label>Experience Title</label>
+                                <input type="text" onChange={(e) => validateExpTitleInput(e)} required></input>
+
+                                <br></br>
+                                <br></br>
+
+                                <label>Experience Subtitle (E.g: Company)</label>
+                                <input type="text" onChange={(e) => validateExpSubtitleInput(e)}></input>
+
+                                <br></br>
+                                <br></br>
+
+                                <label>Time Period</label>
+                                <input type="text" onChange={(e) => validateExpTimePeriodInput(e)} required></input>
+
+                                <br></br>
+                                <br></br>
+
+                                <label>Location</label>
+                                <input type="text" onChange={(e) => validateExpLocationInput(e)}></input>
+
+                                {bulletPoints.map((bullet_point, index) => (
+                                    <div>
+                                        <label>Bullet Point {index + 1} </label>
+                                        <input type="button" value="Delete" onClick={()=>deleteBulletPoint(index)}></input>
+                                        <br></br>
+                                        <div className="text-area-element" onChange={(e) => handleBulletPointChange(index, e.target.value)} contentEditable></div>
+                                    </div>
+                                ))}
+
+                                <input type="button" value="Add Bullet Point" onClick={addBulletPoint}></input>
+                                <input type="submit" value="Edit"></input>
                             </form>
                         </div>
                     }

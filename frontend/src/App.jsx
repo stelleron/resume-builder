@@ -73,9 +73,9 @@ function ResumeBuilder(props) {
   }
 
   const addResumeSectionFunc = function(s_name) {
-    setResumeSections([...resumeSections, s_name.toUpperCase()])
+    setResumeSections([...resumeSections, s_name])
     hideSectionModal()
-    props.store_resume(name, phone, email, linkedin, github, [...resumeSections, s_name.toUpperCase()])
+    props.store_resume(name, phone, email, linkedin, github, [...resumeSections, s_name])
   }
 
   const removeResumeSection = function(idx) {
@@ -159,7 +159,7 @@ function ResumePreview(props) {
           {props.resume_header.resumeSections != undefined &&
            props.resume_header.resumeSections.map((sName, index) => (
             <div class="resume-section">
-              <div class="resume-section-title">{sName}</div>
+              <div class="resume-section-title">{sName.toUpperCase()}</div>
               <hr></hr>
             </div>
           ))}
