@@ -86,7 +86,6 @@ function ResumeBuilder(props) {
   }
 
   const showExperienceModal = function() {
-    console.log("sadsa")
     setShowExpModal(true)
   }
 
