@@ -55,6 +55,20 @@ function ExperienceModal(props) {
             }
         }
     }
+
+    const deleteItem = function(index) {
+        const updatedExpNames = [...expNames];
+        if (updatedExpNames.length > 8) {
+            updatedExpNames.splice(index, 1)
+            setExpNames(updatedExpNames)
+        } else {
+            for (let i = index; i < updatedExpNames.length - 1; i++) {
+                updatedExpNames[i] = updatedExpNames[i + 1]
+            }
+            updatedExpNames[updatedExpNames.length - 1] = ""
+            setExpNames(updatedExpNames)
+        }
+    }
     
     const validateExpTitleInput = function(event) {
         setExpTitle(event.target.value)
@@ -110,13 +124,13 @@ function ExperienceModal(props) {
                         <thead></thead>
                         <tbody>
                         {
-                            expNames.map((secName, index) => {
-                                if (secName === "(+) Add New Experience") {
+                            expNames.map((expName, index) => {
+                                if (expName === "(+) Add New Experience") {
                                     return (
                                         <tr className="new-section-button">
                                             <td>
                                                 <input type="button" 
-                                                       value={secName}
+                                                       value={expName}
                                                        onClick={()=>(changeMode(ADD_MODE))}>
                                                 </input>
                                             </td>
@@ -131,25 +145,30 @@ function ExperienceModal(props) {
                                 } else {
                                     return (
                                         <tr>
-                                            {secName == "" && 
-                                            <td onClick={() => props.addNewSectionFunction(secName)}>
-                                                {secName}
+                                            {expName == "" && 
+                                            <td onClick={() => props.addNewSectionFunction(expName)}>
+                                                {expName}
                                             </td>
                                             }
-                                            {secName != "" && 
-                                            <td onClick={() => props.addNewSectionFunction(secName)}>
-                                                {secName.title}
+                                            {expName != "" && expName.sub_title == "" &&
+                                            <td onClick={() => props.addNewSectionFunction(expName)}>
+                                                {expName.title} 
+                                            </td>
+                                            }
+                                            {expName != "" && expName.sub_title != "" &&
+                                            <td onClick={() => props.addNewSectionFunction(expName)}>
+                                                {expName.title}, {expName.subTitle}
                                             </td>
                                             }
                                             <td>
-                                                {secName != "" && 
+                                                {expName != "" && 
                                                 <input type='button' 
                                                        value="-"
                                                        onClick={() => (deleteItem(index))}></input>
                                                 }
                                             </td>
                                             <td>
-                                                {secName != "" && 
+                                                {expName != "" && 
                                                 <input type='button' 
                                                        value="Edit"
                                                        onClick={() => (setEditMode(index, EDIT_MODE))}></input>
