@@ -14,7 +14,6 @@ function ExperienceModal(props) {
     const [expTimePeriod, setExpTimePeriod] = useState("")
     const [bulletPoints, setBulletPoints] = useState([])
 
-    const [sName, setSName] = useState("")
     const [idx, setIdx] = useState(-1)
 
     const changeMode = function(mode) {
@@ -29,6 +28,32 @@ function ExperienceModal(props) {
     const exitFunction = function() {
         setMode(NONE_MODE)
         props.closeFunction()
+    }
+
+    const addExperience = function(event) {
+        event.preventDefault()
+        for (let i = 0; i < expNames.length; i++) {
+            if (expNames[i] === "(+) Add New Experience") {
+                let updatedExpNames = [...expNames];
+                updatedExpNames[i + 1] = "(+) Add New Experience"
+                updatedExpNames[i] = {
+                    title: expTitle,
+                    sub_title: expSubTitle,
+                    location: expLocation,
+                    time_period: expTimePeriod,
+                    bullet_points: bulletPoints
+                }
+                setExpNames(updatedExpNames)
+                setMode(NONE_MODE)
+                setExpTitle("")
+                setExpSubTitle("")
+                setExpTimePeriod("")
+                setExpLocation("")
+                setBulletPoints([])
+                console.log(updatedExpNames)
+                return
+            }
+        }
     }
     
     const validateExpTitleInput = function(event) {
@@ -47,25 +72,6 @@ function ExperienceModal(props) {
         setExpTimePeriod(event.target.value)
     }
     
-    const addItem = function(event) {
-        event.preventDefault()
-        if (sName === "") {
-            setMode(NONE_MODE)
-            return
-        }
-        for (let i = 0; i < sectionNames.length; i++) {
-            if (sectionNames[i] === "(+) Add New Section") {
-                let updatedSecNames = [...sectionNames];
-                updatedSecNames[i + 1] = "(+) Add New Section"
-                updatedSecNames[i] = sName
-                setSectionNames(updatedSecNames)
-                setMode(NONE_MODE)
-                setSName("")
-                return
-            }
-        }
-    }
-
     const addBulletPoint = function() {
         setBulletPoints([...bulletPoints, ""])
     }
@@ -125,9 +131,16 @@ function ExperienceModal(props) {
                                 } else {
                                     return (
                                         <tr>
+                                            {secName == "" && 
                                             <td onClick={() => props.addNewSectionFunction(secName)}>
                                                 {secName}
                                             </td>
+                                            }
+                                            {secName != "" && 
+                                            <td onClick={() => props.addNewSectionFunction(secName)}>
+                                                {secName.title}
+                                            </td>
+                                            }
                                             <td>
                                                 {secName != "" && 
                                                 <input type='button' 
@@ -153,7 +166,7 @@ function ExperienceModal(props) {
                     }
                     {mode === ADD_MODE &&
                         <div>
-                            <form onSubmit={addItem}>
+                            <form onSubmit={addExperience}>
                                 <label>Experience Title</label>
                                 <input type="text" onChange={(e) => validateExpTitleInput(e)} required></input>
 
