@@ -7,6 +7,11 @@ function ExperienceModal(props) {
 
     const [mode, setMode] = useState(NONE_MODE)
     const [expNames, setExpNames] = useState(["(+) Add New Experience", "", "", "", "", "", "", ""])
+
+    const [expTitle, setExpTitle] = useState("")
+    const [expSubTitle, setExpSubTitle] = useState("")
+    const [expLocation, setExpLocation] = useState("")
+    const [expTimePeriod, setExpTimePeriod] = useState("")
     const [bulletPoints, setBulletPoints] = useState([])
 
     const [sName, setSName] = useState("")
@@ -26,8 +31,20 @@ function ExperienceModal(props) {
         props.closeFunction()
     }
     
-    const blankFunc = function() {
+    const validateExpTitleInput = function(event) {
+        setExpTitle(event.target.value)
+    }
 
+    const validateExpSubtitleInput = function(event) {
+        setExpSubTitle(event.target.value)
+    }
+
+    const validateExpLocationInput = function(event) {
+        setExpLocation(event.target.value)
+    }
+
+    const validateExpTimePeriodInput = function(event) {
+        setExpTimePeriod(event.target.value)
     }
     
     const addItem = function(event) {
@@ -138,32 +155,32 @@ function ExperienceModal(props) {
                         <div>
                             <form onSubmit={addItem}>
                                 <label>Experience Title</label>
-                                <input type="text" onChange={blankFunc} required></input>
+                                <input type="text" onChange={(e) => validateExpTitleInput(e)} required></input>
 
                                 <br></br>
                                 <br></br>
 
                                 <label>Experience Subtitle (E.g: Company)</label>
-                                <input type="text" onChange={blankFunc}></input>
+                                <input type="text" onChange={(e) => validateExpSubtitleInput(e)}></input>
 
                                 <br></br>
                                 <br></br>
 
                                 <label>Time Period</label>
-                                <input type="text" onChange={blankFunc}></input>
+                                <input type="text" onChange={(e) => validateExpTimePeriodInput(e)} required></input>
 
                                 <br></br>
                                 <br></br>
 
                                 <label>Location</label>
-                                <input type="text" onChange={blankFunc}></input>
+                                <input type="text" onChange={(e) => validateExpLocationInput(e)}></input>
 
                                 {bulletPoints.map((bullet_point, index) => (
                                     <div>
                                         <label>Bullet Point {index + 1} </label>
                                         <input type="button" value="Delete" onClick={()=>deleteBulletPoint(index)}></input>
                                         <br></br>
-                                        <input type="text" value={bullet_point} onChange={(e) => handleBulletPointChange(index, e.target.value)}></input>
+                                        <div className="text-area-element" onChange={(e) => handleBulletPointChange(index, e.target.value)} contentEditable></div>
                                     </div>
                                 ))}
 
