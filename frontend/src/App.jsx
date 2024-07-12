@@ -189,10 +189,20 @@ function ResumePreview(props) {
             <span>{props.resume_header.github}</span>
           </div>
           {props.resume_header.resumeSections != undefined &&
-           props.resume_header.resumeSections.map((sName, index) => (
+           props.resume_header.resumeSections.map((sName) => (
             <div class="resume-section">
-              <div class="resume-section-title">{sName.toUpperCase()}</div>
+              <div class="resume-section-title">{sName.name.toUpperCase()}</div>
               <hr></hr>
+              {sName.experiences.map((exp, index) => (
+                <div class="resume-exp">
+                  <div class="exp-title">{exp.title}, <span class="exp-position">{exp.sub_title}</span><span class="exp-time">{exp.time_period}</span></div>
+                  <ul>
+                    {exp.bullet_points.map((bullet_point) => (
+                      <li><span>{bullet_point}</span></li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           ))}
         </div>

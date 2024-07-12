@@ -129,6 +129,36 @@ hr {
   margin-top: 0px;
 }
 
+.exp-title {
+  font-weight: bold;
+}
+
+.exp-position {
+  font-weight: normal;
+}
+
+.exp-time {
+  font-weight: normal;
+  font-style: italic;
+  float: right;
+}
+
+ul {
+  list-style-position: inside;
+  padding-left: 0px;
+  margin-top: 5px;
+  overflow: visible;
+}
+
+li {
+  position: relative;
+  padding-left: 20px; /* Space for custom bullet */
+  text-indent: -15px; /* Align text after bullet */
+  font-size: 11pt;
+}
+
+
+
 /* Resume CSS */
 
 .multiline {
