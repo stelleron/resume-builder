@@ -17,6 +17,7 @@ function SectionModal(props) {
     }
 
     const setEditMode = function(index, mode) {
+        setSName(sectionNames[index])
         setIdx(index)
         setMode(mode)
     }
@@ -158,6 +159,7 @@ function SectionModal(props) {
                         <form onSubmit={(event) => (editItem(event))}>
                             <label>Section Name</label>
                             <input type="text"
+                                    value={sName}
                                    onChange={validateSecName} required></input>
                             <input type="submit"
                                    value="Edit"></input>

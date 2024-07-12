@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState, useRef, useEffect} from 'react'
 
 function ExperienceModal(props) {
     const NONE_MODE = 0
@@ -21,6 +21,11 @@ function ExperienceModal(props) {
     }
 
     const setEditMode = function(index, mode) {
+        setExpTitle(expNames[index].title)
+        setExpSubTitle(expNames[index].sub_title)
+        setExpLocation(expNames[index].location)
+        setExpTimePeriod(expNames[index].time_period)
+        setBulletPoints(expNames[index].bullet_points)
         setIdx(index)
         setMode(mode)
     }
@@ -41,7 +46,7 @@ function ExperienceModal(props) {
                     sub_title: expSubTitle,
                     location: expLocation,
                     time_period: expTimePeriod,
-                    bullet_points: bulletPoints
+                    bullet_points: [...bulletPoints]
                 }
                 setExpNames(updatedExpNames)
                 setMode(NONE_MODE)
@@ -50,7 +55,6 @@ function ExperienceModal(props) {
                 setExpTimePeriod("")
                 setExpLocation("")
                 setBulletPoints([])
-                console.log(updatedExpNames)
                 return
             }
         }
@@ -113,9 +117,7 @@ function ExperienceModal(props) {
 
     const deleteBulletPoint = function(index) {
         const updatedBulletPoints = [...bulletPoints]
-        console.log(updatedBulletPoints)
         updatedBulletPoints.splice(index, 1)
-        console.log(updatedBulletPoints)
         setBulletPoints(updatedBulletPoints)
     }
 
@@ -124,7 +126,7 @@ function ExperienceModal(props) {
         updatedBulletPoints[index] = p_value
         setBulletPoints(updatedBulletPoints)
     }
-
+    
 
     if (!props.show) {
         return (
@@ -233,7 +235,9 @@ function ExperienceModal(props) {
                                         <label>Bullet Point {index + 1} </label>
                                         <input type="button" value="Delete" onClick={()=>deleteBulletPoint(index)}></input>
                                         <br></br>
-                                        <div className="text-area-element" onChange={(e) => handleBulletPointChange(index, e.target.value)} contentEditable></div>
+                                        <textarea className="text-area-element"  
+                                                  onChange={(e) => handleBulletPointChange(index, e.target.value)}
+                                                  value={bullet_point}></textarea>
                                     </div>
                                 ))}
 
@@ -246,32 +250,36 @@ function ExperienceModal(props) {
                         <div>
                             <form onSubmit={editExperience}>
                                 <label>Experience Title</label>
-                                <input type="text" onChange={(e) => validateExpTitleInput(e)} required></input>
+                                <input type="text" 
+                                       value={expTitle}
+                                       onChange={(e) => validateExpTitleInput(e)} required></input>
 
                                 <br></br>
                                 <br></br>
 
                                 <label>Experience Subtitle (E.g: Company)</label>
-                                <input type="text" onChange={(e) => validateExpSubtitleInput(e)}></input>
+                                <input type="text" value={expSubTitle} onChange={(e) => validateExpSubtitleInput(e)}></input>
 
                                 <br></br>
                                 <br></br>
 
                                 <label>Time Period</label>
-                                <input type="text" onChange={(e) => validateExpTimePeriodInput(e)} required></input>
+                                <input type="text" value={expTimePeriod} onChange={(e) => validateExpTimePeriodInput(e)} required></input>
 
                                 <br></br>
                                 <br></br>
 
                                 <label>Location</label>
-                                <input type="text" onChange={(e) => validateExpLocationInput(e)}></input>
+                                <input type="text" value={expLocation} onChange={(e) => validateExpLocationInput(e)}></input>
 
                                 {bulletPoints.map((bullet_point, index) => (
                                     <div>
                                         <label>Bullet Point {index + 1} </label>
                                         <input type="button" value="Delete" onClick={()=>deleteBulletPoint(index)}></input>
                                         <br></br>
-                                        <div className="text-area-element" onChange={(e) => handleBulletPointChange(index, e.target.value)} contentEditable></div>
+                                        <textarea className="text-area-element"  
+                                                  onChange={(e) => handleBulletPointChange(index, e.target.value)}
+                                                  value={bullet_point}></textarea>
                                     </div>
                                 ))}
 
