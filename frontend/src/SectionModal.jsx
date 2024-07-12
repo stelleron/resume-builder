@@ -49,11 +49,7 @@ function SectionModal(props) {
     const editItem = function(event) {
         event.preventDefault()
         let updatedSecNames = [...sectionNames];
-        updatedSecNames[idx] = {
-            id: id,
-            name: sName,
-            experiences: []
-        }
+        updatedSecNames[idx].name = sName
         setId(id + 1)
         setSectionNames(updatedSecNames)
         setMode(NONE_MODE)
