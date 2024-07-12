@@ -17,13 +17,16 @@ function PreviewBox(props) {
   if (dropDown) {
     return (
       <div>
-        <div className="resume-sections-column"> <span className='sections-drop-down-arrow' onClick={handleClick}>▼</span> {props.secName} <span className='resume-section-remove-item' onClick={() => props.removeResumeSection(props.index)}>(-)</span></div>
-        <div className="resume-experience-column resume-add-experience-column" onClick={props.showExpModalFunc}>Add Resume Experience (+)</div>
+        <div className="resume-sections-column"> <span className='sections-drop-down-arrow' onClick={handleClick}>▼</span> {props.secName.name} <span className='resume-section-remove-item' onClick={() => props.removeResumeSection(props.index)}>(-)</span></div>
+        {props.secName.experiences.map((exp, index) => (
+            <div className='resume-experience-column'>{exp.title}</div> 
+        ))}
+        <div className="resume-experience-column resume-add-experience-column" onClick={() => (props.showExpModalFunc(props.secName.id)) }>Add Resume Experience (+)</div>
       </div>
     )
   } else {
     return (
-      <div className="resume-sections-column"> <span className='sections-drop-down-arrow' onClick={handleClick}>▶</span> {props.secName} <span className='resume-section-remove-item' onClick={() => props.removeResumeSection(props.index)}>(-)</span></div>
+      <div className="resume-sections-column"> <span className='sections-drop-down-arrow' onClick={handleClick}>▶</span> {props.secName.name} <span className='resume-section-remove-item' onClick={() => props.removeResumeSection(props.index)}>(-)</span></div>
     )
   }
 }
@@ -36,8 +39,11 @@ function ResumeBuilder(props) {
   const [github, setGithub] = useState("")
   const [resumeSections, setResumeSections] = useState([])
 
+  const [sectionId, setSectionId] = useState(0)
+
   const [showModal, setShowModal] = useState(false)
   const [showExpModal, setShowExpModal] = useState(false)
+
 
   const validateName = function(event) {
     setName(event.target.value)
@@ -78,6 +84,7 @@ function ResumeBuilder(props) {
     props.store_resume(name, phone, email, linkedin, github, [...resumeSections, s_name])
   }
 
+
   const removeResumeSection = function(idx) {
     const updatedResumeSections = [...resumeSections];
     updatedResumeSections.splice(idx, 1)
@@ -85,7 +92,21 @@ function ResumeBuilder(props) {
     props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
   }
 
-  const showExperienceModal = function() {
+  const addResumeExperienceFunc = function(experience) {
+    resumeSections.forEach((section, index) => {
+      if (section.id === sectionId) {
+        const updatedResumeSections = [...resumeSections];
+        updatedResumeSections[index].experiences.push(experience)
+        setResumeSections(updatedResumeSections)
+        props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
+        hideExperienceModal()
+        setSectionId(0)
+      }
+    })
+  }
+
+  const showExperienceModal = function(id) {
+    setSectionId(id)
     setShowExpModal(true)
   }
 
@@ -126,7 +147,7 @@ function ResumeBuilder(props) {
 
           {resumeSections.map((secName, index) => {
             return (
-              <PreviewBox secName={secName.name} index={index} removeResumeSection={removeResumeSection} showExpModalFunc={showExperienceModal}/>
+              <PreviewBox secName={secName} index={index} removeResumeSection={removeResumeSection} showExpModalFunc={showExperienceModal}/>
             )
           })}
 
@@ -139,7 +160,7 @@ function ResumeBuilder(props) {
 
       </form>
       <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc}></SectionModal>
-      <ExperienceModal show={showExpModal} closeFunction={hideExperienceModal} />
+      <ExperienceModal show={showExpModal} closeFunction={hideExperienceModal} addNewExperienceFunction={addResumeExperienceFunc}/>
     </div>
   )
 }

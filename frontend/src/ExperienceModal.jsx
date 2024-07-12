@@ -169,17 +169,17 @@ function ExperienceModal(props) {
                                     return (
                                         <tr>
                                             {expName == "" && 
-                                            <td onClick={() => props.addNewSectionFunction(expName)}>
+                                            <td onClick={() => props.addNewExperienceFunction(expName)}>
                                                 {expName}
                                             </td>
                                             }
                                             {expName != "" && expName.sub_title == "" &&
-                                            <td onClick={() => props.addNewSectionFunction(expName)}>
+                                            <td onClick={() => props.addNewExperienceFunction(expName)}>
                                                 {expName.title} 
                                             </td>
                                             }
                                             {expName != "" && expName.sub_title != "" &&
-                                            <td onClick={() => props.addNewSectionFunction(expName)}>
+                                            <td onClick={() => props.addNewExperienceFunction(expName)}>
                                                 {expName.title}, {expName.sub_title}
                                             </td>
                                             }

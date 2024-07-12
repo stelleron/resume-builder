@@ -8,6 +8,7 @@ function SectionModal(props) {
     const [mode, setMode] = useState(NONE_MODE)
     const [sectionNames, setSectionNames] = useState(["(+) Add New Section", "", "", "", "", "", "", ""])
 
+    const [id, setId] = useState(1)
     const [sName, setSName] = useState("")
     const [idx, setIdx] = useState(-1)
 
@@ -49,9 +50,11 @@ function SectionModal(props) {
         event.preventDefault()
         let updatedSecNames = [...sectionNames];
         updatedSecNames[idx] = {
+            id: id,
             name: sName,
             experiences: []
         }
+        setId(id + 1)
         setSectionNames(updatedSecNames)
         setMode(NONE_MODE)
         setSName("")
@@ -70,9 +73,11 @@ function SectionModal(props) {
                 let updatedSecNames = [...sectionNames];
                 updatedSecNames[i + 1] = "(+) Add New Section"
                 updatedSecNames[i] = {
+                    id: id,
                     name: sName,
                     experiences: []
                 }
+                setId(id + 1)
                 setSectionNames(updatedSecNames)
                 setMode(NONE_MODE)
                 setSName("")
