@@ -17,7 +17,7 @@ function SectionModal(props) {
     }
 
     const setEditMode = function(index, mode) {
-        setSName(sectionNames[index])
+        setSName(sectionNames[index].name)
         setIdx(index)
         setMode(mode)
     }
@@ -48,7 +48,10 @@ function SectionModal(props) {
     const editItem = function(event) {
         event.preventDefault()
         let updatedSecNames = [...sectionNames];
-        updatedSecNames[idx] = sName
+        updatedSecNames[idx] = {
+            name: sName,
+            experiences: []
+        }
         setSectionNames(updatedSecNames)
         setMode(NONE_MODE)
         setSName("")
@@ -66,7 +69,10 @@ function SectionModal(props) {
             if (sectionNames[i] === "(+) Add New Section") {
                 let updatedSecNames = [...sectionNames];
                 updatedSecNames[i + 1] = "(+) Add New Section"
-                updatedSecNames[i] = sName
+                updatedSecNames[i] = {
+                    name: sName,
+                    experiences: []
+                }
                 setSectionNames(updatedSecNames)
                 setMode(NONE_MODE)
                 setSName("")
@@ -118,7 +124,7 @@ function SectionModal(props) {
                                     return (
                                         <tr>
                                             <td onClick={() => props.addNewSectionFunction(secName)}>
-                                                {secName}
+                                                {secName.name}
                                             </td>
                                             <td>
                                                 {secName != "" && 

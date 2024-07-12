@@ -126,7 +126,7 @@ function ResumeBuilder(props) {
 
           {resumeSections.map((secName, index) => {
             return (
-              <PreviewBox secName={secName} index={index} removeResumeSection={removeResumeSection} showExpModalFunc={showExperienceModal}/>
+              <PreviewBox secName={secName.name} index={index} removeResumeSection={removeResumeSection} showExpModalFunc={showExperienceModal}/>
             )
           })}
 
