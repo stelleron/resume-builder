@@ -158,8 +158,6 @@ li {
   font-size: 11pt;
 }
 
-
-
 /* Resume CSS */
 
 .multiline {
@@ -394,4 +392,12 @@ tr:nth-child(even) {
 .resume-add-experience-column:hover {
   background-color: #9e9e9e;
 }
+
+
+.error-message {
+  color: red;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
 

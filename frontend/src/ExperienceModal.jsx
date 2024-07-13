@@ -13,6 +13,7 @@ function ExperienceModal(props) {
     const [expLocation, setExpLocation] = useState("")
     const [expTimePeriod, setExpTimePeriod] = useState("")
     const [bulletPoints, setBulletPoints] = useState([])
+    const [errorMessage, setErrorMessage] = useState("")
 
     const [idx, setIdx] = useState(-1)
 
@@ -37,6 +38,11 @@ function ExperienceModal(props) {
 
     const addExperience = function(event) {
         event.preventDefault()
+        if (expTitle == "" || expTimePeriod == "") {
+            setErrorMessage("ERROR: If you don't have bullet points, you must fill the experience title and time period at least")
+            return
+        }
+
         for (let i = 0; i < expNames.length; i++) {
             if (expNames[i] === "(+) Add New Experience") {
                 let updatedExpNames = [...expNames];
@@ -55,6 +61,7 @@ function ExperienceModal(props) {
                 setExpTimePeriod("")
                 setExpLocation("")
                 setBulletPoints([])
+                setErrorMessage("")
                 return
             }
         }
@@ -62,6 +69,10 @@ function ExperienceModal(props) {
 
     const editExperience= function(event) {
         event.preventDefault()
+        if (expTitle == "" || expTimePeriod == "") {
+            setErrorMessage("ERROR: If you don't have bullet points, you must fill the experience title and time period at least")
+            return
+        }
         let updatedExpNames = [...expNames];
         updatedExpNames[idx] = {
             title: expTitle,
@@ -78,6 +89,7 @@ function ExperienceModal(props) {
         setExpLocation("")
         setBulletPoints([])
         setIdx(-1)
+        setErrorMessage("")
         return
     }
 
@@ -209,8 +221,9 @@ function ExperienceModal(props) {
                     {mode === ADD_MODE &&
                         <div>
                             <form onSubmit={addExperience}>
+                                <div className='error-message'>{errorMessage}</div>
                                 <label>Experience Title</label>
-                                <input type="text" onChange={(e) => validateExpTitleInput(e)} required></input>
+                                <input type="text" onChange={(e) => validateExpTitleInput(e)}></input>
 
                                 <br></br>
                                 <br></br>
@@ -222,7 +235,7 @@ function ExperienceModal(props) {
                                 <br></br>
 
                                 <label>Time Period</label>
-                                <input type="text" onChange={(e) => validateExpTimePeriodInput(e)} required></input>
+                                <input type="text" onChange={(e) => validateExpTimePeriodInput(e)}></input>
 
                                 <br></br>
                                 <br></br>
@@ -249,10 +262,11 @@ function ExperienceModal(props) {
                     {mode == EDIT_MODE && 
                         <div>
                             <form onSubmit={editExperience}>
+                                <div className='error-message'>{errorMessage}</div>
                                 <label>Experience Title</label>
                                 <input type="text" 
                                        value={expTitle}
-                                       onChange={(e) => validateExpTitleInput(e)} required></input>
+                                       onChange={(e) => validateExpTitleInput(e)}></input>
 
                                 <br></br>
                                 <br></br>
@@ -264,7 +278,7 @@ function ExperienceModal(props) {
                                 <br></br>
 
                                 <label>Time Period</label>
-                                <input type="text" value={expTimePeriod} onChange={(e) => validateExpTimePeriodInput(e)} required></input>
+                                <input type="text" value={expTimePeriod} onChange={(e) => validateExpTimePeriodInput(e)}></input>
 
                                 <br></br>
                                 <br></br>
