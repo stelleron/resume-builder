@@ -19,13 +19,19 @@ function PreviewBox(props) {
       <div>
         <div className="resume-sections-column"> <span className='sections-drop-down-arrow' onClick={handleClick}>▼</span> {props.secName.name} <span className='resume-section-remove-item' onClick={() => props.removeResumeSection(props.index)}>(-)</span></div>
         {props.secName.experiences.map((exp, index) => { 
-          if (exp.sub_title != "") {
+          if (exp.title != "" && exp.sub_title != "") {
             return (
               <div className='resume-experience-column'>{exp.title}, {exp.sub_title}<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}>(-)</span></div> 
             )
-          } else {
+          }
+          else if(exp.title != "" && exp.sub_title == ""){
             return (
               <div className='resume-experience-column'>{exp.title}<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}>(-)</span></div> 
+            )
+          } 
+          else {
+            return (
+              <div className='resume-experience-column'>[{exp.bullet_points[0].slice(0, 10)}...]<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}>(-)</span></div> 
             )
           }
         })}

@@ -38,7 +38,7 @@ function ExperienceModal(props) {
 
     const addExperience = function(event) {
         event.preventDefault()
-        if (expTitle == "" || expTimePeriod == "") {
+        if ( (expTitle == "" || expTimePeriod == "") && bulletPoints.length == 0) {
             setErrorMessage("ERROR: If you don't have bullet points, you must fill the experience title and time period at least")
             return
         }
@@ -181,16 +181,21 @@ function ExperienceModal(props) {
                                     return (
                                         <tr>
                                             {expName == "" && 
-                                            <td onClick={() => props.addNewExperienceFunction(expName)}>
+                                            <td>
                                                 {expName}
                                             </td>
                                             }
-                                            {expName != "" && expName.sub_title == "" &&
+                                            {expName.title == "" && expName.sub_title == "" &&
+                                            <td onClick={() => props.addNewExperienceFunction(expName)}>
+                                                [{expName.bullet_points[0].slice(0, 10)}...]
+                                            </td>
+                                            }
+                                            {expName != "" && expName.sub_title == "" && expName.title != "" &&
                                             <td onClick={() => props.addNewExperienceFunction(expName)}>
                                                 {expName.title} 
                                             </td>
                                             }
-                                            {expName != "" && expName.sub_title != "" &&
+                                            {expName != "" && expName.sub_title != "" && expName.title != "" &&
                                             <td onClick={() => props.addNewExperienceFunction(expName)}>
                                                 {expName.title}, {expName.sub_title}
                                             </td>
