@@ -214,7 +214,7 @@ function ResumePreview(props) {
                     <div class="exp-title">{exp.title}, <span class="exp-position">{exp.sub_title}</span><span class="exp-time">{exp.time_period}</span></div>
                     <ul>
                       {exp.bullet_points.map((bullet_point) => (
-                        <li><span>{bullet_point}</span></li>
+                        <li><span dangerouslySetInnerHTML={{__html: bullet_point}}></span></li>
                       ))}
                     </ul>
                   </div>
@@ -225,7 +225,7 @@ function ResumePreview(props) {
                     <div class="exp-title">{exp.title}<span class="exp-time">{exp.time_period}</span></div>
                     <ul>
                       {exp.bullet_points.map((bullet_point) => (
-                        <li><span>{bullet_point}</span></li>
+                        <li><span dangerouslySetInnerHTML={{__html: bullet_point}}></span></li>
                       ))}
                     </ul>
                   </div>
@@ -248,6 +248,7 @@ function App() {
     let phone_str = phone
     let email_str = email
     let linkedin_str = linkedin
+    let resume_sections = resumeSections
 
     if (phone_str != "" && email_str != "") {
       phone_str +=  " • "
@@ -261,13 +262,23 @@ function App() {
       linkedin_str += " • "
     }
 
+    resume_sections.map((section) => {
+      section.experiences.map((exp) => {
+        exp.bullet_points.map((bullet_point, idx) => {
+          exp.bullet_points[idx] = bullet_point
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Bold
+            .replace(/\*(.+?)\*/g, '<em>$1</em>') // Italics
+          })
+      })
+    })
+
     setRHead({
       name: name,
       phone: phone_str,
       email: email_str,
       linkedin: linkedin_str,
       github: github,
-      resumeSections: resumeSections,
+      resumeSections: resume_sections,
     })
   }
 
