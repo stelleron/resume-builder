@@ -189,22 +189,37 @@ function ResumePreview(props) {
             <span>{props.resume_header.github}</span>
           </div>
           {props.resume_header.resumeSections != undefined &&
-           props.resume_header.resumeSections.map((sName) => (
+           props.resume_header.resumeSections.map((sName) => { return (
             <div class="resume-section">
               <div class="resume-section-title">{sName.name.toUpperCase()}</div>
               <hr></hr>
-              {sName.experiences.map((exp, index) => (
-                <div class="resume-exp">
-                  <div class="exp-title">{exp.title}, <span class="exp-position">{exp.sub_title}</span><span class="exp-time">{exp.time_period}</span></div>
-                  <ul>
-                    {exp.bullet_points.map((bullet_point) => (
-                      <li><span>{bullet_point}</span></li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          ))}
+              {sName.experiences.map((exp, index) => { 
+              if (exp.sub_title != "") {
+                return (
+                  <div class="resume-exp">
+                    <div class="exp-title">{exp.title}, <span class="exp-position">{exp.sub_title}</span><span class="exp-time">{exp.time_period}</span></div>
+                    <ul>
+                      {exp.bullet_points.map((bullet_point) => (
+                        <li><span>{bullet_point}</span></li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              } else {
+                return (
+                  <div class="resume-exp">
+                    <div class="exp-title">{exp.title}<span class="exp-time">{exp.time_period}</span></div>
+                    <ul>
+                      {exp.bullet_points.map((bullet_point) => (
+                        <li><span>{bullet_point}</span></li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              }
+              })}
+            </div> 
+          )})}
         </div>
       </div>
     </div>

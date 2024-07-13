@@ -121,12 +121,13 @@ body {
 .resume-section-title {
   font-weight: bold;
   font-size: 12pt;
-  margin-top: 8pt;
+  margin-top: 5pt;
   margin-bottom: 0pt;
 }
 
 hr {
   margin-top: 0px;
+  margin-bottom: 5px;
 }
 
 .exp-title {
