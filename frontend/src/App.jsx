@@ -18,9 +18,17 @@ function PreviewBox(props) {
     return (
       <div>
         <div className="resume-sections-column"> <span className='sections-drop-down-arrow' onClick={handleClick}>▼</span> {props.secName.name} <span className='resume-section-remove-item' onClick={() => props.removeResumeSection(props.index)}>(-)</span></div>
-        {props.secName.experiences.map((exp, index) => (
-            <div className='resume-experience-column'>{exp.title}, {exp.time_period} <span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}>(-)</span></div> 
-        ))}
+        {props.secName.experiences.map((exp, index) => { 
+          if (exp.sub_title != "") {
+            return (
+              <div className='resume-experience-column'>{exp.title}, {exp.sub_title}<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}>(-)</span></div> 
+            )
+          } else {
+            return (
+              <div className='resume-experience-column'>{exp.title}<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}>(-)</span></div> 
+            )
+          }
+        })}
         <div className="resume-experience-column resume-add-experience-column" onClick={() => (props.showExpModalFunc(props.secName.id)) }>Add Resume Experience (+)</div>
       </div>
     )
