@@ -2,6 +2,7 @@ import { useState } from 'react'
 import "./App.css"
 import SectionModal from './SectionModal'
 import ExperienceModal from './ExperienceModal'
+import axios from "axios"
 
 function PreviewBox(props) {
   const [dropDown, setDropDown] = useState(false)
