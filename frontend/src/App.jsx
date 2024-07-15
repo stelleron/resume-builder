@@ -291,7 +291,7 @@ function App() {
       var prtContent = document.getElementById("resume-page");
       var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
 
-      WinPrint.document.write('<html><head><title>My Resume</title>');
+      WinPrint.document.write('<html><head><title>Resume</title>');
       WinPrint.document.write('<link rel="stylesheet" href="src/App.css" type="text/css" media="print">');
       WinPrint.document.write('</head><body >');
       WinPrint.document.write(prtContent.innerHTML);
