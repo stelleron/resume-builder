@@ -211,7 +211,8 @@ function ResumePreview(props) {
               if (exp.sub_title != "") {
                 return (
                   <div class="resume-exp">
-                    <div class="exp-title">{exp.title}, <span class="exp-position">{exp.sub_title}</span><span class="exp-time">{exp.time_period}</span></div>
+                    <div class="exp-title">{exp.title} <span class="exp-time">{exp.time_period}</span></div>
+                    <div><span class="exp-subtitle">{exp.sub_title}</span> <span class="exp-location">{exp.location}</span></div>
                     <ul>
                       {exp.bullet_points.map((bullet_point) => (
                         <li><span dangerouslySetInnerHTML={{__html: bullet_point}}></span></li>

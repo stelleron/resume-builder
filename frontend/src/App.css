@@ -134,13 +134,19 @@ hr {
   font-weight: bold;
 }
 
-.exp-position {
+.exp-subtitle {
   font-weight: normal;
+  font-style: italic;
 }
 
 .exp-time {
   font-weight: normal;
   font-style: italic;
+  float: right;
+}
+
+.exp-location {
+  font-weight: normal;
   float: right;
 }
 
