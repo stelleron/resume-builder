@@ -305,6 +305,10 @@ function App() {
   }
 
   const compileResume = function() {
+    axios
+      .get("/api/resume")
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
     setRData(rHead)
   }
   
