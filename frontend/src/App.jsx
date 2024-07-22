@@ -179,11 +179,12 @@ function ResumeBuilder(props) {
   const removeResumeSection = function(idx) {
     const updatedResumeSections = [...resumeSections];
     const updatedShowExpModal = [...showExpModal];
-    updatedResumeSections.splice(idx, 1)
+    const deletedItem = updatedResumeSections.splice(idx, 1)
     updatedShowExpModal.splice(idx, 1)
     setResumeSections(updatedResumeSections)
     setShowExpModal(updatedShowExpModal)
     props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
+    axios.delete(`/api/section/${deletedItem[0].id}/`)
   }
 
   const addResumeExperienceFunc = function(experience) {
