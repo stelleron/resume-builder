@@ -186,7 +186,9 @@ function ResumeBuilder(props) {
 
       </form>
       <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc}></SectionModal>
-      <ExperienceModal show={showExpModal} closeFunction={hideExperienceModal} addNewExperienceFunction={addResumeExperienceFunc}/>
+      {resumeSections.map(() => {
+        return <ExperienceModal show={showExpModal} closeFunction={hideExperienceModal} addNewExperienceFunction={addResumeExperienceFunc}/>
+      })}
     </div>
   )
 }
