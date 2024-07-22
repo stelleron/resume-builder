@@ -17,6 +17,7 @@ function ExperienceModal(props) {
     const [errorMessage, setErrorMessage] = useState("")
 
     const [idx, setIdx] = useState(-1)
+    const [id, setId] = useState(1)
 
     const changeMode = function(mode) {
         setMode(mode)
@@ -50,6 +51,7 @@ function ExperienceModal(props) {
                 let updatedExpNames = [...expNames];
                 updatedExpNames[i + 1] = "(+) Add New Experience"
                 updatedExpNames[i] = {
+                    id: id,
                     title: expTitle,
                     sub_title: expSubTitle,
                     location: expLocation,
@@ -58,6 +60,7 @@ function ExperienceModal(props) {
                 }
                 setExpNames(updatedExpNames)
                 setMode(NONE_MODE)
+                setId(id + 1)
                 setExpTitle("")
                 setExpSubTitle("")
                 setExpTimePeriod("")
