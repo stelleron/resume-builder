@@ -13,15 +13,15 @@ class Resume(models.Model):
         return self.name + "'s Resume"
     
 class Section(models.Model):
-    resume = models.ForeignKey(Resume, related_name="sections", on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
+    resume = models.ForeignKey(Resume, related_name="sections", on_delete=models.CASCADE)
 
 class Experience(models.Model):
-    section = models.ForeignKey(Section, related_name="experiences", on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
     sub_title = models.CharField(max_length=120)
     time_period = models.CharField(max_length=40)
     location = models.CharField(max_length=50)
+    section = models.ForeignKey(Section, related_name="experiences", on_delete=models.CASCADE)
 
 class BulletPoint(models.Model):
     experience = models.ForeignKey(Experience, related_name="bullet_points", on_delete=models.CASCADE)

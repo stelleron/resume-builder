@@ -4,19 +4,19 @@ from .models import Resume, Section, Experience, BulletList, BulletPoint
 class BulletPointSerializer(serializers.ModelSerializer):
     class Meta:
         model = BulletPoint
-        fields = ['id', 'text']
+        fields = '__all__'
 
 class BulletListSerializer(serializers.ModelSerializer):
     class Meta:
         model = BulletList
-        fields = ['id', 'text']
+        fields = '__all__'
 
 class ExperienceSerializer(serializers.ModelSerializer):
     bullet_points = BulletPointSerializer(many=True, read_only=True)
 
     class Meta:
         model = Experience
-        fields = ['id', 'title', 'sub_title', 'time_period', 'location', 'bullet_points']
+        fields = '__all__'
 
 class SectionSerializer(serializers.ModelSerializer):
     experiences = ExperienceSerializer(many=True, read_only=True)
@@ -24,12 +24,12 @@ class SectionSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Section
-        fields = ['id', 'name', 'experiences', 'bullet_list']
+        fields = '__all__'
 
 class ResumeSerializer(serializers.ModelSerializer):
     sections = SectionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Resume
-        fields = ['id', 'name', 'email', 'phone', 'linkedin', 'github', 'sections']
+        fields = '__all__'
 
