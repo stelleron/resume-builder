@@ -24,10 +24,12 @@ function SectionModal(props) {
 
 
     const changeMode = function(mode) {
+        setErrorMessage("")
         setMode(mode)
     }
 
     const setEditMode = function(index, mode) {
+        setErrorMessage("")
         setSName(sectionNames[index].name)
         setIdx(index)
         setMode(mode)
@@ -35,6 +37,7 @@ function SectionModal(props) {
 
     const exitFunction = function() {
         setMode(NONE_MODE)
+        setErrorMessage("")
         props.closeFunction()
     }
 
@@ -43,6 +46,7 @@ function SectionModal(props) {
     }
 
     const deleteItem = function(index) {
+        setErrorMessage("")
         const updatedSecNames = [...sectionNames];
         if (updatedSecNames.length > 8) {
             updatedSecNames.splice(index, 1)
@@ -59,6 +63,7 @@ function SectionModal(props) {
     const editItem = function(event) {
         event.preventDefault()
         let updatedSecNames = [...sectionNames];
+        updatedSecNames[idx].id = id;
         updatedSecNames[idx].name = sName
         setId(id + 1)
         setSectionNames(updatedSecNames)
