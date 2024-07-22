@@ -67,14 +67,19 @@ function ResumeBuilder(props) {
             setEmail(data.data[0].email)
             setLinkedin(data.data[0].linkedin)
             setGithub(data.data[0].github)
-            // console.log(data.data[0].sections)
             setResumeSections(data.data[0].sections)
+
+            const updatedShowExpModal = []
+            data.data[0].sections.map(() => {
+              updatedShowExpModal.push(false)
+            })
+            setShowExpModal(updatedShowExpModal)
+
             props.store_resume(data.data[0].name, 
                                data.data[0].phone, 
                                data.data[0].email, 
                                data.data[0].linkedin, 
                                data.data[0].github, 
-                               //resumeSections
                                data.data[0].sections
             )
         })
