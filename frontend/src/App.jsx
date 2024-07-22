@@ -22,21 +22,21 @@ function PreviewBox(props) {
         {props.secName.experiences.map((exp, index) => { 
           if (exp.title != "" && exp.sub_title != "") {
             return (
-              <div className='resume-experience-column'>{exp.title}, {exp.sub_title}<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}>(-)</span></div> 
+              <div className='resume-experience-column'>{exp.title}, {exp.sub_title}<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}> (-)</span></div> 
             )
           }
           else if(exp.title != "" && exp.sub_title == ""){
             return (
-              <div className='resume-experience-column'>{exp.title}<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}>(-)</span></div> 
+              <div className='resume-experience-column'>{exp.title}<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}> (-)</span></div> 
             )
           } 
           else {
             return (
-              <div className='resume-experience-column'>[{exp.bullet_points[0].slice(0, 10)}...]<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}>(-)</span></div> 
+              <div className='resume-experience-column'>[{exp.bullet_points[0].slice(0, 10)}...]<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}> (-)</span></div> 
             )
           }
         })}
-        <div className="resume-experience-column resume-add-experience-column" onClick={() => (props.showExpModalFunc(props.secName.id)) }>Add Resume Experience (+)</div>
+        <div className="resume-experience-column resume-add-experience-column" onClick={() => (props.showExpModalFunc(props.secName.id, props.index)) }>Add Resume Experience (+)</div>
       </div>
     )
   } else {
@@ -57,7 +57,7 @@ function ResumeBuilder(props) {
   const [sectionId, setSectionId] = useState(0)
 
   const [showModal, setShowModal] = useState(false)
-  const [showExpModal, setShowExpModal] = useState(false)
+  const [showExpModal, setShowExpModal] = useState([])
 
 
   const validateName = function(event) {
@@ -106,13 +106,17 @@ function ResumeBuilder(props) {
     setResumeSections([...resumeSections, s_name])
     hideSectionModal()
     props.store_resume(name, phone, email, linkedin, github, [...resumeSections, s_name])
+    setShowExpModal([...showExpModal, false])
   }
 
 
   const removeResumeSection = function(idx) {
     const updatedResumeSections = [...resumeSections];
+    const updatedShowExpModal = [...showExpModal];
     updatedResumeSections.splice(idx, 1)
+    updatedShowExpModal.splice(idx, 1)
     setResumeSections(updatedResumeSections)
+    setShowExpModal(updatedShowExpModal)
     props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
   }
 
@@ -140,13 +144,18 @@ function ResumeBuilder(props) {
     })
   }
 
-  const showExperienceModal = function(id) {
+  const showExperienceModal = function(id, index) {
     setSectionId(id)
-    setShowExpModal(true)
+    const updatedShowExpModal = [...showExpModal];
+    updatedShowExpModal[index] = true
+    setShowExpModal(updatedShowExpModal)
   }
 
   const hideExperienceModal = function() {
-    setShowExpModal(false)
+    const updatedShowExpModal = [...showExpModal];
+    updatedShowExpModal.fill(false)
+    console.log(updatedShowExpModal)
+    setShowExpModal(updatedShowExpModal)
   }
 
   return (
@@ -195,8 +204,8 @@ function ResumeBuilder(props) {
 
       </form>
       <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc} validateAddSectionFunction={isSectionInResume}></SectionModal>
-      {resumeSections.map(() => {
-        return <ExperienceModal show={showExpModal} closeFunction={hideExperienceModal} addNewExperienceFunction={addResumeExperienceFunc}/>
+      {resumeSections.map((v, index) => {
+        return <ExperienceModal show={showExpModal[index]} closeFunction={hideExperienceModal} addNewExperienceFunction={addResumeExperienceFunc}/>
       })}
     </div>
   )
