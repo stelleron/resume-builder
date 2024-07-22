@@ -130,9 +130,15 @@ function SectionModal(props) {
                                 } else {
                                     return (
                                         <tr>
+                                            {secName == "" &&
+                                            <td>
+                                            
+                                            </td>}
+                                            {secName != "" && 
                                             <td onClick={() => validateAddNewSection(secName)}>
                                                 {secName.name}
                                             </td>
+                                            }
                                             <td>
                                                 {secName != "" && 
                                                 <input type='button' 
