@@ -24,7 +24,7 @@ class SectionSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Section
-        fields = ['id', 'category', 'experiences', 'bullet_list']
+        fields = ['id', 'name', 'experiences', 'bullet_list']
 
 class ResumeSerializer(serializers.ModelSerializer):
     sections = SectionSerializer(many=True, read_only=True)

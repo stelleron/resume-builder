@@ -14,7 +14,7 @@ class Resume(models.Model):
     
 class Section(models.Model):
     resume = models.ForeignKey(Resume, related_name="sections", on_delete=models.CASCADE)
-    category = models.CharField(max_length=20)
+    name = models.CharField(max_length=20)
 
 class Experience(models.Model):
     section = models.ForeignKey(Section, related_name="experiences", on_delete=models.CASCADE)

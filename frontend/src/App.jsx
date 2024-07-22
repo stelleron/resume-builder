@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import "./App.css"
 import SectionModal from './SectionModal'
 import ExperienceModal from './ExperienceModal'
@@ -32,7 +32,7 @@ function PreviewBox(props) {
           } 
           else {
             return (
-              <div className='resume-experience-column'>[{exp.bullet_points[0].slice(0, 10)}...]<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}> (-)</span></div> 
+              <div className='resume-experience-column'>[{exp.bullet_points[0].text.slice(0, 10)}...]<span className='resume-section-remove-item' onClick={() => props.removeResumeExperience(props.secName.id, index)}> (-)</span></div> 
             )
           }
         })}
@@ -58,6 +58,27 @@ function ResumeBuilder(props) {
 
   const [showModal, setShowModal] = useState(false)
   const [showExpModal, setShowExpModal] = useState([])
+
+  useEffect(() => {
+    axios.get("/api/resume")
+         .then((data) => {
+            setName(data.data[0].name)
+            setPhone(data.data[0].phone)
+            setEmail(data.data[0].email)
+            setLinkedin(data.data[0].linkedin)
+            setGithub(data.data[0].github)
+            // console.log(data.data[0].sections)
+            setResumeSections(data.data[0].sections)
+            props.store_resume(data.data[0].name, 
+                               data.data[0].phone, 
+                               data.data[0].email, 
+                               data.data[0].linkedin, 
+                               data.data[0].github, 
+                               //resumeSections
+                               data.data[0].sections
+            )
+        })
+  }, [])
 
 
   const validateName = function(event) {
@@ -235,9 +256,9 @@ function ResumePreview(props) {
                     <div class="exp-title">{exp.title} <span class="exp-time">{exp.time_period}</span></div>
                     <div><span class="exp-subtitle">{exp.sub_title}</span> <span class="exp-location">{exp.location}</span></div>
                     <ul>
-                      {exp.bullet_points.map((bullet_point) => (
-                        <li><span dangerouslySetInnerHTML={{__html: bullet_point}}></span></li>
-                      ))}
+                      {exp.bullet_points.map((bullet_point) => {
+                        return <li><span dangerouslySetInnerHTML={{__html: bullet_point.text}}></span></li>
+                      })}
                     </ul>
                   </div>
                 )
@@ -246,9 +267,9 @@ function ResumePreview(props) {
                   <div class="resume-exp">
                     <div class="exp-title">{exp.title}<span class="exp-time">{exp.time_period}</span></div>
                     <ul>
-                      {exp.bullet_points.map((bullet_point) => (
-                        <li><span dangerouslySetInnerHTML={{__html: bullet_point}}></span></li>
-                      ))}
+                      {exp.bullet_points.map((bullet_point) => {
+                        return <li><span dangerouslySetInnerHTML={{__html: bullet_point.text}}></span></li>
+                      })}
                     </ul>
                   </div>
                 )
@@ -287,7 +308,7 @@ function App() {
     resume_sections.map((section) => {
       section.experiences.map((exp) => {
         exp.bullet_points.map((bullet_point, idx) => {
-          exp.bullet_points[idx] = bullet_point
+          exp.bullet_points[idx].text = bullet_point.text
             .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Bold
             .replace(/\*(.+?)\*/g, '<em>$1</em>') // Italics
           })
@@ -305,10 +326,6 @@ function App() {
   }
 
   const compileResume = function() {
-    axios
-      .get("/api/resume")
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
     setRData(rHead)
   }
   

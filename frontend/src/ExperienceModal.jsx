@@ -137,7 +137,10 @@ function ExperienceModal(props) {
 
     const handleBulletPointChange = function(index, p_value) {
         const updatedBulletPoints = [...bulletPoints]
-        updatedBulletPoints[index] = p_value
+        updatedBulletPoints[index] = {
+            id: 0,
+            text: p_value
+        }
         setBulletPoints(updatedBulletPoints)
     }
     
@@ -189,7 +192,7 @@ function ExperienceModal(props) {
                                             }
                                             {expName.title == "" && expName.sub_title == "" &&
                                             <td onClick={() => props.addNewExperienceFunction(expName)}>
-                                                [{expName.bullet_points[0].slice(0, 10)}...]
+                                                [{expName.bullet_points[0].text.slice(0, 10)}...]
                                             </td>
                                             }
                                             {expName != "" && expName.sub_title == "" && expName.title != "" &&
@@ -257,7 +260,7 @@ function ExperienceModal(props) {
                                         <br></br>
                                         <textarea className="text-area-element"  
                                                   onChange={(e) => handleBulletPointChange(index, e.target.value)}
-                                                  value={bullet_point}></textarea>
+                                                  value={bullet_point.text}></textarea>
                                     </div>
                                 ))}
 
@@ -300,7 +303,7 @@ function ExperienceModal(props) {
                                         <br></br>
                                         <textarea className="text-area-element"  
                                                   onChange={(e) => handleBulletPointChange(index, e.target.value)}
-                                                  value={bullet_point}></textarea>
+                                                  value={bullet_point.text}></textarea>
                                     </div>
                                 ))}
 
