@@ -2,11 +2,11 @@ from django.db import models
 
 # Create your models here.
 class Resume(models.Model):
-    name = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)
-    phone = models.CharField(max_length=20)
-    linkedin = models.CharField(max_length=120)
-    github = models.CharField(max_length=120)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    email = models.CharField(max_length=50, blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    linkedin = models.CharField(max_length=120, blank=True, null=True)
+    github = models.CharField(max_length=120, blank=True, null=True)
 
 
     def __str__(self):
