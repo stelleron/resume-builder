@@ -89,26 +89,66 @@ function ResumeBuilder(props) {
   const validateName = function(event) {
     setName(event.target.value)
     props.store_resume(event.target.value, phone, email, linkedin, github, resumeSections)
+    const updatedHead = {
+      name: event.target.value,
+      phone: phone,
+      email: email,
+      linkedin: linkedin,
+      github: github
+    }
+    axios.put("/api/resume/1/", updatedHead)
   }
 
   const validatePhone = function(event) {
     setPhone(event.target.value)
     props.store_resume(name, event.target.value, email, linkedin, github, resumeSections)
+    const updatedHead = {
+      name: name,
+      phone: event.target.value,
+      email: email,
+      linkedin: linkedin,
+      github: github
+    }
+    axios.put("/api/resume/1/", updatedHead)
   }
 
   const validateEmail = function(event) {
     setEmail(event.target.value)
     props.store_resume(name, phone, event.target.value, linkedin, github, resumeSections)
+    const updatedHead = {
+      name: name,
+      phone: phone,
+      email: event.target.value,
+      linkedin: linkedin,
+      github: github
+    }
+    axios.put("/api/resume/1/", updatedHead)
   }
 
   const validateLinkedin = function(event) {
     setLinkedin(event.target.value)
     props.store_resume(name, phone, email, event.target.value, github, resumeSections)
+    const updatedHead = {
+      name: name,
+      phone: phone,
+      email: email,
+      linkedin: event.target.value,
+      github: github
+    }
+    axios.put("/api/resume/1/", updatedHead)
   }
 
   const validateGithub = function(event) {
     setGithub(event.target.value)
     props.store_resume(name, phone, email, linkedin, event.target.value, resumeSections)
+    const updatedHead = {
+      name: name,
+      phone: phone,
+      email: email,
+      linkedin: linkedin,
+      github: event.target.value
+    }
+    axios.put("/api/resume/1/", updatedHead)
   }
 
   const showSectionModal = function() {
