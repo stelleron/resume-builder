@@ -39,7 +39,7 @@ function ExperienceModal(props) {
     const addExperience = function(event) {
         event.preventDefault()
         if ( (expTitle == "" || expTimePeriod == "") && bulletPoints.length == 0) {
-            setErrorMessage("ERROR: If you don't have bullet points, you must fill the experience title and time period at least")
+            setErrorMessage("If you don't have bullet points, you must fill the experience title and time period at least")
             return
         }
 

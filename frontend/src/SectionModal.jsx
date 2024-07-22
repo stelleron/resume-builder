@@ -11,10 +11,14 @@ function SectionModal(props) {
     const [id, setId] = useState(1)
     const [sName, setSName] = useState("")
     const [idx, setIdx] = useState(-1)
+    const [errorMessage, setErrorMessage] = useState("")
 
     const validateAddNewSection = function(secName) {
         if (!props.validateAddSectionFunction(secName)) {
             props.addNewSectionFunction(secName)
+            setErrorMessage("")
+        } else {
+            setErrorMessage("This section has already been added!")
         }
     }
 
@@ -102,9 +106,9 @@ function SectionModal(props) {
                 <span className="close" onClick={exitFunction}>&times;</span>
                 <div className='modal-box'>
                     <h2>Resume Sections</h2>
-                    
                     {mode === NONE_MODE && 
                     <div className='overflow-box'>
+                    <div className='error-message'>{errorMessage}</div>
                     <table>
                         <thead></thead>
                         <tbody>
