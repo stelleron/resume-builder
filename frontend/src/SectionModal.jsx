@@ -12,6 +12,12 @@ function SectionModal(props) {
     const [sName, setSName] = useState("")
     const [idx, setIdx] = useState(-1)
 
+    const validateAddNewSection = function(secName) {
+        if (!props.validateAddSectionFunction(secName)) {
+            props.addNewSectionFunction(secName)
+        }
+    }
+
 
     const changeMode = function(mode) {
         setMode(mode)
@@ -124,7 +130,7 @@ function SectionModal(props) {
                                 } else {
                                     return (
                                         <tr>
-                                            <td onClick={() => props.addNewSectionFunction(secName)}>
+                                            <td onClick={() => validateAddNewSection(secName)}>
                                                 {secName.name}
                                             </td>
                                             <td>

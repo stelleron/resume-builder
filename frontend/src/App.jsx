@@ -93,6 +93,15 @@ function ResumeBuilder(props) {
     setShowModal(false)
   }
 
+  const isSectionInResume = function(sName) {
+    for (let i = 0; i < resumeSections.length; i++) {
+      if (resumeSections[i].id == sName.id) {
+        return true
+      }
+    }
+    return false
+  }
+
   const addResumeSectionFunc = function(s_name) {
     setResumeSections([...resumeSections, s_name])
     hideSectionModal()
@@ -185,7 +194,7 @@ function ResumeBuilder(props) {
 
 
       </form>
-      <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc}></SectionModal>
+      <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc} validateAddSectionFunction={isSectionInResume}></SectionModal>
       {resumeSections.map(() => {
         return <ExperienceModal show={showExpModal} closeFunction={hideExperienceModal} addNewExperienceFunction={addResumeExperienceFunc}/>
       })}
