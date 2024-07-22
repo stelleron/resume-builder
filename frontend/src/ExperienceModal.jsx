@@ -33,6 +33,7 @@ function ExperienceModal(props) {
 
     const exitFunction = function() {
         setMode(NONE_MODE)
+        setErrorMessage("")
         props.closeFunction()
     }
 
