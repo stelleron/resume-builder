@@ -17,10 +17,10 @@ class Section(models.Model):
     resume = models.ForeignKey(Resume, related_name="sections", on_delete=models.CASCADE)
 
 class Experience(models.Model):
-    title = models.CharField(max_length=120)
-    sub_title = models.CharField(max_length=120)
-    time_period = models.CharField(max_length=40)
-    location = models.CharField(max_length=50)
+    title = models.CharField(max_length=120, blank=True, null=True)
+    sub_title = models.CharField(max_length=120, blank=True, null=True)
+    time_period = models.CharField(max_length=40, blank=True, null=True)
+    location = models.CharField(max_length=50, blank=True, null=True)
     section = models.ForeignKey(Section, related_name="experiences", on_delete=models.CASCADE)
 
 class BulletPoint(models.Model):
