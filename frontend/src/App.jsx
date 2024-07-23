@@ -224,9 +224,10 @@ function ResumeBuilder(props) {
     resumeSections.forEach((section, idx) => {
       if (section.id == id) {
         const updatedResumeSections = [...resumeSections];
-        updatedResumeSections[idx].experiences.splice(index, 1)
+        const deletedItem = updatedResumeSections[idx].experiences.splice(index, 1)
         setResumeSections(updatedResumeSections)
         props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
+        axios.delete(`/api/experience/${deletedItem[0].id}/`)
       }
     })
   }
