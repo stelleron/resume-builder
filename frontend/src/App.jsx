@@ -200,6 +200,13 @@ function ResumeBuilder(props) {
         setResumeSections(updatedResumeSections)
         props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
         hideExperienceModal()
+        axios.post('/api/experience/', {
+          title: experience.title,
+          sub_title: experience.sub_title,
+          time_period: experience.time_period,
+          location: experience.location,
+          section: updatedResumeSections[index].id
+        }).catch((err) => console.log(err));
         setSectionId(0)
       }
     })
