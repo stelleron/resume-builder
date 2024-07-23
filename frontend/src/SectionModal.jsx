@@ -21,19 +21,20 @@ function SectionModal(props) {
              })
         axios.get("/api/resume/2/")
              .then((data) => {
+                let updatedSecNames = [...sectionNames];
                 data.data.sections.map((v, index) => {
-                    for (let i = 0; i < sectionNames.length; i++) {
-                        if (sectionNames[i] === "(+) Add New Section") {
-                            let updatedSecNames = [...sectionNames];
+                    for (let i = 0; i < updatedSecNames.length; i++) {
+                        if (updatedSecNames[i] === "(+) Add New Section") {
                             updatedSecNames[i + 1] = "(+) Add New Section"
                             updatedSecNames[i] = {
                                 id: v.id,
                                 name: v.name,
                                 experiences: []
                             }
-                            setSectionNames(updatedSecNames)
+                            break
                         }
                     }
+                setSectionNames(updatedSecNames)
                 })
              })
     }, [])
@@ -74,9 +75,11 @@ function SectionModal(props) {
         setErrorMessage("")
         const updatedSecNames = [...sectionNames];
         if (updatedSecNames.length > 8) {
-            updatedSecNames.splice(index, 1)
+            const deletedItem = updatedSecNames.splice(index, 1)
+            axios.delete(`/api/section/${deletedItem[0].id}/`)
             setSectionNames(updatedSecNames)
         } else {
+            axios.delete(`/api/section/${updatedSecNames[index].id}/`)
             for (let i = index; i < updatedSecNames.length - 1; i++) {
                 updatedSecNames[i] = updatedSecNames[i + 1]
             }
