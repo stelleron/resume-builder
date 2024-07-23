@@ -19,6 +19,23 @@ function SectionModal(props) {
              .then((data) => {
                 setId(data.data[data.data.length - 1].id + 1)
              })
+        axios.get("/api/resume/2/")
+             .then((data) => {
+                data.data.sections.map((v, index) => {
+                    for (let i = 0; i < sectionNames.length; i++) {
+                        if (sectionNames[i] === "(+) Add New Section") {
+                            let updatedSecNames = [...sectionNames];
+                            updatedSecNames[i + 1] = "(+) Add New Section"
+                            updatedSecNames[i] = {
+                                id: v.id,
+                                name: v.name,
+                                experiences: []
+                            }
+                            setSectionNames(updatedSecNames)
+                        }
+                    }
+                })
+             })
     }, [])
 
     const validateAddNewSection = function(secName) {
@@ -98,6 +115,10 @@ function SectionModal(props) {
                 setSectionNames(updatedSecNames)
                 setMode(NONE_MODE)
                 setSName("")
+                axios.post('/api/section/', {
+                    name: sName,
+                    resume: 2
+                })
                 return
             }
         }
