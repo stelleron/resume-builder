@@ -89,6 +89,10 @@ function SectionModal(props) {
         event.preventDefault()
         let updatedSecNames = [...sectionNames];
         updatedSecNames[idx].name = sName
+        axios.put(`/api/section/${updatedSecNames[idx].id}/`, {
+            name: sName,
+            resume: 2
+        })
         setSectionNames(updatedSecNames)
         setMode(NONE_MODE)
         setSName("")
