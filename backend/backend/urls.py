@@ -25,7 +25,6 @@ router.register(r'resume', views.ResumeViewSet, 'resume')
 router.register(r'section', views.SectionViewSet, 'section')
 router.register(r'experience', views.ExperienceViewSet, 'experience')
 router.register(r'bullet_point', views.BulletPointViewSet, 'bullet_point')
-router.register(r'bullet_list', views.BulletListViewSet, 'bullet_list')
 
 urlpatterns = [
     path("admin/", admin.site.urls),

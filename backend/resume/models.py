@@ -26,7 +26,3 @@ class Experience(models.Model):
 class BulletPoint(models.Model):
     experience = models.ForeignKey(Experience, related_name="bullet_points", on_delete=models.CASCADE)
     text = models.TextField()
-
-class BulletList(models.Model):
-    section = models.ForeignKey(Section, related_name="bullet_list", on_delete=models.CASCADE)
-    text = models.TextField()

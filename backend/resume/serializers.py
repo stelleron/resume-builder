@@ -1,14 +1,9 @@
 from rest_framework import serializers
-from .models import Resume, Section, Experience, BulletList, BulletPoint
+from .models import Resume, Section, Experience, BulletPoint
 
 class BulletPointSerializer(serializers.ModelSerializer):
     class Meta:
         model = BulletPoint
-        fields = '__all__'
-
-class BulletListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BulletList
         fields = '__all__'
 
 class ExperienceSerializer(serializers.ModelSerializer):
@@ -20,7 +15,6 @@ class ExperienceSerializer(serializers.ModelSerializer):
 
 class SectionSerializer(serializers.ModelSerializer):
     experiences = ExperienceSerializer(many=True, read_only=True)
-    bullet_list = BulletListSerializer(many=True, read_only=True)
     
     class Meta:
         model = Section
