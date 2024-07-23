@@ -19,6 +19,13 @@ function ExperienceModal(props) {
     const [idx, setIdx] = useState(-1)
     const [id, setId] = useState(1)
 
+    useEffect(() => {
+        axios.get("/api/experience/")
+             .then((data) => {
+                setId(data.data[data.data.length - 1].id + 1)
+             })
+    }, [])
+
     const changeMode = function(mode) {
         setMode(mode)
     }

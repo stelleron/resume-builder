@@ -173,6 +173,11 @@ function ResumeBuilder(props) {
     hideSectionModal()
     props.store_resume(name, phone, email, linkedin, github, [...resumeSections, s_name])
     setShowExpModal([...showExpModal, false])
+    axios.post('/api/section/', {
+      name: s_name.name,
+      resume: 1
+    })
+         .catch((err) => console.log(err));
   }
 
 

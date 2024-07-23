@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 function SectionModal(props) {
     const NONE_MODE = 0
@@ -12,6 +13,13 @@ function SectionModal(props) {
     const [sName, setSName] = useState("")
     const [idx, setIdx] = useState(-1)
     const [errorMessage, setErrorMessage] = useState("")
+
+    useEffect(() => {
+        axios.get("/api/section/")
+             .then((data) => {
+                setId(data.data[data.data.length - 1].id + 1)
+             })
+    }, [])
 
     const validateAddNewSection = function(secName) {
         if (!props.validateAddSectionFunction(secName)) {
