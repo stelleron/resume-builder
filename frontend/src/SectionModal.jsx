@@ -14,6 +14,7 @@ function SectionModal(props) {
     const [idx, setIdx] = useState(-1)
     const [errorMessage, setErrorMessage] = useState("")
 
+    /*
     useEffect(() => {
         axios.get("/api/section/")
              .then((data) => {
@@ -38,6 +39,7 @@ function SectionModal(props) {
                 })
              })
     }, [])
+    */
 
     const validateAddNewSection = function(secName) {
         if (!props.validateAddSectionFunction(secName)) {
@@ -76,10 +78,10 @@ function SectionModal(props) {
         const updatedSecNames = [...sectionNames];
         if (updatedSecNames.length > 8) {
             const deletedItem = updatedSecNames.splice(index, 1)
-            axios.delete(`/api/section/${deletedItem[0].id}/`)
+            // axios.delete(`/api/section/${deletedItem[0].id}/`)
             setSectionNames(updatedSecNames)
         } else {
-            axios.delete(`/api/section/${updatedSecNames[index].id}/`)
+            // axios.delete(`/api/section/${updatedSecNames[index].id}/`)
             for (let i = index; i < updatedSecNames.length - 1; i++) {
                 updatedSecNames[i] = updatedSecNames[i + 1]
             }
@@ -92,11 +94,13 @@ function SectionModal(props) {
         event.preventDefault()
         let updatedSecNames = [...sectionNames];
         updatedSecNames[idx].name = sName
+        /*
         axios.put(`/api/section/${updatedSecNames[idx].id}/`, {
             name: sName,
             resume: 2
         })
         setSectionNames(updatedSecNames)
+        */
         setMode(NONE_MODE)
         setSName("")
         setIdx(-1)
@@ -122,10 +126,12 @@ function SectionModal(props) {
                 setSectionNames(updatedSecNames)
                 setMode(NONE_MODE)
                 setSName("")
+                /*
                 axios.post('/api/section/', {
                     name: sName,
                     resume: 2
                 })
+                    */
                 return
             }
         }
