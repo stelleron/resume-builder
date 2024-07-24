@@ -5,7 +5,7 @@ class UserData(models.Model):
     username = models.CharField(max_length=100)
 
 class Resume(models.Model):
-    user = models.ForeignKey(UserData, related_name="resume", on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(UserData, related_name="resume", on_delete=models.CASCADE)
     name = models.CharField(max_length=50, blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
