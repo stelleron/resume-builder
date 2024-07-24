@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import ResumeSerializer, SectionSerializer, ExperienceSerializer, BulletPointSerializer
-from .models import Resume, Section, Experience, BulletPoint
+from .serializers import ResumeSerializer, SectionSerializer, ExperienceSerializer, BulletPointSerializer, UserDataSerializer
+from .models import Resume, Section, Experience, BulletPoint, UserData
 
 # Create your views here.
+class UserDataViewSet(viewsets.ModelViewSet):
+    queryset = UserData.objects.all()
+    serializer_class = UserDataSerializer
+
 class ResumeViewSet(viewsets.ModelViewSet):
     queryset = Resume.objects.all()
     serializer_class = ResumeSerializer
