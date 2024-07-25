@@ -134,12 +134,35 @@ function ExperienceModal(props) {
         
         let updatedExpNames = [...expNames];
         updatedExpNames[idx] = {
+            id: updatedExpNames[idx].id,
             title: expTitle,
             sub_title: expSubTitle,
             location: expLocation,
             time_period: expTimePeriod,
             bullet_points: bulletPoints
         }
+
+        axios.get(`/api/experience/${updatedExpNames[idx].id}/`)
+             .then((data) => {
+                axios.put(`/api/experience/${updatedExpNames[idx].id}/`, {
+                    title: expTitle,
+                    sub_title: expSubTitle,
+                    location: expLocation,
+                    time_period: expTimePeriod,
+                    bullet_points: bulletPoints,
+                    display: data.data.display,
+                    section: data.data.section
+                })
+                props.editExperienceFunction(props.sectionIndex, {
+                    id: updatedExpNames[idx].id,
+                    title: expTitle,
+                    sub_title: expSubTitle,
+                    location: expLocation,
+                    time_period: expTimePeriod,
+                    bullet_points: bulletPoints,
+                })
+             })
+
         setExpNames(updatedExpNames)
         setMode(NONE_MODE)
         setExpTitle("")

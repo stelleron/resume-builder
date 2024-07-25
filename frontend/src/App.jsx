@@ -260,6 +260,21 @@ function ResumeBuilder(props) {
     setResumeSections(updatedResumeSections)
   }
 
+  const editResumeExperienceFunc = function(sec_index, exp) {
+    const updatedResumeSections = [...resumeSections];
+    for (let i = 0; i < updatedResumeSections[sec_index].experiences.length; i++) {
+      if (updatedResumeSections[sec_index].experiences[i].id == exp.id) {
+        updatedResumeSections[sec_index].experiences[i].title = exp.title
+        updatedResumeSections[sec_index].experiences[i].sub_title = exp.sub_title
+        updatedResumeSections[sec_index].experiences[i].time_period = exp.time_period
+        updatedResumeSections[sec_index].experiences[i].location = exp.location
+        updatedResumeSections[sec_index].experiences[i].bullet_points = exp.bullet_point
+        break
+      }
+    }
+    setResumeSections(updatedResumeSections)
+  }
+
   const removeResumeExperienceFunc = function(id, index) {
     resumeSections.forEach((section, idx) => {
       if (section.id == id) {
@@ -333,7 +348,7 @@ function ResumeBuilder(props) {
       </form>
       <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc} editSectionFunction={editResumeSectionFunc} deleteSectionFunction={deleteResumeSectionFunc} validateAddSectionFunction={isSectionInResume}></SectionModal>
       {resumeSections.map((v, index) => {
-        return <ExperienceModal show={showExpModal[index]} sectionIndex={index} sectionId={v.id} closeFunction={hideExperienceModal} addNewExperienceFunction={addResumeExperienceFunc} deleteExperienceFunction={deleteResumeExperienceInModalFunc}/>
+        return <ExperienceModal show={showExpModal[index]} sectionIndex={index} sectionId={v.id} closeFunction={hideExperienceModal} addNewExperienceFunction={addResumeExperienceFunc} deleteExperienceFunction={deleteResumeExperienceInModalFunc} editExperienceFunction={editResumeExperienceFunc}/>
       })}
     </div>
   )
