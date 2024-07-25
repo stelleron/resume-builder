@@ -59,7 +59,7 @@ function ResumeBuilder(props) {
   const [showModal, setShowModal] = useState(false)
   const [showExpModal, setShowExpModal] = useState([])
 
-  /*
+  // Loads the initial resume data
   useEffect(() => {
     axios.get("/api/resume")
          .then((data) => {
@@ -85,7 +85,6 @@ function ResumeBuilder(props) {
             )
         })
   }, [])
-  */
 
 
   const validateName = function(event) {
@@ -98,7 +97,7 @@ function ResumeBuilder(props) {
       linkedin: linkedin,
       github: github
     }
-    // axios.put("/api/resume/1/", updatedHead)
+    axios.put("/api/resume/1/", updatedHead)
   }
 
   const validatePhone = function(event) {
@@ -111,7 +110,7 @@ function ResumeBuilder(props) {
       linkedin: linkedin,
       github: github
     }
-    // axios.put("/api/resume/1/", updatedHead)
+    axios.put("/api/resume/1/", updatedHead)
   }
 
   const validateEmail = function(event) {
@@ -124,7 +123,7 @@ function ResumeBuilder(props) {
       linkedin: linkedin,
       github: github
     }
-    // axios.put("/api/resume/1/", updatedHead)
+    axios.put("/api/resume/1/", updatedHead)
   }
 
   const validateLinkedin = function(event) {
@@ -137,7 +136,7 @@ function ResumeBuilder(props) {
       linkedin: event.target.value,
       github: github
     }
-    // axios.put("/api/resume/1/", updatedHead)
+    axios.put("/api/resume/1/", updatedHead)
   }
 
   const validateGithub = function(event) {
@@ -150,7 +149,7 @@ function ResumeBuilder(props) {
       linkedin: linkedin,
       github: event.target.value
     }
-    // axios.put("/api/resume/1/", updatedHead)
+    axios.put("/api/resume/1/", updatedHead)
   }
 
   const showSectionModal = function() {
@@ -175,13 +174,11 @@ function ResumeBuilder(props) {
     hideSectionModal()
     props.store_resume(name, phone, email, linkedin, github, [...resumeSections, s_name])
     setShowExpModal([...showExpModal, false])
-    /*
-    axios.post('/api/section/', {
-      name: s_name.name,
-      resume: 1
+    axios.put(`/api/section/${s_name.id}/`, {
+        name: s_name.name,
+        user: 1,
+        resume: 1
     })
-         .catch((err) => console.log(err));
-    */
   }
 
 
@@ -193,7 +190,7 @@ function ResumeBuilder(props) {
     setResumeSections(updatedResumeSections)
     setShowExpModal(updatedShowExpModal)
     props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
-    // axios.delete(`/api/section/${deletedItem[0].id}/`)
+    axios.delete(`/api/section/${deletedItem[0].id}/`)
   }
 
   const addResumeExperienceFunc = function(experience) {
