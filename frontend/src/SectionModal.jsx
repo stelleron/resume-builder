@@ -14,15 +14,15 @@ function SectionModal(props) {
     const [idx, setIdx] = useState(-1)
     const [errorMessage, setErrorMessage] = useState("")
 
+
     useEffect(() => {
         axios.get("/api/section/")
              .then((data) => {
-                setId(data.data[data.data.length - 1].id + 1)
-             })
-        axios.get("/api/resume/2/")
-             .then((data) => {
+                if (data.data.length != 0) {
+                    setId(data.data[data.data.length - 1].id + 1)
+                }
                 let updatedSecNames = [...sectionNames];
-                data.data.sections.map((v, index) => {
+                data.data.map((v, index) => {
                     for (let i = 0; i < updatedSecNames.length; i++) {
                         if (updatedSecNames[i] === "(+) Add New Section") {
                             updatedSecNames[i + 1] = "(+) Add New Section"
@@ -35,8 +35,8 @@ function SectionModal(props) {
                         }
                     }
                 setSectionNames(updatedSecNames)
-                })
              })
+        })
     }, [])
 
     const validateAddNewSection = function(secName) {
@@ -77,9 +77,11 @@ function SectionModal(props) {
         if (updatedSecNames.length > 8) {
             const deletedItem = updatedSecNames.splice(index, 1)
             axios.delete(`/api/section/${deletedItem[0].id}/`)
+            props.deleteSectionFunction(deletedItem[0].id)
             setSectionNames(updatedSecNames)
         } else {
             axios.delete(`/api/section/${updatedSecNames[index].id}/`)
+            props.deleteSectionFunction(updatedSecNames[index].id)
             for (let i = index; i < updatedSecNames.length - 1; i++) {
                 updatedSecNames[i] = updatedSecNames[i + 1]
             }
@@ -92,10 +94,18 @@ function SectionModal(props) {
         event.preventDefault()
         let updatedSecNames = [...sectionNames];
         updatedSecNames[idx].name = sName
-        axios.put(`/api/section/${updatedSecNames[idx].id}/`, {
-            name: sName,
-            resume: 2
-        })
+        axios.get(`/api/section/${updatedSecNames[idx].id}/`)
+             .then((data) => {
+                axios.put(`/api/section/${updatedSecNames[idx].id}/`, {
+                    name: sName,
+                    user: 1,
+                    resume: data.data.resume
+                })
+                props.editSectionFunction({
+                    id: updatedSecNames[idx].id,
+                    name: sName,
+                })
+             })
         setSectionNames(updatedSecNames)
         setMode(NONE_MODE)
         setSName("")
@@ -118,14 +128,21 @@ function SectionModal(props) {
                     name: sName,
                     experiences: []
                 }
-                setId(id + 1)
+                axios.post('/api/section/', {
+                    name: sName,
+                    user: 1,
+                    resume: null,
+                }).then((data) => {
+                    updatedSecNames[i].id = data.data.id 
+                    if (id != data.data.id) {
+                        setId(data.data.id + 1)
+                    } else {
+                        setId(id + 1)
+                    }
+                })
                 setSectionNames(updatedSecNames)
                 setMode(NONE_MODE)
                 setSName("")
-                axios.post('/api/section/', {
-                    name: sName,
-                    resume: 2
-                })
                 return
             }
         }

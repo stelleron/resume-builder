@@ -21,13 +21,46 @@ function ExperienceModal(props) {
 
     useEffect(() => {
         axios.get("/api/experience/")
-             .then((data) => {
-                setId(data.data[data.data.length - 1].id + 1)
-             })
-    }, [])
+            .then((data) => {
+                if (data.data.length != 0) {
+                    setId(data.data[data.data.length - 1].id + 1)
+                }
+                let updatedExpNames = [...expNames];
+                data.data.map((v, index) => {
+                    for (let i = 0; i < updatedExpNames.length; i++) {
+                        if (v.section == props.sectionId) {
+                            if (updatedExpNames[i] === "(+) Add New Experience") {
+                                updatedExpNames[i + 1] = "(+) Add New Experience"
+                                updatedExpNames[i] = {
+                                    id: v.id,
+                                    title: v.title,
+                                    sub_title: v.sub_title,
+                                    time_period: v.time_period,
+                                    location: v.location,
+                                    bullet_points: v.bullet_points
+                                }
+                                break
+                            }
+                        }
+                    }
+                })
+                setExpNames(updatedExpNames)
+            }
+        )
+        }, [])
+
+    const validateAddNewExperience = function(expName) {
+        if (!props.validateAddExperienceFunction(props.sectionIndex, expName.id)) {
+            props.addNewExperienceFunction(expName)
+            setErrorMessage("")
+        } else {
+            setErrorMessage("This experience has already been added!")
+        }
+    }
 
     const changeMode = function(mode) {
         setMode(mode)
+        setErrorMessage("")
     }
 
     const setEditMode = function(index, mode) {
@@ -38,6 +71,7 @@ function ExperienceModal(props) {
         setBulletPoints(expNames[index].bullet_points)
         setIdx(index)
         setMode(mode)
+        setErrorMessage("")
     }
 
     const exitFunction = function() {
@@ -65,9 +99,31 @@ function ExperienceModal(props) {
                     time_period: expTimePeriod,
                     bullet_points: [...bulletPoints]
                 }
+                axios.post('/api/experience/', {
+                    title: expTitle,
+                    sub_title: expSubTitle,
+                    location: expLocation,
+                    time_period: expTimePeriod,
+                    display: false,
+                    section: props.sectionId
+                }).then((data) => {
+                    updatedExpNames[i].id = data.data.id 
+                    if (id != data.data.id) {
+                        setId(data.data.id + 1)
+                    } else {
+                        setId(id + 1)
+                    }
+
+                    bulletPoints.map((value, index) => {
+                        axios.post('/api/bullet_point/', {
+                            text: value.text,
+                            experience: data.data.id
+                        })
+                    })
+                })
+                
                 setExpNames(updatedExpNames)
                 setMode(NONE_MODE)
-                setId(id + 1)
                 setExpTitle("")
                 setExpSubTitle("")
                 setExpTimePeriod("")
@@ -79,7 +135,7 @@ function ExperienceModal(props) {
         }
     }
 
-    const editExperience= function(event) {
+    const editExperience = function(event) {
         event.preventDefault()
         if ( (expTitle == "" || expTimePeriod == "") && bulletPoints.length == 0) {
             setErrorMessage("ERROR: If you don't have bullet points, you must fill the experience title and time period at least")
@@ -88,12 +144,35 @@ function ExperienceModal(props) {
         
         let updatedExpNames = [...expNames];
         updatedExpNames[idx] = {
+            id: updatedExpNames[idx].id,
             title: expTitle,
             sub_title: expSubTitle,
             location: expLocation,
             time_period: expTimePeriod,
             bullet_points: bulletPoints
         }
+
+        axios.get(`/api/experience/${updatedExpNames[idx].id}/`)
+             .then((data) => {
+                axios.put(`/api/experience/${updatedExpNames[idx].id}/`, {
+                    title: expTitle,
+                    sub_title: expSubTitle,
+                    location: expLocation,
+                    time_period: expTimePeriod,
+                    bullet_points: bulletPoints,
+                    display: data.data.display,
+                    section: data.data.section
+                })
+                props.editExperienceFunction(props.sectionIndex, {
+                    id: updatedExpNames[idx].id,
+                    title: expTitle,
+                    sub_title: expSubTitle,
+                    location: expLocation,
+                    time_period: expTimePeriod,
+                    bullet_points: bulletPoints,
+                })
+             })
+
         setExpNames(updatedExpNames)
         setMode(NONE_MODE)
         setExpTitle("")
@@ -109,9 +188,15 @@ function ExperienceModal(props) {
     const deleteItem = function(index) {
         const updatedExpNames = [...expNames];
         if (updatedExpNames.length > 8) {
-            updatedExpNames.splice(index, 1)
+            const deletedItem = updatedExpNames.splice(index, 1)
+            axios.delete(`/api/experience/${deletedItem[0].id}/`)
+            props.deleteExperienceFunction(props.sectionIndex, deletedItem[0].id)
             setExpNames(updatedExpNames)
         } else {
+            console.log(updatedExpNames[index])
+            axios.delete(`/api/experience/${updatedExpNames[index].id}/`)
+            props.deleteExperienceFunction(props.sectionIndex, updatedExpNames[index].id)
+            // props.deleteSectionFunction(updatedExpNames[index].id)
             for (let i = index; i < updatedExpNames.length - 1; i++) {
                 updatedExpNames[i] = updatedExpNames[i + 1]
             }
@@ -171,6 +256,7 @@ function ExperienceModal(props) {
                     <h2>Resume Experiences</h2>
                     {mode === NONE_MODE && 
                     <div className='overflow-box'>
+                    <div className='error-message'>{errorMessage}</div>
                     <table>
                         <thead></thead>
                         <tbody>
@@ -202,17 +288,17 @@ function ExperienceModal(props) {
                                             </td>
                                             }
                                             {expName.title == "" && expName.sub_title == "" &&
-                                            <td onClick={() => props.addNewExperienceFunction(expName)}>
+                                            <td onClick={() => validateAddNewExperience(expName)}>
                                                 [{expName.bullet_points[0].text.slice(0, 10)}...]
                                             </td>
                                             }
                                             {expName != "" && expName.sub_title == "" && expName.title != "" &&
-                                            <td onClick={() => props.addNewExperienceFunction(expName)}>
+                                            <td onClick={() => validateAddNewExperience(expName)}>
                                                 {expName.title} 
                                             </td>
                                             }
                                             {expName != "" && expName.sub_title != "" && expName.title != "" &&
-                                            <td onClick={() => props.addNewExperienceFunction(expName)}>
+                                            <td onClick={() => validateAddNewExperience(expName)}>
                                                 {expName.title}, {expName.sub_title}
                                             </td>
                                             }

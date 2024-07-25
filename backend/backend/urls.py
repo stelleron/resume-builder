@@ -21,6 +21,7 @@ from rest_framework import routers
 from resume import views
 
 router = routers.DefaultRouter()
+router.register(r'user_data', views.UserDataViewSet, 'user_data')
 router.register(r'resume', views.ResumeViewSet, 'resume')
 router.register(r'section', views.SectionViewSet, 'section')
 router.register(r'experience', views.ExperienceViewSet, 'experience')

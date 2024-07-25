@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Resume, Experience, Section, BulletPoint
+from .models import Resume, Experience, Section, BulletPoint, UserData
 
 # Register your models here.
 class BulletPointInline(admin.StackedInline):
@@ -16,10 +16,16 @@ class SectionInline(admin.StackedInline):
     extra = 1
     inlines = [ExperienceInline]
 
-class ResumeAdmin(admin.ModelAdmin):
+class ResumeAdmin(admin.StackedInline):
+    model = Resume
+    extra = 1
     inlines = [SectionInline]
 
-admin.site.register(Resume, ResumeAdmin)
+class UserDataAdmin(admin.ModelAdmin):
+    inlines = [ResumeAdmin]
+
+admin.site.register(UserData, UserDataAdmin)
+admin.site.register(Resume)
 admin.site.register(Section)
 admin.site.register(Experience)
 admin.site.register(BulletPoint)

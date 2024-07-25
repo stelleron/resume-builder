@@ -59,15 +59,23 @@ function ResumeBuilder(props) {
   const [showModal, setShowModal] = useState(false)
   const [showExpModal, setShowExpModal] = useState([])
 
+  // Loads the initial resume data
   useEffect(() => {
-    axios.get("/api/resume")
+    axios.get("/api/resume/")
          .then((data) => {
+            const updatedResumeSections = data.data[0].sections
+            for (let i = 0; i < updatedResumeSections.length; i++) {
+              updatedResumeSections[i].experiences = updatedResumeSections[i].experiences.filter((v) => {
+                return v.display == true
+              })
+            }
+
             setName(data.data[0].name)
             setPhone(data.data[0].phone)
             setEmail(data.data[0].email)
             setLinkedin(data.data[0].linkedin)
             setGithub(data.data[0].github)
-            setResumeSections(data.data[0].sections)
+            setResumeSections(updatedResumeSections)
 
             const updatedShowExpModal = []
             data.data[0].sections.map(() => {
@@ -80,7 +88,7 @@ function ResumeBuilder(props) {
                                data.data[0].email, 
                                data.data[0].linkedin, 
                                data.data[0].github, 
-                               data.data[0].sections
+                               updatedResumeSections
             )
         })
   }, [])
@@ -168,16 +176,49 @@ function ResumeBuilder(props) {
     return false
   }
 
+  const isExperienceInResume = function(index, exp_id) {
+    for (let i = 0; i < resumeSections[index].experiences.length; i++) {
+       if (resumeSections[index].experiences[i].id == exp_id) {
+        return true
+       }
+    }
+    return false
+  }
+
   const addResumeSectionFunc = function(s_name) {
     setResumeSections([...resumeSections, s_name])
     hideSectionModal()
     props.store_resume(name, phone, email, linkedin, github, [...resumeSections, s_name])
     setShowExpModal([...showExpModal, false])
-    axios.post('/api/section/', {
-      name: s_name.name,
-      resume: 1
+    axios.put(`/api/section/${s_name.id}/`, {
+        name: s_name.name,
+        user: 1,
+        resume: 1
     })
-         .catch((err) => console.log(err));
+  }
+
+  const editResumeSectionFunc = function(s_name) {
+    const updatedResumeSections = [...resumeSections];
+    for (let i = 0; i < updatedResumeSections.length; i++) {
+      if (updatedResumeSections[i].id == s_name.id) {
+        updatedResumeSections[i].name = s_name.name
+        break
+      }
+    }
+    setResumeSections(updatedResumeSections)
+    props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
+  }
+
+  const deleteResumeSectionFunc = function(sec_id) {
+    const updatedResumeSections = [...resumeSections];
+    for (let i = 0; i < updatedResumeSections.length; i++) {
+      if (updatedResumeSections[i].id == sec_id) {
+        updatedResumeSections.splice(i, 1)
+        break
+      }
+    }
+    setResumeSections(updatedResumeSections)
+    props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
   }
 
 
@@ -189,7 +230,11 @@ function ResumeBuilder(props) {
     setResumeSections(updatedResumeSections)
     setShowExpModal(updatedShowExpModal)
     props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
-    axios.delete(`/api/section/${deletedItem[0].id}/`)
+    axios.put(`/api/section/${deletedItem[0].id}/`, {
+      name: deletedItem[0].name,
+      resume: null,
+      user: 1
+    })
   }
 
   const addResumeExperienceFunc = function(experience) {
@@ -201,23 +246,46 @@ function ResumeBuilder(props) {
         props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
         hideExperienceModal()
 
-        axios.post('/api/experience/', {
+        axios.put(`/api/experience/${experience.id}/`, {
           title: experience.title,
           sub_title: experience.sub_title,
           time_period: experience.time_period,
           location: experience.location,
+          display: true,
           section: updatedResumeSections[index].id
-        }).then((data) => {
-          experience.bullet_points.map((bullet_point, index) => {
-            axios.post('api/bullet_point/', {
-              text: bullet_point.text,
-              experience: experience.id
-            });
-          })
         })
+    
         setSectionId(0)
       }
     })
+  }
+
+  const deleteResumeExperienceInModalFunc = function(sec_index, exp_id) {
+    const updatedResumeSections = [...resumeSections];
+    for (let i = 0; i < updatedResumeSections[sec_index].experiences.length; i++) {
+      if (updatedResumeSections[sec_index].experiences[i].id == exp_id) {
+        updatedResumeSections[sec_index].experiences.splice(i, 1)
+        break
+      }
+    }
+    setResumeSections(updatedResumeSections)
+    props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
+  }
+
+  const editResumeExperienceFunc = function(sec_index, exp) {
+    const updatedResumeSections = [...resumeSections];
+    for (let i = 0; i < updatedResumeSections[sec_index].experiences.length; i++) {
+      if (updatedResumeSections[sec_index].experiences[i].id == exp.id) {
+        updatedResumeSections[sec_index].experiences[i].title = exp.title
+        updatedResumeSections[sec_index].experiences[i].sub_title = exp.sub_title
+        updatedResumeSections[sec_index].experiences[i].time_period = exp.time_period
+        updatedResumeSections[sec_index].experiences[i].location = exp.location
+        updatedResumeSections[sec_index].experiences[i].bullet_points = exp.bullet_point
+        break
+      }
+    }
+    setResumeSections(updatedResumeSections)
+    props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
   }
 
   const removeResumeExperienceFunc = function(id, index) {
@@ -227,7 +295,15 @@ function ResumeBuilder(props) {
         const deletedItem = updatedResumeSections[idx].experiences.splice(index, 1)
         setResumeSections(updatedResumeSections)
         props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
-        axios.delete(`/api/experience/${deletedItem[0].id}/`)
+        
+        axios.put(`/api/experience/${deletedItem[0].id}/`, {
+          title: deletedItem[0].title,
+          sub_title: deletedItem[0].sub_title,
+          time_period: deletedItem[0].time_period,
+          location: deletedItem[0].location,
+          display: false,
+          section: section.id
+        })
       }
     })
   }
@@ -291,9 +367,9 @@ function ResumeBuilder(props) {
 
 
       </form>
-      <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc} validateAddSectionFunction={isSectionInResume}></SectionModal>
+      <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc} editSectionFunction={editResumeSectionFunc} deleteSectionFunction={deleteResumeSectionFunc} validateAddSectionFunction={isSectionInResume}></SectionModal>
       {resumeSections.map((v, index) => {
-        return <ExperienceModal show={showExpModal[index]} closeFunction={hideExperienceModal} addNewExperienceFunction={addResumeExperienceFunc}/>
+        return <ExperienceModal show={showExpModal[index]} sectionIndex={index} sectionId={v.id} closeFunction={hideExperienceModal} addNewExperienceFunction={addResumeExperienceFunc} deleteExperienceFunction={deleteResumeExperienceInModalFunc} editExperienceFunction={editResumeExperienceFunc} validateAddExperienceFunction={isExperienceInResume}/>
       })}
     </div>
   )
