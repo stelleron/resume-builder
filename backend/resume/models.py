@@ -25,6 +25,7 @@ class Experience(models.Model):
     sub_title = models.CharField(max_length=120, blank=True, null=True)
     time_period = models.CharField(max_length=50, blank=True, null=True)
     location = models.CharField(max_length=50, blank=True, null=True)
+    display = models.BooleanField()
     section = models.ForeignKey(Section, related_name="experiences", on_delete=models.CASCADE)
 
 class BulletPoint(models.Model):
