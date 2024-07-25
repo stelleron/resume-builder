@@ -75,9 +75,11 @@ function SectionModal(props) {
         if (updatedSecNames.length > 8) {
             const deletedItem = updatedSecNames.splice(index, 1)
             axios.delete(`/api/section/${deletedItem[0].id}/`)
+            props.deleteSectionFunction(deletedItem[0].id)
             setSectionNames(updatedSecNames)
         } else {
             axios.delete(`/api/section/${updatedSecNames[index].id}/`)
+            props.deleteSectionFunction(updatedSecNames[index].id)
             for (let i = index; i < updatedSecNames.length - 1; i++) {
                 updatedSecNames[i] = updatedSecNames[i + 1]
             }
@@ -96,6 +98,10 @@ function SectionModal(props) {
                     name: sName,
                     user: 1,
                     resume: data.data.resume
+                })
+                props.editSectionFunction({
+                    id: updatedSecNames[idx].id,
+                    name: sName,
                 })
              })
         setSectionNames(updatedSecNames)
@@ -120,15 +126,21 @@ function SectionModal(props) {
                     name: sName,
                     experiences: []
                 }
-                setId(id + 1)
-                setSectionNames(updatedSecNames)
-                setMode(NONE_MODE)
-                setSName("")
                 axios.post('/api/section/', {
                     name: sName,
                     user: 1,
                     resume: null,
+                }).then((data) => {
+                    updatedSecNames[i].id = data.data.id 
+                    if (id != data.data.id) {
+                        setId(data.data.id + 1)
+                    } else {
+                        setId(id + 1)
+                    }
                 })
+                setSectionNames(updatedSecNames)
+                setMode(NONE_MODE)
+                setSName("")
                 return
             }
         }

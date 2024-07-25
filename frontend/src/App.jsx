@@ -181,6 +181,28 @@ function ResumeBuilder(props) {
     })
   }
 
+  const editResumeSectionFunc = function(s_name) {
+    const updatedResumeSections = [...resumeSections];
+    for (let i = 0; i < updatedResumeSections.length; i++) {
+      if (updatedResumeSections[i].id == s_name.id) {
+        updatedResumeSections[i].name = s_name.name
+        break
+      }
+    }
+    setResumeSections(updatedResumeSections)
+  }
+
+  const deleteResumeSectionFunc = function(sec_id) {
+    const updatedResumeSections = [...resumeSections];
+    for (let i = 0; i < updatedResumeSections.length; i++) {
+      if (updatedResumeSections[i].id == sec_id) {
+        updatedResumeSections.splice(i, 1)
+        break
+      }
+    }
+    setResumeSections(updatedResumeSections)
+  }
+
 
   const removeResumeSection = function(idx) {
     const updatedResumeSections = [...resumeSections];
@@ -190,7 +212,11 @@ function ResumeBuilder(props) {
     setResumeSections(updatedResumeSections)
     setShowExpModal(updatedShowExpModal)
     props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
-    axios.delete(`/api/section/${deletedItem[0].id}/`)
+    axios.put(`/api/section/${deletedItem[0].id}/`, {
+      name: deletedItem[0].name,
+      resume: null,
+      user: 1
+    })
   }
 
   const addResumeExperienceFunc = function(experience) {
@@ -294,7 +320,7 @@ function ResumeBuilder(props) {
 
 
       </form>
-      <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc} validateAddSectionFunction={isSectionInResume}></SectionModal>
+      <SectionModal show={showModal} closeFunction={hideSectionModal} addNewSectionFunction={addResumeSectionFunc} editSectionFunction={editResumeSectionFunc} deleteSectionFunction={deleteResumeSectionFunc} validateAddSectionFunction={isSectionInResume}></SectionModal>
       {resumeSections.map((v, index) => {
         return <ExperienceModal show={showExpModal[index]} closeFunction={hideExperienceModal} addNewExperienceFunction={addResumeExperienceFunc}/>
       })}
