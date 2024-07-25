@@ -197,6 +197,7 @@ function ResumeBuilder(props) {
       }
     }
     setResumeSections(updatedResumeSections)
+    props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
   }
 
   const deleteResumeSectionFunc = function(sec_id) {
@@ -208,6 +209,7 @@ function ResumeBuilder(props) {
       }
     }
     setResumeSections(updatedResumeSections)
+    props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
   }
 
 
@@ -258,6 +260,7 @@ function ResumeBuilder(props) {
       }
     }
     setResumeSections(updatedResumeSections)
+    props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
   }
 
   const editResumeExperienceFunc = function(sec_index, exp) {
@@ -273,6 +276,7 @@ function ResumeBuilder(props) {
       }
     }
     setResumeSections(updatedResumeSections)
+    props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
   }
 
   const removeResumeExperienceFunc = function(id, index) {
