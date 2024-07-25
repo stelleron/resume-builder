@@ -19,14 +19,36 @@ function ExperienceModal(props) {
     const [idx, setIdx] = useState(-1)
     const [id, setId] = useState(1)
 
-    /*
     useEffect(() => {
         axios.get("/api/experience/")
-             .then((data) => {
-                setId(data.data[data.data.length - 1].id + 1)
-             })
-    }, [])
-    */
+            .then((data) => {
+                if (data.data.length != 0) {
+                    setId(data.data[data.data.length - 1].id + 1)
+                }
+                let updatedExpNames = [...expNames];
+                data.data.map((v, index) => {
+                    for (let i = 0; i < updatedExpNames.length; i++) {
+                        if (v.section == props.sectionId) {
+                            if (updatedExpNames[i] === "(+) Add New Experience") {
+                                updatedExpNames[i + 1] = "(+) Add New Experience"
+                                updatedExpNames[i] = {
+                                    id: v.id,
+                                    title: v.title,
+                                    sub_title: v.sub_title,
+                                    time_period: v.time_period,
+                                    location: v.location,
+                                    bullet_points: v.bullet_points
+                                }
+                                break
+                            }
+                        }
+                    }
+                })
+                setExpNames(updatedExpNames)
+
+            }
+        )
+        }, [])
 
     const changeMode = function(mode) {
         setMode(mode)
@@ -67,9 +89,31 @@ function ExperienceModal(props) {
                     time_period: expTimePeriod,
                     bullet_points: [...bulletPoints]
                 }
+                axios.post('/api/experience/', {
+                    title: expTitle,
+                    sub_title: expSubTitle,
+                    location: expLocation,
+                    time_period: expTimePeriod,
+                    display: false,
+                    section: props.sectionId
+                }).then((data) => {
+                    updatedExpNames[i].id = data.data.id 
+                    if (id != data.data.id) {
+                        setId(data.data.id + 1)
+                    } else {
+                        setId(id + 1)
+                    }
+
+                    bulletPoints.map((value, index) => {
+                        axios.post('/api/bullet_point/', {
+                            text: value.text,
+                            experience: data.data.id
+                        })
+                    })
+                })
+                
                 setExpNames(updatedExpNames)
                 setMode(NONE_MODE)
-                setId(id + 1)
                 setExpTitle("")
                 setExpSubTitle("")
                 setExpTimePeriod("")
@@ -111,9 +155,15 @@ function ExperienceModal(props) {
     const deleteItem = function(index) {
         const updatedExpNames = [...expNames];
         if (updatedExpNames.length > 8) {
-            updatedExpNames.splice(index, 1)
+            const deletedItem = updatedExpNames.splice(index, 1)
+            axios.delete(`/api/experience/${deletedItem[0].id}/`)
+            props.deleteExperienceFunction(props.sectionIndex, deletedItem[0].id)
             setExpNames(updatedExpNames)
         } else {
+            console.log(updatedExpNames[index])
+            axios.delete(`/api/experience/${updatedExpNames[index].id}/`)
+            props.deleteExperienceFunction(props.sectionIndex, updatedExpNames[index].id)
+            // props.deleteSectionFunction(updatedExpNames[index].id)
             for (let i = index; i < updatedExpNames.length - 1; i++) {
                 updatedExpNames[i] = updatedExpNames[i + 1]
             }

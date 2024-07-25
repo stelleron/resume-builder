@@ -18,7 +18,9 @@ function SectionModal(props) {
     useEffect(() => {
         axios.get("/api/section/")
              .then((data) => {
-                setId(data.data[data.data.length - 1].id + 1)
+                if (data.data.length != 0) {
+                    setId(data.data[data.data.length - 1].id + 1)
+                }
                 let updatedSecNames = [...sectionNames];
                 data.data.map((v, index) => {
                     for (let i = 0; i < updatedSecNames.length; i++) {
