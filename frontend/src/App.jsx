@@ -61,14 +61,21 @@ function ResumeBuilder(props) {
 
   // Loads the initial resume data
   useEffect(() => {
-    axios.get("/api/resume")
+    axios.get("/api/resume/")
          .then((data) => {
+            const updatedResumeSections = data.data[0].sections
+            for (let i = 0; i < updatedResumeSections.length; i++) {
+              updatedResumeSections[i].experiences = updatedResumeSections[i].experiences.filter((v) => {
+                return v.display == true
+              })
+            }
+
             setName(data.data[0].name)
             setPhone(data.data[0].phone)
             setEmail(data.data[0].email)
             setLinkedin(data.data[0].linkedin)
             setGithub(data.data[0].github)
-            setResumeSections(data.data[0].sections)
+            setResumeSections(updatedResumeSections)
 
             const updatedShowExpModal = []
             data.data[0].sections.map(() => {
@@ -81,7 +88,7 @@ function ResumeBuilder(props) {
                                data.data[0].email, 
                                data.data[0].linkedin, 
                                data.data[0].github, 
-                               data.data[0].sections
+                               updatedResumeSections
             )
         })
   }, [])
@@ -228,22 +235,15 @@ function ResumeBuilder(props) {
         props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
         hideExperienceModal()
 
-        /*
-        axios.post('/api/experience/', {
+        axios.put(`/api/experience/${experience.id}/`, {
           title: experience.title,
           sub_title: experience.sub_title,
           time_period: experience.time_period,
           location: experience.location,
+          display: true,
           section: updatedResumeSections[index].id
-        }).then((data) => {
-          experience.bullet_points.map((bullet_point, index) => {
-            axios.post('api/bullet_point/', {
-              text: bullet_point.text,
-              experience: experience.id
-            });
-          })
         })
-        */
+    
         setSectionId(0)
       }
     })
@@ -282,7 +282,15 @@ function ResumeBuilder(props) {
         const deletedItem = updatedResumeSections[idx].experiences.splice(index, 1)
         setResumeSections(updatedResumeSections)
         props.store_resume(name, phone, email, linkedin, github, updatedResumeSections)
-        // axios.delete(`/api/experience/${deletedItem[0].id}/`)
+        
+        axios.put(`/api/experience/${deletedItem[0].id}/`, {
+          title: deletedItem[0].title,
+          sub_title: deletedItem[0].sub_title,
+          time_period: deletedItem[0].time_period,
+          location: deletedItem[0].location,
+          display: false,
+          section: section.id
+        })
       }
     })
   }
