@@ -49,8 +49,18 @@ function ExperienceModal(props) {
         )
         }, [])
 
+    const validateAddNewExperience = function(expName) {
+        if (!props.validateAddExperienceFunction(props.sectionIndex, expName.id)) {
+            props.addNewExperienceFunction(expName)
+            setErrorMessage("")
+        } else {
+            setErrorMessage("This experience has already been added!")
+        }
+    }
+
     const changeMode = function(mode) {
         setMode(mode)
+        setErrorMessage("")
     }
 
     const setEditMode = function(index, mode) {
@@ -61,6 +71,7 @@ function ExperienceModal(props) {
         setBulletPoints(expNames[index].bullet_points)
         setIdx(index)
         setMode(mode)
+        setErrorMessage("")
     }
 
     const exitFunction = function() {
@@ -245,6 +256,7 @@ function ExperienceModal(props) {
                     <h2>Resume Experiences</h2>
                     {mode === NONE_MODE && 
                     <div className='overflow-box'>
+                    <div className='error-message'>{errorMessage}</div>
                     <table>
                         <thead></thead>
                         <tbody>
@@ -276,17 +288,17 @@ function ExperienceModal(props) {
                                             </td>
                                             }
                                             {expName.title == "" && expName.sub_title == "" &&
-                                            <td onClick={() => props.addNewExperienceFunction(expName)}>
+                                            <td onClick={() => validateAddNewExperience(expName)}>
                                                 [{expName.bullet_points[0].text.slice(0, 10)}...]
                                             </td>
                                             }
                                             {expName != "" && expName.sub_title == "" && expName.title != "" &&
-                                            <td onClick={() => props.addNewExperienceFunction(expName)}>
+                                            <td onClick={() => validateAddNewExperience(expName)}>
                                                 {expName.title} 
                                             </td>
                                             }
                                             {expName != "" && expName.sub_title != "" && expName.title != "" &&
-                                            <td onClick={() => props.addNewExperienceFunction(expName)}>
+                                            <td onClick={() => validateAddNewExperience(expName)}>
                                                 {expName.title}, {expName.sub_title}
                                             </td>
                                             }
