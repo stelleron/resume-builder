@@ -161,8 +161,19 @@ function ExperienceModal(props) {
                     time_period: expTimePeriod,
                     bullet_points: bulletPoints,
                     display: data.data.display,
-                    section: data.data.section
+                    section: data.data.section  
                 })
+
+                data.data.bullet_points.forEach((v, i) => {
+                    axios.delete(`/api/bullet_point/${v.id}`)
+                }) 
+                bulletPoints.forEach((v, i) => {
+                    axios.post("/api/bullet_point/", {
+                        text: v.text,
+                        experience: data.data.id
+                    })
+                }) 
+
                 props.editExperienceFunction(props.sectionIndex, {
                     id: updatedExpNames[idx].id,
                     title: expTitle,
