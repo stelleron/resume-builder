@@ -80,7 +80,7 @@ body {
   width: 8.5in;
   font-size: 12pt;
   margin: 2em auto;
-  padding: calc(var(--bleeding) + var(--margin) - 25px);
+  padding: calc(var(--bleeding) + var(--margin) - 30px);
   box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
   background: white;
   font-family: "PT Serif", sans-serif; 
@@ -130,6 +130,10 @@ hr {
   margin-bottom: 5px;
 }
 
+.resume-exp {
+  margin-bottom: -5px;
+}
+
 .exp-title {
   font-weight: bold;
 }
@@ -153,7 +157,8 @@ hr {
 ul {
   list-style-position: inside;
   padding-left: 0px;
-  margin-top: 5px;
+  margin-top: 2.5px;
+  margin-bottom: 15px;
   overflow: visible;
 }
 

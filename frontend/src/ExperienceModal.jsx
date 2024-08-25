@@ -17,6 +17,7 @@ function ExperienceModal(props) {
     const [errorMessage, setErrorMessage] = useState("")
 
     const [idx, setIdx] = useState(-1)
+    const [sectionId, setSectionId] = useState(1)
     const [id, setId] = useState(1)
 
     useEffect(() => {
