@@ -2,7 +2,7 @@
 </script>
 
 <main>
-  <h1>Resume Generator</h1>
+  <h1 class="text-3xl font-bold underline">Resume Generator</h1>
   <form>
         <label>Name</label><br>
         <input type="text"><br>
