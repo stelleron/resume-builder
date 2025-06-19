@@ -1,20 +1,23 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  let message = 'Loading...';
-
-  onMount(async () => {
-    try {
-      const res = await fetch('/api/hello');
-      const data = await res.json();
-      message = data.message;
-    } catch (err) {
-      message = 'Failed to fetch API';
-      console.error(err);
-    }
-  });
 </script>
 
 <main>
-  <h1>{message}</h1>
+  <h1>Resume Generator</h1>
+  <form>
+        <label>Name</label><br>
+        <input type="text"><br>
+
+        <label>Phone Number</label><br>
+        <input type="text"><br>
+        
+        <label>E-Mail</label><br>
+        <input type="text"><br>
+
+        <label>LinkedIn</label><br>
+        <input type="text"><br>
+
+        <label>GitHub</label><br>
+        <input type="text"><br>
+        
+  </form>
 </main>
