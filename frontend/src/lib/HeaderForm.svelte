@@ -5,7 +5,7 @@
 <main>
   <div class="section-box">
     <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-      <legend class="fieldset-legend">Resume Generator</legend>
+      <legend class="fieldset-legend">Resume Details</legend>
 
       <label class="label">Name</label>
       <input type="text" class="input" placeholder="John Doe" />
