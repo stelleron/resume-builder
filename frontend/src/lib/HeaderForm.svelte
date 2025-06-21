@@ -1,3 +1,7 @@
+<script>
+    import ResumeDetails from "../lib/ResumeDetails.svelte";
+</script>
+
 <style>
   @import '../styles/App.css';
 </style>
@@ -21,6 +25,8 @@
 
       <label class="label">GitHub</label>
       <input type="text" class="input" placeholder="github.com/johndoe" />
+
+      <ResumeDetails></ResumeDetails>
     </fieldset>
   </div>
 </main>
