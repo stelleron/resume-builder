@@ -1,11 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-body {
-  font: "Inter", sans-serif;
-}
-
 .section-box {
   flex: 1;
   padding: 20px;
 }
+
