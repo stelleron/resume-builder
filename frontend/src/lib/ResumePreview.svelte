@@ -2,6 +2,7 @@
     import { ResumeData } from '../scripts/ResumeData';
 
     export let data: ResumeData;
+    $: contactItems = [data.phone, data.email, data.linkedin, data.github].filter(Boolean);
 </script>
 
 <style>
@@ -15,10 +16,7 @@
             <div class="page">
                 <div class='resume-name'>{data.name}</div>
                 <div class='resume-key-details'>
-                    <span>{data.phone}</span>
-                    <span>{data.email}</span>
-                    <span>{data.linkedin}</span>
-                    <span>{data.github}</span>
+                    <span>{contactItems.join(' • ')}</span>
                 </div>
             </div>
         </div>
