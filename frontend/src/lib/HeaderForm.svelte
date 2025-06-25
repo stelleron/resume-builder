@@ -18,16 +18,16 @@
       <input type="text" class="input" placeholder="John Doe" bind:value={data.name}/>
 
       <label class="label">Phone Number</label>
-      <input type="text" class="input" placeholder="111-111-1111" />
+      <input type="text" class="input" placeholder="111-111-1111" bind:value={data.phone} />
 
       <label class="label">Email</label>
-      <input type="text" class="input" placeholder="johndoe@gmail.com" />
+      <input type="text" class="input" placeholder="johndoe@gmail.com" bind:value={data.email}/>
 
       <label class="label">LinkedIn</label>
-      <input type="text" class="input" placeholder="linkedin.com/johndoe" />
+      <input type="text" class="input" placeholder="linkedin.com/johndoe" bind:value={data.linkedin}/>
 
       <label class="label">GitHub</label>
-      <input type="text" class="input" placeholder="github.com/johndoe" />
+      <input type="text" class="input" placeholder="github.com/johndoe" bind:value={data.github}/>
 
       <ResumeDetails></ResumeDetails>
     </fieldset>

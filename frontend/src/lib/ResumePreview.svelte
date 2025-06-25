@@ -14,6 +14,12 @@
         <div id="resume-page">
             <div class="page">
                 <div class='resume-name'>{data.name}</div>
+                <div class='resume-key-details'>
+                    <span>{data.phone}</span>
+                    <span>{data.email}</span>
+                    <span>{data.linkedin}</span>
+                    <span>{data.github}</span>
+                </div>
             </div>
         </div>
     </div>
