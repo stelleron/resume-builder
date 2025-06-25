@@ -3,7 +3,9 @@
   import HeaderForm from "./lib/HeaderForm.svelte";
   import Navbar from "./lib/Navbar.svelte"
 
-  let name: string = '';
+  import { ResumeData } from './scripts/ResumeData';
+
+  let data: ResumeData = new ResumeData();
 </script>
 
 <style>
@@ -15,6 +17,6 @@
 
 <Navbar></Navbar>
 <div id="resume-cont">
-  <HeaderForm bind:name={name}/>
-  <ResumePreview name={name}/>
+  <HeaderForm bind:data={data}/>
+  <ResumePreview data={data}/>
 </div>

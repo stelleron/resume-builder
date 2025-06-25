@@ -1,5 +1,7 @@
 <script lang="ts">
-      export let name: string;
+    import { ResumeData } from '../scripts/ResumeData';
+
+    export let data: ResumeData;
 </script>
 
 <style>
@@ -11,7 +13,7 @@
     <div class="section-box" id="resume-preview">
         <div id="resume-page">
             <div class="page">
-                <div class='resume-name'>{name}</div>
+                <div class='resume-name'>{data.name}</div>
             </div>
         </div>
     </div>
