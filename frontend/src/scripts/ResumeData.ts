@@ -19,12 +19,12 @@ export class ResumeExperience {
 export class ResumeSection {
     public id: number;
     public name: string;
-    public experiences: null;
+    public experiences: ResumeExperience[];
 
     constructor() {
         this.id = 0;
         this.name = ''
-        this.experiences = null;
+        this.experiences = [];
     }
 }
 
