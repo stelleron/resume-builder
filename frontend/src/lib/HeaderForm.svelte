@@ -1,5 +1,7 @@
-<script>
+<script lang='ts'>
     import ResumeDetails from "../lib/ResumeDetails.svelte";
+
+    export let name: string;
 </script>
 
 <style>
@@ -12,7 +14,7 @@
       <legend class="fieldset-legend">Resume Details</legend>
 
       <label class="label">Name</label>
-      <input type="text" class="input" placeholder="John Doe" />
+      <input type="text" class="input" placeholder="John Doe" bind:value={name}/>
 
       <label class="label">Phone Number</label>
       <input type="text" class="input" placeholder="111-111-1111" />
