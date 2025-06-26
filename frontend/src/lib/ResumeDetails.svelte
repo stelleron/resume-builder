@@ -2,11 +2,35 @@
   @import '../styles/App.css';
 </style>
 
+<script lang='ts'>
+  import { ResumeSection } from '../scripts/ResumeData';
+
+  let items: ResumeSection[] = [];
+  let count = 0;
+
+  function addItem() {
+    const newItem = new ResumeSection();
+    newItem.id = ++count;
+    newItem.name = "S";
+    items.push(newItem); items = items;
+    console.log(items);
+  }
+</script>
 
 <main>
-    <div class="collapse bg-base-100 border border-base-300">
-        <input type="radio" name="my-accordion-1"/>
-        <div class="collapse-title font-semibold">How do I create an account?</div>
-        <div class="collapse-content text-sm">Click the "Sign Up" button in the top right corner and follow the registration process.</div>
-    </div>
+  <div class="max-w-xl mx-auto">
+    {#each items as item (item.id)}
+      <div class="collapse collapse-arrow bg-base-100">
+        <input type="checkbox" />
+        <div class="collapse-title text-xl font-medium">
+          {item.name}
+        </div>
+        <div class="collapse-content">
+          <p>Hello</p>
+        </div>
+      </div>
+    {/each}
+
+    <button on:click={addItem} class="btn btn-primary btn-sm mt-4">Add Resume Section</button>
+  </div>
 </main>
