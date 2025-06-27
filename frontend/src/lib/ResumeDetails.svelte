@@ -11,18 +11,18 @@
   function addItem() {
     const newItem = new ResumeSection();
     newItem.id = ++count;
-    newItem.name = "S";
+    newItem.name = "New Section";
     items.push(newItem); items = items;
     console.log(items);
   }
 </script>
 
 <main>
-  <div class="max-w-xl mx-auto">
+  <div class="max-w-xl mx-auto mt-2.5">
     {#each items as item (item.id)}
-      <div class="collapse collapse-arrow bg-base-100">
+      <div class="collapse bg-base-100">
         <input type="checkbox" />
-        <div class="collapse-title text-xl font-medium">
+        <div class="collapse-title text-xs font-medium py-1 flex items-center">
           {item.name}
         </div>
         <div class="collapse-content">
@@ -30,7 +30,6 @@
         </div>
       </div>
     {/each}
-
     <button on:click={addItem} class="btn btn-primary btn-sm mt-4">Add Resume Section</button>
   </div>
 </main>
