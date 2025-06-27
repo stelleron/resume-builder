@@ -9,17 +9,16 @@
   let items: ResumeSection[] = [];
   let count = 0;
 
-  function addItem() {
-    const newItem = new ResumeSection();
-    newItem.id = ++count;
-    newItem.name = "New Section";
-    items.push(newItem); items = items;
-    console.log(items);
-  }
-
   let openSecModal : boolean = false;
   const closeSecModal = () => {
       openSecModal = false;
+  }
+
+  const addItem = (name: string) => {
+    const newItem = new ResumeSection();
+    newItem.id = ++count;
+    newItem.name = name;
+    items.push(newItem); items = items;
   }
 
 </script>
@@ -38,6 +37,6 @@
       </div>
     {/each}
     <button on:click={() => {openSecModal = true}} class="btn btn-primary btn-sm mt-4">Add Resume Section</button>
-    <SectionModal open={openSecModal} close={closeSecModal}></SectionModal>
+    <SectionModal open={openSecModal} close={closeSecModal} submit={addItem}></SectionModal>
   </div>
 </main>

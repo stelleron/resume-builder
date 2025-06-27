@@ -1,6 +1,7 @@
 <script lang="ts">
     export let open: boolean;
     export let close: () => void;
+    export let submit: (name: string) => void;
 
     const handleKeydown = (event: KeyboardEvent) => {
         console.log("ESC pressed", event);
@@ -28,7 +29,7 @@
     </fieldset>
 
       <div class="modal-action">
-        <button class="btn" on:click={close}>close</button>
+        <button class="btn" on:click={() => {submit("h"); close()}}>Submit</button>
       </div>
     </div>
   </dialog>
