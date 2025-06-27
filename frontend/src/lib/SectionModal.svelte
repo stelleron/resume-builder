@@ -2,6 +2,7 @@
     export let open: boolean;
     export let close: () => void;
     export let submit: (name: string) => void;
+    let name: string;
 
     const handleKeydown = (event: KeyboardEvent) => {
         console.log("ESC pressed", event);
@@ -25,11 +26,11 @@
       <h3 class="text-lg font-bold">Add New Section</h3>
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Section Name</legend>
-        <input type="text" class="input"/>
+        <input type="text" class="input" bind:value={name}/>
     </fieldset>
 
       <div class="modal-action">
-        <button class="btn" on:click={() => {submit("h"); close()}}>Submit</button>
+        <button class="btn" on:click={() => {submit(name); close()}}>Submit</button>
       </div>
     </div>
   </dialog>
