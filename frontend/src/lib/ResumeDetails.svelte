@@ -16,6 +16,12 @@
     items.push(newItem); items = items;
     console.log(items);
   }
+
+  let openSecModal : boolean = false;
+  const closeSecModal = () => {
+      openSecModal = false;
+  }
+
 </script>
 
 <main>
@@ -31,7 +37,7 @@
         </div>
       </div>
     {/each}
-    <button on:click={section_modal.showModal()} class="btn btn-primary btn-sm mt-4">Add Resume Section</button>
-    <SectionModal></SectionModal>
+    <button on:click={() => {openSecModal = true}} class="btn btn-primary btn-sm mt-4">Add Resume Section</button>
+    <SectionModal open={openSecModal} close={closeSecModal}></SectionModal>
   </div>
 </main>
