@@ -4,6 +4,7 @@
 
 <script lang='ts'>
   import { ResumeSection } from '../scripts/ResumeData';
+  import SectionModal from './SectionModal.svelte';
 
   let items: ResumeSection[] = [];
   let count = 0;
@@ -30,6 +31,7 @@
         </div>
       </div>
     {/each}
-    <button on:click={addItem} class="btn btn-primary btn-sm mt-4">Add Resume Section</button>
+    <button on:click={section_modal.showModal()} class="btn btn-primary btn-sm mt-4">Add Resume Section</button>
+    <SectionModal></SectionModal>
   </div>
 </main>
