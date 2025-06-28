@@ -3,12 +3,13 @@
 </style>
 
 <script lang='ts'>
-  import { ResumeSection } from '../scripts/ResumeData';
+  import { ResumeData, ResumeSection } from '../scripts/ResumeData';
   import ExperienceModal from './ExperienceModal.svelte';
   import SectionModal from './SectionModal.svelte';
 
+  export let data: ResumeData;
+
   // For Section
-  let items: ResumeSection[] = [];
   let secCount = 0;
 
   let openSecModal : boolean = false;
@@ -20,7 +21,7 @@
     const newItem = new ResumeSection();
     newItem.id = ++secCount;
     newItem.name = name;
-    items.push(newItem); items = items;
+    data.sections.push(newItem); data.sections = data.sections;
   }
 
   // For Experiences
@@ -40,14 +41,14 @@
 
 <main>
   <div class="max-w-xl mx-auto mt-2.5">
-    {#each items as item}
+    {#each data.sections as section}
       <div class="collapse bg-base-100">
         <input type="checkbox" />
         <div class="collapse-title text-xs font-medium py-1 flex items-center">
-          {item.name}
+          {section.name}
         </div>
         <div class="collapse-content">
-          <button on:click={() => {openExpModal = true; selectedExp = item.id}} class="btn btn-primary btn-xs mt-4">Add Resume Experience</button>
+          <button on:click={() => {openExpModal = true; selectedExp = section.id}} class="btn btn-primary btn-xs mt-4">Add Resume Experience</button>
         </div>
       </div>
     {/each}

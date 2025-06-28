@@ -29,7 +29,7 @@
       <label class="label">GitHub</label>
       <input type="text" class="input" placeholder="github.com/johndoe" bind:value={data.github}/>
 
-      <ResumeDetails></ResumeDetails>
+      <ResumeDetails data={data}></ResumeDetails>
     </fieldset>
   </div>
 </main>
