@@ -25,14 +25,14 @@
 
 <main>
   <div class="max-w-xl mx-auto mt-2.5">
-    {#each items as item (item.id)}
+    {#each items as item}
       <div class="collapse bg-base-100">
         <input type="checkbox" />
         <div class="collapse-title text-xs font-medium py-1 flex items-center">
           {item.name}
         </div>
         <div class="collapse-content">
-          <p>Hello</p>
+          <button on:click={() => {}} class="btn btn-primary btn-xs mt-4">Add Resume Experience</button>
         </div>
       </div>
     {/each}
