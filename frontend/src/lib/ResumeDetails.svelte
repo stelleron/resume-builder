@@ -25,9 +25,11 @@
 
   // For Experiences
   let expCount = 0;
+  let selectedExp = -1;
   let openExpModal: boolean = false;
   const closeExpModal = () => {
       openExpModal = false;
+      selectedExp = -1;
   }
 
   const addExpItem = (name: string) => {
@@ -45,7 +47,7 @@
           {item.name}
         </div>
         <div class="collapse-content">
-          <button on:click={() => {openExpModal = true}} class="btn btn-primary btn-xs mt-4">Add Resume Experience</button>
+          <button on:click={() => {openExpModal = true; selectedExp = item.id}} class="btn btn-primary btn-xs mt-4">Add Resume Experience</button>
         </div>
       </div>
     {/each}
