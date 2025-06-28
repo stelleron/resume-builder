@@ -4,21 +4,34 @@
 
 <script lang='ts'>
   import { ResumeSection } from '../scripts/ResumeData';
+  import ExperienceModal from './ExperienceModal.svelte';
   import SectionModal from './SectionModal.svelte';
 
+  // For Section
   let items: ResumeSection[] = [];
-  let count = 0;
+  let secCount = 0;
 
   let openSecModal : boolean = false;
   const closeSecModal = () => {
       openSecModal = false;
   }
 
-  const addItem = (name: string) => {
+  const addSectionItem = (name: string) => {
     const newItem = new ResumeSection();
-    newItem.id = ++count;
+    newItem.id = ++secCount;
     newItem.name = name;
     items.push(newItem); items = items;
+  }
+
+  // For Experiences
+  let expCount = 0;
+  let openExpModal: boolean = false;
+  const closeExpModal = () => {
+      openExpModal = false;
+  }
+
+  const addExpItem = (name: string) => {
+
   }
 
 </script>
@@ -32,11 +45,12 @@
           {item.name}
         </div>
         <div class="collapse-content">
-          <button on:click={() => {}} class="btn btn-primary btn-xs mt-4">Add Resume Experience</button>
+          <button on:click={() => {openExpModal = true}} class="btn btn-primary btn-xs mt-4">Add Resume Experience</button>
         </div>
       </div>
     {/each}
     <button on:click={() => {openSecModal = true}} class="btn btn-primary btn-sm mt-4">Add Resume Section</button>
-    <SectionModal open={openSecModal} close={closeSecModal} submit={addItem}></SectionModal>
+    <SectionModal open={openSecModal} close={closeSecModal} submit={addSectionItem}></SectionModal>
+    <ExperienceModal open={openExpModal} close={closeExpModal} submit={addExpItem}></ExperienceModal>
   </div>
 </main>
