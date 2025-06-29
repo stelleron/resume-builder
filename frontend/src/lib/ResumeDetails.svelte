@@ -37,7 +37,7 @@
       selectedExp = -1;
   }
 
-  const addExpItem = (title: string, subtitle: string, time_period: string, location: string) => {
+  const addExpItem = (title: string, subtitle: string, time_period: string, location: string, bullet_points: string[]) => {
     for (let i = 0; i < $data.sections.length; i++) {
       if (selectedExp == $data.sections[i].id) {
         const newItem = new ResumeExperience();
@@ -46,6 +46,7 @@
         newItem.sub_title = subtitle;
         newItem.time_period = time_period;
         newItem.location = location;
+        newItem.bullet_points = bullet_points;
         $data.sections[i].experiences = [...$data.sections[i].experiences, newItem];
         $data = $data;
         console.log($data);

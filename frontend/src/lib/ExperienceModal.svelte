@@ -1,13 +1,13 @@
 <script lang="ts">
     export let open: boolean;
     export let close: () => void;
-    export let submit: (title: string, subtitle: string, time_period: string, location: string) => void;
+    export let submit: (title: string, subtitle: string, time_period: string, location: string, bullet_points: string[]) => void;
 
     let title: string;
     let subtitle: string;
     let time_period: string;
     let location: string;
-    let bullet_points: string[];
+    let bullet_points: string[] = [];
 
     const handleKeydown = (event: KeyboardEvent) => {
         console.log("ESC pressed", event);
@@ -15,6 +15,11 @@
             close();
         }
     };
+
+    const addBulletPoint = () => {
+      bullet_points = [...bullet_points, ""];
+      console.log(bullet_points);
+    }
 </script>
 
 {#if open}
@@ -41,10 +46,21 @@
 
         <legend class="fieldset-legend">Location</legend>
         <input type="text" class="input" bind:value={location}/>
+
+        {#each bullet_points as bullet, i}
+            <legend class="fieldset-legend">Bullet Point {i + 1}</legend>
+            <textarea
+              class="textarea font-sans"
+              placeholder="Add bullet point here..."
+              bind:value={bullet_points[i]}
+            ></textarea>
+        {/each}
+
+        <button class="btn btn-primary btn-sm mt-4 w-1/4" on:click={() => addBulletPoint()}>Add Bullet Point</button>
       </fieldset>
 
       <div class="modal-action">
-        <button class="btn" on:click={() => {submit(title, subtitle, time_period, location); close()}}>Submit</button>
+        <button class="btn" on:click={() => {submit(title, subtitle, time_period, location, bullet_points); close()}}>Submit</button>
       </div>
     </div>
   </dialog>
