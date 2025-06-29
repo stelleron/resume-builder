@@ -2,6 +2,35 @@
   @import '../styles/App.css';
 </style>
 
+<script lang="ts">
+    const downloadPage = function() {
+      var prtContent = document.getElementById("resume-page");
+      if (prtContent == null) {
+        console.log("Could not find resume page.");
+        return;
+      }
+      var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+      if (WinPrint == null) {
+        console.log("Could not open print.");
+        return;
+      }
+
+      WinPrint.document.write('<html><head><title>Resume</title>');
+      WinPrint.document.write('<link rel="stylesheet" href="src/styles/ResumePreview.css" type="text/css" media="print">');
+      WinPrint.document.write('</head><body >');
+      WinPrint.document.write(prtContent.innerHTML);
+      WinPrint.document.write('</body></html>');
+      WinPrint.document.close();
+
+      WinPrint.onload = function() {
+        if (WinPrint == null) {return;}
+        WinPrint.focus(); // Ensure focus before print
+        WinPrint.print();
+        WinPrint.close();
+    };
+  }
+</script>
+
 
 <main>
   <div class="navbar bg-base-100 shadow-sm">
@@ -11,7 +40,7 @@
     <div class="flex-none">
       <!-- Download Button with Tooltip -->
       <div class="tooltip tooltip-bottom" data-tip="Download">
-        <button class="btn btn-square btn-ghost">
+        <button class="btn btn-square btn-ghost" on:click={() => downloadPage()}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
             class="bi bi-download" viewBox="0 0 16 16">
             <path
