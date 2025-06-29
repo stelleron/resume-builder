@@ -16,7 +16,7 @@
       }
 
       WinPrint.document.write('<html><head><title>Resume</title>');
-      WinPrint.document.write('<link rel="stylesheet" href="src/styles/ResumePreview.css" type="text/css" media="print">');
+      WinPrint.document.write('<link rel="stylesheet" href="src/styles/Resume.css" type="text/css" media="print">');
       WinPrint.document.write('</head><body >');
       WinPrint.document.write(prtContent.innerHTML);
       WinPrint.document.write('</body></html>');

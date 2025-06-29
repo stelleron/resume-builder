@@ -14,7 +14,7 @@
 <main>
     <div class="section-box" id="resume-preview">
         <div id="resume-page">
-            <div class="page">
+            <div id="page">
                 <!-- Person's Name -->
                 <div class='resume-name'>{$data.name}</div>
                 <!-- Person's Details -->
