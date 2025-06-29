@@ -7,7 +7,9 @@
   import ExperienceModal from './ExperienceModal.svelte';
   import SectionModal from './SectionModal.svelte';
 
-  export let data: ResumeData;
+  import { writable, type Writable } from 'svelte/store';
+
+  export let data: Writable<ResumeData>;
 
   // For Section
   let secCount = 0;
@@ -21,7 +23,9 @@
     const newItem = new ResumeSection();
     newItem.id = ++secCount;
     newItem.name = name;
-    data.sections.push(newItem); data.sections = data.sections;
+    $data.sections.push(newItem); $data.sections = $data.sections;
+    $data = $data;
+    console.log($data);
   }
 
   // For Experiences
@@ -41,7 +45,7 @@
 
 <main>
   <div class="max-w-xl mx-auto mt-2.5">
-    {#each data.sections as section}
+    {#each $data.sections as section}
       <div class="collapse bg-base-100">
         <input type="checkbox" />
         <div class="collapse-title text-xs font-medium py-1 flex items-center">

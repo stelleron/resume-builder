@@ -2,10 +2,11 @@
   import ResumePreview from "./lib/ResumePreview.svelte";
   import HeaderForm from "./lib/HeaderForm.svelte";
   import Navbar from "./lib/Navbar.svelte"
-
+  
+  import { writable, type Writable } from 'svelte/store';
   import { ResumeData } from './scripts/ResumeData';
 
-  let data: ResumeData = new ResumeData();
+  let data: Writable<ResumeData> = writable(new ResumeData());
 </script>
 
 <style>

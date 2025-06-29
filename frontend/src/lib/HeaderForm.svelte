@@ -2,7 +2,9 @@
     import ResumeDetails from "../lib/ResumeDetails.svelte";
     import { ResumeData } from '../scripts/ResumeData';
 
-    export let data: ResumeData;
+    import { writable, type Writable } from 'svelte/store';
+
+    export let data: Writable<ResumeData>;
 </script>
 
 <style>
@@ -15,19 +17,19 @@
       <legend class="fieldset-legend">Resume Details</legend>
 
       <label class="label">Name</label>
-      <input type="text" class="input" placeholder="John Doe" bind:value={data.name}/>
+      <input type="text" class="input" placeholder="John Doe" bind:value={$data.name}/>
 
       <label class="label">Phone Number</label>
-      <input type="text" class="input" placeholder="111-111-1111" bind:value={data.phone} />
+      <input type="text" class="input" placeholder="111-111-1111" bind:value={$data.phone} />
 
       <label class="label">Email</label>
-      <input type="text" class="input" placeholder="johndoe@gmail.com" bind:value={data.email}/>
+      <input type="text" class="input" placeholder="johndoe@gmail.com" bind:value={$data.email}/>
 
       <label class="label">LinkedIn</label>
-      <input type="text" class="input" placeholder="linkedin.com/johndoe" bind:value={data.linkedin}/>
+      <input type="text" class="input" placeholder="linkedin.com/johndoe" bind:value={$data.linkedin}/>
 
       <label class="label">GitHub</label>
-      <input type="text" class="input" placeholder="github.com/johndoe" bind:value={data.github}/>
+      <input type="text" class="input" placeholder="github.com/johndoe" bind:value={$data.github}/>
 
       <ResumeDetails data={data}></ResumeDetails>
     </fieldset>
