@@ -3,7 +3,7 @@
 </style>
 
 <script lang='ts'>
-  import { ResumeData, ResumeSection } from '../scripts/ResumeData';
+  import { ResumeData, ResumeExperience, ResumeSection } from '../scripts/ResumeData';
   import ExperienceModal from './ExperienceModal.svelte';
   import SectionModal from './SectionModal.svelte';
 
@@ -37,8 +37,20 @@
       selectedExp = -1;
   }
 
-  const addExpItem = (name: string) => {
-
+  const addExpItem = (title: string, subtitle: string, time_period: string, location: string) => {
+    for (let i = 0; i < $data.sections.length; i++) {
+      if (selectedExp == $data.sections[i].id) {
+        const newItem = new ResumeExperience();
+        newItem.id = ++expCount;
+        newItem.title = title;
+        newItem.sub_title = subtitle;
+        newItem.time_period = time_period;
+        newItem.location = location;
+        $data.sections[i].experiences = [...$data.sections[i].experiences, newItem];
+        $data = $data;
+        console.log($data);
+      }
+    }
   }
 
 </script>

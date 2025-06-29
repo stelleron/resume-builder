@@ -1,8 +1,13 @@
 <script lang="ts">
     export let open: boolean;
     export let close: () => void;
-    export let submit: (name: string) => void;
-    let name: string;
+    export let submit: (title: string, subtitle: string, time_period: string, location: string) => void;
+
+    let title: string;
+    let subtitle: string;
+    let time_period: string;
+    let location: string;
+    let bullet_points: string[];
 
     const handleKeydown = (event: KeyboardEvent) => {
         console.log("ESC pressed", event);
@@ -25,12 +30,21 @@
 
       <h3 class="text-lg font-bold">Add New Experience</h3>
       <fieldset class="fieldset">
-        <legend class="fieldset-legend">Experience Name</legend>
-        <input type="text" class="input" bind:value={name}/>
-    </fieldset>
+        <legend class="fieldset-legend">Experience Title</legend>
+        <input type="text" class="input" bind:value={title}/>
+
+        <legend class="fieldset-legend">Experience Subtitle</legend>
+        <input type="text" class="input" bind:value={subtitle}/>
+
+        <legend class="fieldset-legend">Time Period</legend>
+        <input type="text" class="input" bind:value={time_period}/>
+
+        <legend class="fieldset-legend">Location</legend>
+        <input type="text" class="input" bind:value={location}/>
+      </fieldset>
 
       <div class="modal-action">
-        <button class="btn" on:click={() => {submit(name); close()}}>Submit</button>
+        <button class="btn" on:click={() => {submit(title, subtitle, time_period, location); close()}}>Submit</button>
       </div>
     </div>
   </dialog>
