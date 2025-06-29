@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ResumeData } from '../scripts/ResumeData';
+    import { ResumeData, ResumeSection, ResumeExperience} from '../scripts/ResumeData';
     import { writable, type Writable } from 'svelte/store';
 
     export let data: Writable<ResumeData>;
@@ -26,6 +26,12 @@
                 <div class="resume-section">
                     <div class="resume-section-title">{section.name.toUpperCase()}</div>
                     <hr>
+                    {#each section.experiences as exp}
+                    <div class="resume-exp">
+                        <div class="exp-title">{exp.title} <span class="exp-time">{exp.time_period}</span></div>
+                        <div><span class="exp-subtitle">{exp.sub_title}</span> <span class="exp-location">{exp.location}</span></div>
+                    </div>
+                    {/each}
                 </div>
                 {/each}
             </div>
