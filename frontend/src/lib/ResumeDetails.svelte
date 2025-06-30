@@ -65,6 +65,9 @@
           {section.name}
         </div>
         <div class="collapse-content">
+          {#each section.experiences as exp}
+          <div>{exp.title}</div>
+          {/each}
           <button on:click={() => {openExpModal = true; selectedExp = section.id}} class="btn btn-primary btn-xs mt-4">Add Resume Experience</button>
         </div>
       </div>
