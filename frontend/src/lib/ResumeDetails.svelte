@@ -57,16 +57,18 @@
 </script>
 
 <main>
+  <label class="label">Sections</label>
   <div class="max-w-xl mx-auto mt-2.5">
     {#each $data.sections as section}
-      <div class="collapse bg-base-100">
+      <div class="collapse bg-base-100 relative border border-gray-500 rounded-sm mb-2">
+        <div class="section-bar absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-sm"></div>
         <input type="checkbox" />
         <div class="collapse-title text-xs font-medium py-1 flex items-center">
           {section.name}
         </div>
         <div class="collapse-content">
           {#each section.experiences as exp}
-          <div>{exp.title}</div>
+          <div class="relative border border-gray-500 rounded-sm mb-2">{exp.title}</div>
           {/each}
           <button on:click={() => {openExpModal = true; selectedExp = section.id}} class="btn btn-primary btn-xs mt-4">Add Resume Experience</button>
         </div>
