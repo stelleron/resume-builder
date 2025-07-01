@@ -74,55 +74,50 @@
         <div class="collapse-title text-sm font-medium py-1 flex items-center">
           {section.name}
         </div>
-          <div class="collapse-content space-y-2">
-            {#each section.experiences as exp, i}
-              {#if exp.title != "" && exp.sub_title != ""}
-                <div class="relative border border-gray-500 rounded-md pl-3 py-2 pr-6">
-                  <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-md"></div>
-                  <button
-                    on:click={() => deleteExperience(section.id, i)}
-                    class="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-red-500"
-                    aria-label="Delete"
-                  >
-                    &times;
-                  </button>
+        <div class="collapse-content space-y-2">
+          {#each section.experiences as exp, i}
+            <div class="relative border border-gray-500 rounded-md pl-3 py-2 pr-6 flex items-center gap-2">
+              <!-- Left color bar -->
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-md"></div>
+
+              <!-- Visibility checkbox -->
+              <input
+                type="checkbox"
+                bind:checked={exp.visible}
+                class="accent-primary self-center"
+                aria-label="Toggle experience visibility"
+              />
+
+              <!-- Content area -->
+              <div class="flex-1 space-y-0.5">
+                {#if exp.title != "" && exp.sub_title != ""}
                   <div class="text-xs font-semibold">{exp.title}</div>
                   <div class="text-2xs">{exp.sub_title}</div>
-                </div>
-              {:else if exp.title != "" && exp.sub_title == ""}
-                <div class="relative border border-gray-500 rounded-md pl-3 py-2 pr-6">
-                  <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-md"></div>
-                  <button
-                    on:click={() => deleteExperience(section.id, i)}
-                    class="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-red-500"
-                    aria-label="Delete"
-                  >
-                    &times;
-                  </button>
+                {:else if exp.title != "" && exp.sub_title == ""}
                   <div class="text-xs font-semibold">{exp.title}</div>
-                </div>
-              {:else}
-                <div class="relative border border-gray-500 rounded-md pl-3 py-2 pr-6">
-                  <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-md"></div>
-                  <button
-                    on:click={() => deleteExperience(section.id, i)}
-                    class="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-red-500"
-                    aria-label="Delete"
-                  >
-                    &times;
-                  </button>
+                {:else}
                   <div class="text-xs italic">[{exp.bullet_points[0].slice(0, 15)}...]</div>
-                </div>
-              {/if}
-            {/each}
-            
-            <button
-              on:click={() => { openExpModal = true; selectedExp = section.id }}
-              class="btn btn-primary btn-xs mt-4"
-            >
-              Add Resume Experience
-            </button>
-          </div>
+                {/if}
+              </div>
+
+              <!-- Delete button -->
+              <button
+                on:click={() => deleteExperience(section.id, i)}
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-gray-400 hover:text-red-500"
+                aria-label="Delete"
+              >
+                &times;
+              </button>
+            </div>
+          {/each}
+
+          <button
+            on:click={() => { openExpModal = true; selectedExp = section.id }}
+            class="btn btn-primary btn-xs mt-4"
+          >
+            Add Resume Experience
+          </button>
+        </div>
       </div>
     {/each}
     <button on:click={() => {openSecModal = true}} class="btn btn-primary btn-sm">Add Resume Section</button>

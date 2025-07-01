@@ -5,6 +5,7 @@ export class ResumeExperience {
     public time_period: string;
     public location: string;
     public bullet_points: string[];
+    public visible: boolean;
 
     constructor() {
         this.id = 0;
@@ -13,6 +14,7 @@ export class ResumeExperience {
         this.time_period = '';
         this.location = '';
         this.bullet_points = [];
+        this.visible = true;
     }
 }
 
@@ -20,11 +22,13 @@ export class ResumeSection {
     public id: number;
     public name: string;
     public experiences: ResumeExperience[];
+    public visible: boolean;
 
     constructor() {
         this.id = 0;
         this.name = ''
         this.experiences = [];
+        this.visible = true;
     }
 }
 
