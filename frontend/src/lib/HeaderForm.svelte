@@ -31,6 +31,7 @@
       <label class="label">GitHub</label>
       <input type="text" class="input w-md" placeholder="github.com/johndoe" bind:value={$data.github}/>
 
+      <label class="label">Sections</label>
       <ResumeDetails data={data}></ResumeDetails>
     </fieldset>
   </div>

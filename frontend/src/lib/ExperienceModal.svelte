@@ -3,10 +3,10 @@
     export let close: () => void;
     export let submit: (title: string, subtitle: string, time_period: string, location: string, bullet_points: string[]) => void;
 
-    let title: string;
-    let subtitle: string;
-    let time_period: string;
-    let location: string;
+    let title: string = "";
+    let subtitle: string = "";
+    let time_period: string = "";
+    let location: string = "";
     let bullet_points: string[] = [];
 
     const handleKeydown = (event: KeyboardEvent) => {

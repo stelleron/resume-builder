@@ -57,8 +57,7 @@
 </script>
 
 <main>
-  <label class="label">Sections</label>
-  <div class="max-w-xl mx-auto mt-2.5">
+  <div class="max-w-xl mx-auto">
     {#each $data.sections as section}
       <div class="collapse bg-base-100 relative border border-gray-500 rounded-sm mb-2">
         <div class="section-bar absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-sm"></div>
@@ -68,13 +67,19 @@
         </div>
         <div class="collapse-content">
           {#each section.experiences as exp}
-          <div class="relative border border-gray-500 rounded-sm mb-2">{exp.title}</div>
+            {#if exp.title != "" && exp.sub_title != ""}
+              <div class="relative border border-gray-500 rounded-sm mb-2">{exp.title}, {exp.sub_title}</div>
+            {:else if exp.title != "" && exp.sub_title == ""}
+              <div class="relative border border-gray-500 rounded-sm mb-2">{exp.title}</div>
+            {:else}
+              <div class="relative border border-gray-500 rounded-sm mb-2">[{exp.bullet_points[0].slice(0, 10)}...]</div>
+            {/if}
           {/each}
           <button on:click={() => {openExpModal = true; selectedExp = section.id}} class="btn btn-primary btn-xs mt-4">Add Resume Experience</button>
         </div>
       </div>
     {/each}
-    <button on:click={() => {openSecModal = true}} class="btn btn-primary btn-sm mt-4">Add Resume Section</button>
+    <button on:click={() => {openSecModal = true}} class="btn btn-primary btn-sm">Add Resume Section</button>
     <SectionModal open={openSecModal} close={closeSecModal} submit={addSectionItem}></SectionModal>
     <ExperienceModal open={openExpModal} close={closeExpModal} submit={addExpItem}></ExperienceModal>
   </div>
