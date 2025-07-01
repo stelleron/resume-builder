@@ -62,20 +62,32 @@
       <div class="collapse bg-base-100 relative border border-gray-500 rounded-sm mb-2">
         <div class="section-bar absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-sm"></div>
         <input type="checkbox" />
-        <div class="collapse-title text-xs font-medium py-1 flex items-center">
+        <div class="collapse-title text-sm font-medium py-1 flex items-center">
           {section.name}
         </div>
-        <div class="collapse-content">
+        <div class="collapse-content space-y-2">
           {#each section.experiences as exp}
             {#if exp.title != "" && exp.sub_title != ""}
-              <div class="relative border border-gray-500 rounded-sm mb-2">{exp.title}, {exp.sub_title}</div>
+              <div class="relative border border-gray-300 rounded-md pl-3 py-2 pr-2 ">
+                <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-md"></div>
+                <div class="text-xs font-semibold">{exp.title}</div>
+                <div class="text-2xs">{exp.sub_title}</div>
+              </div>
             {:else if exp.title != "" && exp.sub_title == ""}
-              <div class="relative border border-gray-500 rounded-sm mb-2">{exp.title}</div>
+              <div class="relative border border-gray-300 rounded-md pl-3 py-2 pr-2 ">
+                <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-md"></div>
+                <div class="text-xs font-semibold">{exp.title}</div>
+              </div>
             {:else}
-              <div class="relative border border-gray-500 rounded-sm mb-2">[{exp.bullet_points[0].slice(0, 10)}...]</div>
+              <div class="relative border border-gray-300 rounded-md pl-3 py-2 pr-2 ">
+                <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-md"></div>
+                <div class="text-xs italic">[{exp.bullet_points[0].slice(0, 10)}...]</div>
+              </div>
             {/if}
           {/each}
-          <button on:click={() => {openExpModal = true; selectedExp = section.id}} class="btn btn-primary btn-xs mt-4">Add Resume Experience</button>
+          <button on:click={() => {openExpModal = true; selectedExp = section.id}} class="btn btn-primary btn-xs mt-4">
+            Add Resume Experience
+          </button>
         </div>
       </div>
     {/each}
