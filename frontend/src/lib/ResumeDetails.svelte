@@ -79,7 +79,7 @@
         </div>
       </div>
     {/each}
-    <button on:click={() => {openSecModal = true}} class="btn btn-primary btn-sm mt-4">Add Resume Section</button>
+    <button on:click={() => {openSecModal = true}} class="btn btn-primary btn-sm">Add Resume Section</button>
     <SectionModal open={openSecModal} close={closeSecModal} submit={addSectionItem}></SectionModal>
     <ExperienceModal open={openExpModal} close={closeExpModal} submit={addExpItem}></ExperienceModal>
   </div>
