@@ -27,15 +27,17 @@
                     <div class="resume-section-title">{section.name.toUpperCase()}</div>
                     <hr>
                     {#each section.experiences as exp}
-                    <div class="resume-exp">
-                        <div class="exp-title">{exp.title} <span class="exp-time">{exp.time_period}</span></div>
-                        <div><span class="exp-subtitle">{exp.sub_title}</span> <span class="exp-location">{exp.location}</span></div>
-                        <ul>
-                        {#each exp.bullet_points as bullet_point}
-                            <li><span>{bullet_point}</span></li>
-                        {/each}
-                        </ul>
-                    </div>
+                        {#if exp.visible}
+                        <div class="resume-exp">
+                            <div class="exp-title">{exp.title} <span class="exp-time">{exp.time_period}</span></div>
+                            <div><span class="exp-subtitle">{exp.sub_title}</span> <span class="exp-location">{exp.location}</span></div>
+                            <ul>
+                            {#each exp.bullet_points as bullet_point}
+                                <li><span>{bullet_point}</span></li>
+                            {/each}
+                            </ul>
+                        </div>
+                        {/if}
                     {/each}
                 </div>
                 {/each}

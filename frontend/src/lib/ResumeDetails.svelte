@@ -63,6 +63,10 @@
     }
   }
 
+  const refresh = () => {
+    $data = $data;
+  }
+
 </script>
 
 <main>
@@ -84,6 +88,7 @@
               <input
                 type="checkbox"
                 bind:checked={exp.visible}
+                on:change={() => refresh()}
                 class="accent-primary self-center"
                 aria-label="Toggle experience visibility"
               />
