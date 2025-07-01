@@ -63,6 +63,18 @@
     }
   }
 
+  const moveExperience = (id: number, from: number, to: number) => {
+    const sectionIndex = $data.sections.findIndex(s => s.id === id);
+    if (sectionIndex !== -1) {
+      const exps = $data.sections[sectionIndex].experiences;
+      if (to >= 0 && to < exps.length) {
+        // Swap
+        [exps[from], exps[to]] = [exps[to], exps[from]];
+        $data = $data;
+      }
+    }
+  }
+
   const refresh = () => {
     $data = $data;
   }
@@ -103,6 +115,27 @@
                 {:else}
                   <div class="text-xs italic">[{exp.bullet_points[0].slice(0, 15)}...]</div>
                 {/if}
+              </div>
+
+
+              <!-- Arrow controls -->
+              <div class="flex flex-col items-center space-y-1 absolute right-6 top-1/2 -translate-y-1/2">
+                <button
+                  on:click={() => moveExperience(section.id, i, i - 1)}
+                  class="text-gray-400 hover:text-primary text-xs disabled:opacity-30"
+                  disabled={i === 0}
+                  aria-label="Move up"
+                >
+                  ↑
+                </button>
+                <button
+                  on:click={() => moveExperience(section.id, i, i + 1)}
+                  class="text-gray-400 hover:text-primary text-xs disabled:opacity-30"
+                  disabled={i === section.experiences.length - 1}
+                  aria-label="Move down"
+                >
+                  ↓
+                </button>
               </div>
 
               <!-- Delete button -->
