@@ -28,6 +28,20 @@
     console.log($data);
   }
 
+  const deleteSection = (index: number) => {
+      $data.sections.splice(index, 1);
+      $data = $data;
+      console.log($data);
+  }
+
+  const moveSection = (from: number, to: number) => {
+    if (to >= 0 && to < $data.sections.length) {
+      // Swap
+      [$data.sections[from], $data.sections[to]] = [$data.sections[to], $data.sections[from]];
+      $data = $data;
+    }
+  }
+
   // For Experiences
   let expCount = 0;
   let selectedExp = -1;
@@ -83,15 +97,58 @@
 
 <main>
   <div class="max-w-xl mx-auto">
-    {#each $data.sections as section}
+    {#each $data.sections as section, i}
       <div class="collapse bg-base-100 relative border border-gray-500 rounded-sm mb-2">
+                <!-- Left color bar -->
         <div class="section-bar absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-sm"></div>
+        
+        <!-- Section controls -->
+        <div class="absolute right-2 top-2 flex items-center gap-2 z-10">
+          <!-- Visibility checkbox -->
+          <input
+            type="checkbox"
+            bind:checked={section.visible}
+            on:change={() => refresh()}
+            class="accent-primary"
+            aria-label="Toggle section visibility"
+          />
+
+          <!-- Move up button -->
+          <button
+            on:click={() => moveSection(i, i - 1)}
+            class="text-gray-400 hover:text-primary text-xs disabled:opacity-30"
+            disabled={i === 0}
+            aria-label="Move section up"
+          >
+            ↑
+          </button>
+
+          <!-- Move down button -->
+          <button
+            on:click={() => moveSection(i, i + 1)}
+            class="text-gray-400 hover:text-primary text-xs disabled:opacity-30"
+            disabled={i === $data.sections.length - 1}
+            aria-label="Move section down"
+          >
+            ↓
+          </button>
+
+          <!-- Delete section -->
+          <button
+            on:click={() => deleteSection(i)}
+            class="text-gray-400 hover:text-red-500 text-sm"
+            aria-label="Delete section"
+          >
+            &times;
+          </button>
+        </div>
+
         <input type="checkbox" />
         <div class="collapse-title text-sm font-medium py-1 flex items-center">
           {section.name}
         </div>
         <div class="collapse-content space-y-2">
-          {#each section.experiences as exp, i}
+          {#each section.experiences as exp, j}
             <div class="relative border border-gray-500 rounded-md pl-3 py-2 pr-6 flex items-center gap-2">
               <!-- Left color bar -->
               <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-md"></div>
@@ -121,17 +178,17 @@
               <!-- Arrow controls -->
               <div class="flex flex-col items-center space-y-1 absolute right-6 top-1/2 -translate-y-1/2">
                 <button
-                  on:click={() => moveExperience(section.id, i, i - 1)}
+                  on:click={() => moveExperience(section.id, j, j - 1)}
                   class="text-gray-400 hover:text-primary text-xs disabled:opacity-30"
-                  disabled={i === 0}
+                  disabled={j === 0}
                   aria-label="Move up"
                 >
                   ↑
                 </button>
                 <button
-                  on:click={() => moveExperience(section.id, i, i + 1)}
+                  on:click={() => moveExperience(section.id, j, j + 1)}
                   class="text-gray-400 hover:text-primary text-xs disabled:opacity-30"
-                  disabled={i === section.experiences.length - 1}
+                  disabled={j === section.experiences.length - 1}
                   aria-label="Move down"
                 >
                   ↓
@@ -140,7 +197,7 @@
 
               <!-- Delete button -->
               <button
-                on:click={() => deleteExperience(section.id, i)}
+                on:click={() => deleteExperience(section.id, j)}
                 class="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-gray-400 hover:text-red-500"
                 aria-label="Delete"
               >
