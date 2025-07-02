@@ -46,14 +46,19 @@
 
         <legend class="fieldset-legend">Location</legend>
         <input type="text" class="input" bind:value={location}/>
-
+        
         {#each bullet_points as bullet, i}
-            <legend class="fieldset-legend">Bullet Point {i + 1}</legend>
+          <div>
+            <div class="flex items-center">
+              <legend class="fieldset-legend mb-0">Bullet Point {i + 1}</legend>
+              <button class="btn btn-xs btn-error ml-1" on:click={() => {bullet_points.splice(i, 1); bullet_points = bullet_points}}>Delete</button>
+            </div>
             <textarea
               class="textarea font-sans"
               placeholder="Add bullet point here..."
               bind:value={bullet_points[i]}
             ></textarea>
+          </div>
         {/each}
 
         <button class="btn btn-primary btn-sm mt-4 w-1/4" on:click={() => addBulletPoint()}>Add Bullet Point</button>
