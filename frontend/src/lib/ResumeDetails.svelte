@@ -208,7 +208,7 @@
 
           <button
             on:click={() => { openExpModal = true; selectedExp = section.id }}
-            class="btn btn-primary btn-xs mt-4"
+            class="btn btn-primary btn-xs mt-1"
           >
             Add Resume Experience
           </button>
