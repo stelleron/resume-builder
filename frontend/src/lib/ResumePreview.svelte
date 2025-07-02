@@ -19,7 +19,13 @@
                 <div class='resume-name'>{$data.name}</div>
                 <!-- Person's Details -->
                 <div class='resume-key-details'>
-                    <span>{contactItems.join(' • ')}</span>
+                    <span>{$data.phone}</span>
+                    <span>{$data.phone && ($data.email || $data.linkedin || $data.github) ? "•" : ''}</span>
+                    <span>{$data.email}</span>
+                    <span>{$data.email && ($data.linkedin || $data.github) ? "•" : ''}</span>
+                    <span><a class="text-black" href={"https://www." + $data.linkedin}>{$data.linkedin}</a></span>
+                    <span>{$data.linkedin && $data.github ? "•" : ''}</span>
+                    <span><a class="text-black" href={"https://www." + $data.github}>{$data.github}</a></span>
                 </div>
                 <!-- Resume Sections -->
                 {#each $data.sections as section}
