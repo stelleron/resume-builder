@@ -40,7 +40,7 @@
                                 <div><span class="exp-subtitle">{exp.sub_title}</span> <span class="exp-location">{exp.location}</span></div>
                                 <ul>
                                 {#each exp.bullet_points as bullet_point}
-                                    <li><span>{bullet_point}</span></li>
+                                    <li><span>{@html bullet_point.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</span></li>
                                 {/each}
                                 </ul>
                             </div>
