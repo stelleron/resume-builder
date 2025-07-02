@@ -216,6 +216,26 @@
                 </button>
               </div>
 
+              <button 
+                aria-label="Edit experience"
+                on:click={() => {}}
+                class="z-30 group"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#99a1af"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-3 h-3 transition-colors duration-150 group-hover:stroke-primary"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M12 20h9" />
+                  <path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z" />
+                </svg>
+              </button>
+
               <!-- Delete button -->
               <button
                 on:click={() => deleteExperience(section.id, j)}
