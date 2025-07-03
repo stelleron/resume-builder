@@ -69,6 +69,7 @@
           $data.sections[i].experiences = [...$data.sections[i].experiences, newExperience.clone()];
           $data = $data;
           console.log($data);
+          selectedExp = -1;
         }
       }
     } else {
@@ -77,7 +78,8 @@
           $data.sections[i].experiences[editExperience] = newExperience.clone();
           $data = $data;
           console.log($data);
-          editSection = -1;
+          editExperience = -1;
+          selectedExp = -1;
         }
       }
     }
