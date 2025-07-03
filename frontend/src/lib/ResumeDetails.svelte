@@ -14,6 +14,7 @@
   // For Section
   let secCount = 0;
   let newSection = new ResumeSection();
+  let editSection = -1;
 
   let openSecModal : boolean = false;
   const closeSecModal = () => {
@@ -21,10 +22,17 @@
   }
 
   const addSectionItem = () => {
-    newSection.id = ++secCount;
-    $data.sections.push(newSection.clone()); $data.sections = $data.sections;
-    $data = $data;
-    console.log($data);
+    if (editSection == -1) {
+      newSection.id = ++secCount;
+      $data.sections.push(newSection.clone()); $data.sections = $data.sections;
+      $data = $data;
+      console.log($data);
+    } else {
+      $data.sections[editSection] = newSection.clone();
+      $data = $data;
+      console.log($data);
+      editSection = -1;
+    }
   }
 
   const deleteSection = (index: number) => {
@@ -130,7 +138,7 @@
 
           <button 
             aria-label="Edit section"
-            on:click={() => {}}
+            on:click={() => {openSecModal = true; editSection = i; newSection = $data.sections[i].clone()}}
             class="z-30 group"
           >
             <svg
