@@ -54,6 +54,7 @@
   let selectedExp = -1;
   let openExpModal: boolean = false;
   let newExperience = new ResumeExperience();
+  let editExperience = -1;
 
   const closeExpModal = () => {
       openExpModal = false;
@@ -61,12 +62,23 @@
   }
 
   const addExpItem = () => {
-    for (let i = 0; i < $data.sections.length; i++) {
-      if (selectedExp == $data.sections[i].id) {
-        newExperience.id = ++expCount;
-        $data.sections[i].experiences = [...$data.sections[i].experiences, newExperience.clone()];
-        $data = $data;
-        console.log($data);
+    if (editExperience == -1) {
+      for (let i = 0; i < $data.sections.length; i++) {
+        if (selectedExp == $data.sections[i].id) {
+          newExperience.id = ++expCount;
+          $data.sections[i].experiences = [...$data.sections[i].experiences, newExperience.clone()];
+          $data = $data;
+          console.log($data);
+        }
+      }
+    } else {
+      for (let i = 0; i < $data.sections.length; i++) {
+        if (selectedExp == $data.sections[i].id) {
+          $data.sections[i].experiences[editExperience] = newExperience.clone();
+          $data = $data;
+          console.log($data);
+          editSection = -1;
+        }
       }
     }
   }
@@ -219,7 +231,7 @@
 
               <button 
                 aria-label="Edit experience"
-                on:click={() => {}}
+                on:click={() => {openExpModal = true; selectedExp = section.id; editExperience = j; newExperience = $data.sections[i].experiences[j]; }}
                 class="z-30 group"
               >
                 <svg
