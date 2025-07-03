@@ -1,13 +1,10 @@
 <script lang="ts">
+    import type { ResumeExperience } from "../scripts/ResumeData";
+
     export let open: boolean;
     export let close: () => void;
-    export let submit: (title: string, subtitle: string, time_period: string, location: string, bullet_points: string[]) => void;
-
-    let title: string = "";
-    let subtitle: string = "";
-    let time_period: string = "";
-    let location: string = "";
-    let bullet_points: string[] = [];
+    export let submit: () => void;
+    export let experience : ResumeExperience;
 
     const handleKeydown = (event: KeyboardEvent) => {
         console.log("ESC pressed", event);
@@ -17,8 +14,8 @@
     };
 
     const addBulletPoint = () => {
-      bullet_points = [...bullet_points, ""];
-      console.log(bullet_points);
+      experience.bullet_points = [...experience.bullet_points, ""];
+      console.log(experience.bullet_points);
     }
 </script>
 
@@ -36,27 +33,27 @@
       <h3 class="text-lg font-bold">Add New Experience</h3>
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Experience Title</legend>
-        <input type="text" class="input" bind:value={title}/>
+        <input type="text" class="input" bind:value={experience.title}/>
 
         <legend class="fieldset-legend">Experience Subtitle</legend>
-        <input type="text" class="input" bind:value={subtitle}/>
+        <input type="text" class="input" bind:value={experience.sub_title}/>
 
         <legend class="fieldset-legend">Time Period</legend>
-        <input type="text" class="input" bind:value={time_period}/>
+        <input type="text" class="input" bind:value={experience.time_period}/>
 
         <legend class="fieldset-legend">Location</legend>
-        <input type="text" class="input" bind:value={location}/>
+        <input type="text" class="input" bind:value={experience.location}/>
         
-        {#each bullet_points as bullet, i}
+        {#each experience.bullet_points as bullet, i}
           <div>
             <div class="flex items-center">
               <legend class="fieldset-legend mb-0">Bullet Point {i + 1}</legend>
-              <button class="btn btn-xs btn-error ml-1" on:click={() => {bullet_points.splice(i, 1); bullet_points = bullet_points}}>Delete</button>
+              <button class="btn btn-xs btn-error ml-1" on:click={() => {experience.bullet_points.splice(i, 1); experience.bullet_points = experience.bullet_points}}>Delete</button>
             </div>
             <textarea
               class="textarea font-sans"
               placeholder="Add bullet point here..."
-              bind:value={bullet_points[i]}
+              bind:value={experience.bullet_points[i]}
             ></textarea>
           </div>
         {/each}
@@ -65,7 +62,7 @@
       </fieldset>
 
       <div class="modal-action">
-        <button class="btn" on:click={() => {submit(title, subtitle, time_period, location, bullet_points); close()}}>Submit</button>
+        <button class="btn" on:click={() => {submit(); close()}}>Submit</button>
       </div>
     </div>
   </dialog>
