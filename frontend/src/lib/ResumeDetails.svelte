@@ -197,24 +197,22 @@
 
 
               <!-- Arrow controls -->
-              <div class="flex flex-col items-center space-y-1 absolute right-6 top-1/2 -translate-y-1/2">
-                <button
-                  on:click={() => moveExperience(section.id, j, j - 1)}
-                  class="text-gray-400 hover:text-primary text-xs disabled:opacity-30"
-                  disabled={j === 0}
-                  aria-label="Move up"
-                >
-                  ↑
-                </button>
-                <button
-                  on:click={() => moveExperience(section.id, j, j + 1)}
-                  class="text-gray-400 hover:text-primary text-xs disabled:opacity-30"
-                  disabled={j === section.experiences.length - 1}
-                  aria-label="Move down"
-                >
-                  ↓
-                </button>
-              </div>
+              <button
+                on:click={() => moveExperience(section.id, j, j - 1)}
+                class="text-gray-400 hover:text-primary text-xs disabled:opacity-30"
+                disabled={j === 0}
+                aria-label="Move up"
+              >
+                ↑
+              </button>
+              <button
+                on:click={() => moveExperience(section.id, j, j + 1)}
+                class="text-gray-400 hover:text-primary text-xs disabled:opacity-30"
+                disabled={j === section.experiences.length - 1}
+                aria-label="Move down"
+              >
+                ↓
+              </button>
 
               <button 
                 aria-label="Edit experience"
