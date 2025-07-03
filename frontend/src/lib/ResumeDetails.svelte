@@ -13,17 +13,16 @@
 
   // For Section
   let secCount = 0;
+  let newSection = new ResumeSection();
 
   let openSecModal : boolean = false;
   const closeSecModal = () => {
       openSecModal = false;
   }
 
-  const addSectionItem = (name: string) => {
-    const newItem = new ResumeSection();
-    newItem.id = ++secCount;
-    newItem.name = name;
-    $data.sections.push(newItem); $data.sections = $data.sections;
+  const addSectionItem = () => {
+    newSection.id = ++secCount;
+    $data.sections.push(newSection.clone()); $data.sections = $data.sections;
     $data = $data;
     console.log($data);
   }
@@ -46,22 +45,18 @@
   let expCount = 0;
   let selectedExp = -1;
   let openExpModal: boolean = false;
+  let newExperience = new ResumeExperience();
+
   const closeExpModal = () => {
       openExpModal = false;
       selectedExp = -1;
   }
 
-  const addExpItem = (title: string, subtitle: string, time_period: string, location: string, bullet_points: string[]) => {
+  const addExpItem = () => {
     for (let i = 0; i < $data.sections.length; i++) {
       if (selectedExp == $data.sections[i].id) {
-        const newItem = new ResumeExperience();
-        newItem.id = ++expCount;
-        newItem.title = title;
-        newItem.sub_title = subtitle;
-        newItem.time_period = time_period;
-        newItem.location = location;
-        newItem.bullet_points = bullet_points;
-        $data.sections[i].experiences = [...$data.sections[i].experiences, newItem];
+        newExperience.id = ++expCount;
+        $data.sections[i].experiences = [...$data.sections[i].experiences, newExperience.clone()];
         $data = $data;
         console.log($data);
       }
@@ -255,7 +250,7 @@
       </div>
     {/each}
     <button on:click={() => {openSecModal = true}} class="btn btn-primary btn-sm">Add Resume Section</button>
-    <SectionModal open={openSecModal} close={closeSecModal} submit={addSectionItem}></SectionModal>
-    <ExperienceModal open={openExpModal} close={closeExpModal} submit={addExpItem}></ExperienceModal>
+    <SectionModal open={openSecModal} close={closeSecModal} submit={addSectionItem} section={newSection}></SectionModal>
+    <ExperienceModal open={openExpModal} close={closeExpModal} submit={addExpItem} experience={newExperience}></ExperienceModal>
   </div>
 </main>

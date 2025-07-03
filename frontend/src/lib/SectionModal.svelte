@@ -1,8 +1,10 @@
 <script lang="ts">
+    import type { ResumeSection } from "../scripts/ResumeData";
+
     export let open: boolean;
     export let close: () => void;
-    export let submit: (name: string) => void;
-    let name: string;
+    export let submit: () => void;
+    export let section: ResumeSection;
 
     const handleKeydown = (event: KeyboardEvent) => {
         console.log("ESC pressed", event);
@@ -26,11 +28,11 @@
       <h3 class="text-lg font-bold">Add New Section</h3>
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Section Name</legend>
-        <input type="text" class="input" bind:value={name}/>
+        <input type="text" class="input" bind:value={section.name}/>
     </fieldset>
 
       <div class="modal-action">
-        <button class="btn" on:click={() => {submit(name); close()}}>Submit</button>
+        <button class="btn" on:click={() => {submit(); close()}}>Submit</button>
       </div>
     </div>
   </dialog>
