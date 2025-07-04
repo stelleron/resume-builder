@@ -38,6 +38,9 @@
         <legend class="fieldset-legend">Experience Subtitle</legend>
         <input type="text" class="input" bind:value={experience.sub_title}/>
 
+        <legend class="fieldset-legend">Skills Used</legend>
+        <input type="text" class="input" bind:value={experience.skills_used}/>
+
         <legend class="fieldset-legend">Time Period</legend>
         <input type="text" class="input" bind:value={experience.time_period}/>
 

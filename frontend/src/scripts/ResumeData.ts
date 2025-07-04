@@ -2,6 +2,7 @@ export class ResumeExperience {
     public id: number;
     public title: string;
     public sub_title: string;
+    public skills_used: string;
     public time_period: string;
     public location: string;
     public bullet_points: string[];
@@ -11,6 +12,7 @@ export class ResumeExperience {
         this.id = 0;
         this.title = '';
         this.sub_title = '';
+        this.skills_used = '';
         this.time_period = '';
         this.location = '';
         this.bullet_points = [];
@@ -22,6 +24,7 @@ export class ResumeExperience {
         copy.id = this.id;
         copy.title = this.title;
         copy.sub_title = this.sub_title;
+        copy.skills_used = this.skills_used;
         copy.time_period = this.time_period;
         copy.location = this.location;
         copy.bullet_points = [...this.bullet_points]; // deep copy the array

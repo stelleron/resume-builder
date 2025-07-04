@@ -3,7 +3,6 @@
     import { writable, type Writable } from 'svelte/store';
 
     export let data: Writable<ResumeData>;
-    $: contactItems = [$data.phone, $data.email, $data.linkedin, $data.github].filter(Boolean);
 </script>
 
 <style>
@@ -36,7 +35,11 @@
                         {#each section.experiences as exp}
                             {#if exp.visible}
                             <div class="resume-exp">
-                                <div class="exp-title">{exp.title} <span class="exp-time">{exp.time_period}</span></div>
+                                {#if exp.skills_used == ''}
+                                    <div class="exp-title">{exp.title}<span class="exp-time">{exp.time_period}</span></div>
+                                {:else}
+                                    <div class="exp-title">{exp.title} | <span class="exp-skills-used">{exp.skills_used}</span> <span class="exp-time">{exp.time_period}</span></div>
+                                {/if}
                                 <div><span class="exp-subtitle">{exp.sub_title}</span> <span class="exp-location">{exp.location}</span></div>
                                 <ul>
                                 {#each exp.bullet_points as bullet_point}
