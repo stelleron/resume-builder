@@ -5,6 +5,7 @@
   
   import { writable, type Writable } from 'svelte/store';
   import { ResumeData } from './scripts/ResumeData';
+  import { onMount } from 'svelte';
 
   let data: Writable<ResumeData> = writable(new ResumeData());
 </script>
