@@ -1,13 +1,19 @@
-const express = require('express');
+const express = require("express");
+const { getAllUsernames } = require("./db/queries");
+
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
-app.use(express.json());
-
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello from Express!' });
+app.get("/usernames", async (req, res) => {
+  try {
+    const users = await getAllUsernames();
+    res.json(users); // Sends back JSON array of usernames
+  } catch (error) {
+    console.error("Error fetching usernames:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
-app.listen(port, () => {
-  console.log(`Backend running at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

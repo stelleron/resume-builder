@@ -24,3 +24,5 @@ frontend/*.sln
 frontend/*.sw?
 
 test
+
+backend/db/pool.js
