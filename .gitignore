@@ -25,4 +25,4 @@ frontend/*.sw?
 
 test
 
-backend/db/pool.js
+backend/.env
