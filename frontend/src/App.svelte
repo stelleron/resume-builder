@@ -8,6 +8,30 @@
   import { onMount } from 'svelte';
 
   let data: Writable<ResumeData> = writable(new ResumeData());
+
+  onMount(async () => {
+    const res = await fetch('/api/testdata');
+    const resumeData = await res.json();
+    if (resumeData?.resume === null) {
+      console.log("Does not have resume! Creating new resume...");
+      const resume_res = await fetch('/api/resumedata', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: "",
+          phone: "",
+          email: "",
+          github: "",
+          linkedin: "",
+          userId: parseInt(resumeData.id),
+        })
+      });
+    } else {
+      console.log("Has resume!");
+    }
+  });
 </script>
 
 <style>
