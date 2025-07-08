@@ -9,10 +9,11 @@
 
   let data: Writable<ResumeData> = writable(new ResumeData());
 
+  // Create resume for user if one doesn't exist
   onMount(async () => {
-    const res = await fetch('/api/testdata');
-    const resumeData = await res.json();
-    if (resumeData?.resume === null) {
+    const user_res = await fetch('/api/testdata');
+    const user_data = await user_res.json();
+    if (user_data?.resume === null) {
       console.log("Does not have resume! Creating new resume...");
       const resume_res = await fetch('/api/resumedata', {
         method: 'POST',
@@ -25,13 +26,35 @@
           email: "",
           github: "",
           linkedin: "",
-          userId: parseInt(resumeData.id),
+          userId: parseInt(user_data.id),
         })
       });
     } else {
       console.log("Has resume!");
+      const resume_res = await fetch('/api/resumedata');
+      const resume_json = await resume_res.json();
+      data.set(resume_json);
     }
   });
+
+  // Updating resume
+  /*
+  async function saveResume() {
+    const res = await fetch('http://localhost:3000/resumedata/' + data.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      console.log("Resume updated!");
+    } else {
+      console.error("Failed to save resume");
+    }
+  }
+  */
 </script>
 
 <style>
