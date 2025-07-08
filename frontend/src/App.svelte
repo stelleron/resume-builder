@@ -35,7 +35,7 @@
     } else {
       // Else load up it's resume
       console.log("Has resume!");
-      const resume_res = await fetch('/api/resumedata/1');
+      const resume_res = await fetch('/api/resumedata/' + parseInt(user_data.resume.id));
       const resume_json = await resume_res.json();
       console.log(resume_json);
       data.set(resume_json);
