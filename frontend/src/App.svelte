@@ -11,8 +11,11 @@
 
   // Create resume for user if one doesn't exist
   onMount(async () => {
+    // Fetch test user
     const user_res = await fetch('/api/testdata');
     const user_data = await user_res.json();
+
+    // If user doesn't have a resume attached, create a new one
     if (user_data?.resume === null) {
       console.log("Does not have resume! Creating new resume...");
       const resume_res = await fetch('/api/resumedata', {
@@ -30,6 +33,7 @@
         })
       });
     } else {
+      // Else load up it's resume
       console.log("Has resume!");
       const resume_res = await fetch('/api/resumedata/1');
       const resume_json = await resume_res.json();
