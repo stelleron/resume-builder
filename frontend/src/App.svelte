@@ -31,30 +31,12 @@
       });
     } else {
       console.log("Has resume!");
-      const resume_res = await fetch('/api/resumedata');
+      const resume_res = await fetch('/api/resumedata/1');
       const resume_json = await resume_res.json();
+      console.log(resume_json);
       data.set(resume_json);
     }
   });
-
-  // Updating resume
-  /*
-  async function saveResume() {
-    const res = await fetch('http://localhost:3000/resumedata/' + data.id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    });
-
-    if (res.ok) {
-      console.log("Resume updated!");
-    } else {
-      console.error("Failed to save resume");
-    }
-  }
-  */
 </script>
 
 <style>

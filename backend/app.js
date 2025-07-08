@@ -41,39 +41,47 @@ app.use('/api', express.Router()
       const users = await prisma.resumeData.findMany();
       res.json(users);
     })
+    .get('/resumedata/:id', async (req, res) => {
+      const resumeId = parseInt(req.params.id);
+      const user = await prisma.resumeData.findUnique({
+        where: {id : resumeId,},
+      })
+      res.json(user);
+    })
     .post('/resumedata', async (req, res) => {
       const { name, phone, email, github, linkedin, userId } = req.body;
-
       try {
         const existingResume = await prisma.resumeData.findFirst({
-          where: {
-            user: {
-              id: parseInt(userId)
-            }
-          }
+          where: { user: {id: parseInt(userId)}}
         });
-
         if (existingResume) {
           return res.status(400).json({ error: 'User already has a resume' });
         }
-
         const newResume = await prisma.resumeData.create({
-          data: {
-            name,
-            phone,
-            email,
-            github,
-            linkedin,
-            user: {
-              connect: { id: parseInt(userId) }
-            }
+          data: {name, phone, email, github, linkedin,
+            user: {connect: { id: parseInt(userId) }}
           }
         });
-
         res.status(201).json(newResume);
       } catch (error) {
         console.error("Error creating ResumeData:", error);
         res.status(500).json({ error: 'Failed to create resume' });
+      }
+    })
+    .put('/resumedata/:id', async(req, res) => {
+      const resumeId = parseInt(req.params.id);
+      const { name, phone, email, github, linkedin } = req.body;
+
+      try {
+        const updatedResume = await prisma.resumeData.update({
+          where: { id: resumeId },
+          data: {name, phone, email, github, linkedin}
+        });
+        console.log("Updated resume:", updatedResume);
+        res.status(200).json(updatedResume);
+      } catch (error) {
+        console.error("Error updating resume:", error);
+        res.status(500).json({ error: "Failed to update resume" });
       }
     })
 );
