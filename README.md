@@ -4,4 +4,4 @@ Credit to:
 HTML A4 Paper - kykungz
 https://github.com/kykungz/html-a4-paper 
 
-Using Svelte, TypeScript, Express.js and PostgreSQL.
+Using Svelte, TypeScript, Express.js and PostgreSQL + Prisma ORM.
