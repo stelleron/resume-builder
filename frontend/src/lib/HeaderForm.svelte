@@ -11,7 +11,7 @@
     async function saveResume() {
       const resume_data = get(data);
       console.log(resume_data);
-      const res = await fetch('/api/resumedata/1', {
+      const res = await fetch('/api/resumedata/' + $data.id, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json',},
         body: JSON.stringify(resume_data)

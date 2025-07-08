@@ -58,6 +58,7 @@ export class ResumeSection {
 
 
 export class ResumeData {
+    public id : number;
     public name : string;
     public phone : string;
     public email : string;
@@ -66,6 +67,7 @@ export class ResumeData {
     public sections: ResumeSection[];
     
     constructor() {
+        this.id = 1;
         this.name = '';
         this.phone = '';
         this.email = '';

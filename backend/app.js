@@ -55,6 +55,7 @@ async function getResumeByID(req, res) {
   const resumeId = parseInt(req.params.id);
   const user = await prisma.resumeData.findUnique({
     where: {id : resumeId,},
+    include: {sections: true},
   })
   res.json(user);
 }
