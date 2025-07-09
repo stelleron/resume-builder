@@ -44,6 +44,20 @@
     }
   }
 
+  async function prismaEditSection(section: ResumeSection) {
+    const res = await fetch(`/api/sections/${section.id}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json',},
+      body: JSON.stringify(section)
+    });
+
+    if (res.ok) {
+      console.log("Section updated!");
+    } else {
+      console.error("Failed to edit section");
+    }
+  }
+
   // For Section
   let secCount = 0;
   let newSection = new ResumeSection();
@@ -56,12 +70,13 @@
 
   const addSectionItem = () => {
     if (editSection == -1) {
+      prismaAddSection(newSection);
       newSection.id = ++secCount;
       $data.sections.push(newSection.clone()); $data.sections = $data.sections;
       $data = $data;
       console.log($data);
-      prismaAddSection(newSection);
     } else {
+      prismaEditSection(newSection);
       $data.sections[editSection] = newSection.clone();
       $data = $data;
       console.log($data);

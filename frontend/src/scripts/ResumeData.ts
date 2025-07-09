@@ -1,3 +1,5 @@
+import type { fromJSON } from "postcss";
+
 export class ResumeExperience {
     public id: number;
     public title: string;
@@ -31,6 +33,13 @@ export class ResumeExperience {
         copy.visible = this.visible;
         return copy;
     }
+
+    static fromJSON(obj: any): ResumeExperience {
+        const exp = new ResumeExperience();
+        Object.assign(exp, obj);
+        exp.bullet_points = [...(obj.bullet_points ?? [])];
+        return exp;
+    }
 }
 
 export class ResumeSection {
@@ -54,6 +63,13 @@ export class ResumeSection {
         copy.experiences = this.experiences.map(exp => exp.clone()); // clone each experience
         return copy;
     }
+
+    static fromJSON(obj: any): ResumeSection {
+        const sec = new ResumeSection();
+        Object.assign(sec, obj);
+        sec.experiences = (obj.experiences ?? []).map(ResumeExperience.fromJSON);
+        return sec;
+    }
 }
 
 
@@ -74,5 +90,12 @@ export class ResumeData {
         this.github = '';
         this.linkedin = '';
         this.sections = [];
+    }
+
+    static fromJSON(obj: any): ResumeData {
+        const data = new ResumeData();
+        Object.assign(data, obj);
+        data.sections = (obj.sections ?? []).map(ResumeSection.fromJSON);
+        return data;
     }
 }

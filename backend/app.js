@@ -155,6 +155,23 @@ async function deleteSection(req, res) {
   }
 }
 
+async function editSection(req, res) {
+  const sectionId = parseInt(req.params.id);
+  const { name, visible} = req.body;
+
+  try {
+    const updatedSection = await prisma.resumeSection.update({
+      where: { id: sectionId },
+      data: {name, visible}
+    });
+    console.log("Updated section:", updatedSection);
+    res.status(200).json(updatedSection);
+  } catch (error) {
+    console.error("Error updating section:", error);
+    res.status(500).json({ error: "Failed to update section" });
+  }
+}
+
 
 
 // Router
@@ -178,6 +195,7 @@ app.use('/api', express.Router()
     .get('/sections/:id', getSectionByID)
     .post('/sections', createSection)
     .delete('/sections/:id', deleteSection)
+    .put('/sections/:id', editSection)
 );
 
 // Listen to indicate it's working
