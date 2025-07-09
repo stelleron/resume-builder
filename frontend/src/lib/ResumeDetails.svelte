@@ -12,7 +12,7 @@
 
   export let data: Writable<ResumeData>;
 
-  // For backend
+  // == BACKEND
   // Section
   async function prismaAddSection(section: ResumeSection): Promise<number> {
     const res = await fetch('/api/sections/', {
@@ -60,6 +60,9 @@
       console.error("Failed to edit section");
     }
   }
+  // Experience
+
+  // == BACKEND
 
   // For Section
   let secCount = 0;
@@ -176,7 +179,7 @@
           <input
             type="checkbox"
             bind:checked={section.visible}
-            on:change={() => refresh()}
+            on:change={() => {refresh(); prismaEditSection(section)}}
             class="accent-primary"
             aria-label="Toggle section visibility"
           />
@@ -203,7 +206,7 @@
 
           <button 
             aria-label="Edit section"
-            on:click={() => {openSecModal = true; editSection = i; newSection = $data.sections[i].clone()}}
+            on:click={() => {openSecModal = true; editSection = i; newSection = $data.sections[i].clone();}}
             class="z-30 group"
           >
             <svg

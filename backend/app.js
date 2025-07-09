@@ -172,6 +172,78 @@ async function editSection(req, res) {
   }
 }
 
+// == Resume experience
+async function getAllExperiences(req, res) {
+  const experiences = await prisma.resumeExperience.findMany();
+  res.json(experiences);
+}
+
+async function getExperienceByID(req, res) {
+  const experienceId = parseInt(req.params.id);
+  const experience = await prisma.resumeExperience.findUnique({
+    where: {id : experienceId,},
+  })
+  res.json(experience);
+}
+
+async function createExperience(req, res) {
+  const { name, sectionId } = req.body;
+  try {
+    const existingExperience = await prisma.resumeExperience.findFirst({
+      where: {
+        name,
+        sectionId: parseInt(sectionId)
+      }
+    });
+    if (existingExperience) {
+      return res.status(400).json({ error: 'Experience with this ID already exists for this section!'});
+    }
+    const newSection = await prisma.resumeExperience.create({
+      data: {
+        name,
+        resumeData: {
+          connect: {
+            id: parseInt(resumeDataId)
+          }
+        }
+      }
+    });
+    res.status(201).json(newSection);
+  } catch (error) {
+    console.error("Error creating ResumeSection:", error);
+    res.status(500).json({ error: 'Failed to create resume section' });
+  }
+}
+
+async function deleteExperience(req, res) {
+  const id = parseInt(req.params.id);
+  try {
+    const deleted = await prisma.resumeSection.delete({
+      where: { id }
+    });
+    res.status(200).json({ message: 'Section deleted', id: deleted.id });
+  } catch (error) {
+    console.error("Error deleting section:", error);
+    res.status(500).json({ error: 'Failed to delete section' });
+  }
+}
+
+async function editExperience(req, res) {
+  const sectionId = parseInt(req.params.id);
+  const { name, visible} = req.body;
+
+  try {
+    const updatedSection = await prisma.resumeSection.update({
+      where: { id: sectionId },
+      data: {name, visible}
+    });
+    console.log("Updated section:", updatedSection);
+    res.status(200).json(updatedSection);
+  } catch (error) {
+    console.error("Error updating section:", error);
+    res.status(500).json({ error: "Failed to update section" });
+  }
+}
 
 
 // Router
@@ -196,6 +268,13 @@ app.use('/api', express.Router()
     .post('/sections', createSection)
     .delete('/sections/:id', deleteSection)
     .put('/sections/:id', editSection)
+
+    // Resume secitons
+    .get('/experiences', getAllExperiences)
+    .get('/experiences/:id', getExperienceByID)
+    .post('/experiences', createExperience)
+    .delete('/experiences/:id', deleteExperience)
+    .put('/experiences/:id', editExperience)
 );
 
 // Listen to indicate it's working
