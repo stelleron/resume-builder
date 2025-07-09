@@ -88,6 +88,18 @@
       return 0;
     }
   }
+
+  async function prismaDeleteExperience(experience: ResumeExperience) {
+    const res = await fetch(`/api/experiences/${experience.id}`, {
+      method: 'DELETE',
+    });
+
+    if (res.ok) {
+      console.log("Experience deleted!");
+    } else {
+      console.error("Failed to delete experience");
+    }
+  }
   // == BACKEND
 
   // For Section
@@ -168,6 +180,7 @@
   const deleteExperience = (id: number, index: number) => {
     const section = $data.sections.find(s => s.id === id);
     if (section) {
+      prismaDeleteExperience(section.experiences[index]);
       section.experiences.splice(index, 1);
       $data = $data;
       console.log($data);

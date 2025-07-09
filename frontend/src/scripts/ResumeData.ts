@@ -36,6 +36,7 @@ export class ResumeExperience {
 
     static fromJSON(obj: any): ResumeExperience {
         const exp = new ResumeExperience();
+        exp.id = obj.id;
         exp.title = obj.title;
         exp.sub_title = obj.subTitle,
         exp.time_period = obj.timePeriod,
