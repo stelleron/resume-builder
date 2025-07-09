@@ -120,19 +120,10 @@ async function getSectionByID(req, res) {
 async function createSection(req, res) {
   const { name, visible, resumeDataId } = req.body;
   try {
-    const existingSection = await prisma.resumeSection.findFirst({
-      where: {
-        name,
-        visible,
-        resumeDataId: parseInt(resumeDataId)
-      }
-    });
-    if (existingSection) {
-      return res.status(400).json({ error: 'Section with this name already exists for this resume!' });
-    }
     const newSection = await prisma.resumeSection.create({
       data: {
         name,
+        visible,
         resumeData: {
           connect: {
             id: parseInt(resumeDataId)
@@ -194,15 +185,6 @@ async function getExperienceByID(req, res) {
 async function createExperience(req, res) {
   const {title, subTitle, timePeriod, location, skillsUsed, bulletPoints, visible, sectionId} = req.body;
   try {
-    const existingExperience = await prisma.resumeExperience.findFirst({
-      where: {
-        title, 
-        sectionId: parseInt(sectionId)
-      }
-    });
-    if (existingExperience) {
-      return res.status(400).json({ error: 'Experience with this ID already exists for this section!'});
-    }
     const newExperience = await prisma.resumeExperience.create({
       data: {
         title, subTitle, timePeriod, location, skillsUsed, bulletPoints, visible,

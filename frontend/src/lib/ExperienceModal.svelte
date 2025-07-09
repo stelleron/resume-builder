@@ -7,7 +7,6 @@
     export let experience : ResumeExperience;
 
     const handleKeydown = (event: KeyboardEvent) => {
-        console.log("ESC pressed", event);
         if (event.key === 'Escape') {
             close();
         }

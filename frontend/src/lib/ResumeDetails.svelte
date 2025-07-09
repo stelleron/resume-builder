@@ -113,7 +113,7 @@
         bulletPoints: experience.bullet_points,
         skillsUsed: experience.skills_used,
         visible: experience.visible,
-        sectionId: selectedExp
+        sectionId: selectedExp,
       })
     });
 
