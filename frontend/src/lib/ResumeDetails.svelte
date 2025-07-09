@@ -26,9 +26,21 @@
     });
 
     if (res.ok) {
-      console.log("Resume updated!");
+      console.log("Created section!");
     } else {
-      console.error("Failed to save resume");
+      console.error("Failed to create section");
+    }
+  }
+
+  async function prismaDeleteSection(section: ResumeSection) {
+    const res = await fetch(`/api/sections/${section.id}`, {
+      method: 'DELETE',
+    });
+
+    if (res.ok) {
+      console.log("Section deleted!");
+    } else {
+      console.error("Failed to delete section");
     }
   }
 
@@ -58,6 +70,7 @@
   }
 
   const deleteSection = (index: number) => {
+      prismaDeleteSection($data.sections[index]);
       $data.sections.splice(index, 1);
       $data = $data;
       console.log($data);

@@ -142,6 +142,19 @@ async function createSection(req, res) {
   }
 }
 
+async function deleteSection(req, res) {
+  const id = parseInt(req.params.id);
+  try {
+    const deleted = await prisma.resumeSection.delete({
+      where: { id }
+    });
+    res.status(200).json({ message: 'Section deleted', id: deleted.id });
+  } catch (error) {
+    console.error("Error deleting section:", error);
+    res.status(500).json({ error: 'Failed to delete section' });
+  }
+}
+
 
 
 // Router
@@ -164,6 +177,7 @@ app.use('/api', express.Router()
     .get('/sections', getAllSections)
     .get('/sections/:id', getSectionByID)
     .post('/sections', createSection)
+    .delete('/sections/:id', deleteSection)
 );
 
 // Listen to indicate it's working
