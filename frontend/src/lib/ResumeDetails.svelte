@@ -100,6 +100,29 @@
       console.error("Failed to delete experience");
     }
   }
+
+  async function prismaEditExperience(experience: ResumeExperience) {
+    const res = await fetch(`/api/experiences/${experience.id}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json',},
+      body: JSON.stringify({
+        title: experience.title,
+        subTitle: experience.sub_title,
+        timePeriod: experience.time_period,
+        location: experience.location,
+        bulletPoints: experience.bullet_points,
+        skillsUsed: experience.skills_used,
+        visible: experience.visible,
+        sectionId: selectedExp
+      })
+    });
+
+    if (res.ok) {
+      console.log("Experience updated!");
+    } else {
+      console.error("Failed to edit experience");
+    }
+  }
   // == BACKEND
 
   // For Section
@@ -167,6 +190,7 @@
     } else {
       for (let i = 0; i < $data.sections.length; i++) {
         if (selectedExp == $data.sections[i].id) {
+          prismaEditExperience(newExperience);
           $data.sections[i].experiences[editExperience] = newExperience.clone();
           $data = $data;
           console.log($data);
@@ -287,7 +311,7 @@
               <input
                 type="checkbox"
                 bind:checked={exp.visible}
-                on:change={() => refresh()}
+                on:change={() => {refresh(); prismaEditExperience(exp);}}
                 class="accent-primary self-center"
                 aria-label="Toggle experience visibility"
               />
