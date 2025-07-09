@@ -11,6 +11,7 @@
   import { get } from 'svelte/store';
 
   export let data: Writable<ResumeData>;
+  let selectedExp = -1;
 
   // == BACKEND
   // Section
@@ -61,7 +62,32 @@
     }
   }
   // Experience
+  async function prismaAddExperience(experience: ResumeExperience): Promise<number> {
+    console.log(selectedExp);
+    const res = await fetch('/api/experiences/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSON.stringify({
+        title: experience.title,
+        subTitle: experience.sub_title,
+        timePeriod: experience.time_period,
+        location: experience.location,
+        bulletPoints: experience.bullet_points,
+        skillsUsed: experience.skills_used,
+        visible: experience.visible,
+        sectionId: selectedExp
+      })
+    });
 
+    if (res.ok) {
+      const json = await res.json();
+      console.log("Created experience!");
+      return json.id;
+    } else {
+      console.error("Failed to create experience");
+      return 0;
+    }
+  }
   // == BACKEND
 
   // For Section
@@ -106,7 +132,6 @@
 
   // For Experiences
   let expCount = 0;
-  let selectedExp = -1;
   let openExpModal: boolean = false;
   let newExperience = new ResumeExperience();
   let editExperience = -1;
@@ -116,11 +141,11 @@
       selectedExp = -1;
   }
 
-  const addExpItem = () => {
+  const addExpItem = async () => {
     if (editExperience == -1) {
       for (let i = 0; i < $data.sections.length; i++) {
         if (selectedExp == $data.sections[i].id) {
-          newExperience.id = ++expCount;
+          newExperience.id = await prismaAddExperience(newExperience);
           $data.sections[i].experiences = [...$data.sections[i].experiences, newExperience.clone()];
           $data = $data;
           console.log($data);

@@ -48,6 +48,7 @@ model ResumeExperience {
   subTitle     String
   timePeriod   String
   location     String
+  skillsUsed   String
   bulletPoints String[]       // array of strings
   visible      Boolean        @default(true)
   section      ResumeSection  @relation(fields: [sectionId], references: [id])

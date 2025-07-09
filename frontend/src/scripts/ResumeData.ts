@@ -36,8 +36,13 @@ export class ResumeExperience {
 
     static fromJSON(obj: any): ResumeExperience {
         const exp = new ResumeExperience();
-        Object.assign(exp, obj);
-        exp.bullet_points = [...(obj.bullet_points ?? [])];
+        exp.title = obj.title;
+        exp.sub_title = obj.subTitle,
+        exp.time_period = obj.timePeriod,
+        exp.location = obj.location,
+        exp.visible = obj.visible,
+        exp.skills_used = obj.skillsUsed,
+        exp.bullet_points = [...(obj.bulletPoints ?? [])];
         return exp;
     }
 }

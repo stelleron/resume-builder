@@ -55,7 +55,11 @@ async function getResumeByID(req, res) {
   const resumeId = parseInt(req.params.id);
   const user = await prisma.resumeData.findUnique({
     where: {id : resumeId,},
-    include: {sections: true},
+    include: {sections: {
+      include: {
+        experiences: true
+      }
+    }},
   })
   res.json(user);
 }
@@ -114,11 +118,12 @@ async function getSectionByID(req, res) {
 }
 
 async function createSection(req, res) {
-  const { name, resumeDataId } = req.body;
+  const { name, visible, resumeDataId } = req.body;
   try {
     const existingSection = await prisma.resumeSection.findFirst({
       where: {
         name,
+        visible,
         resumeDataId: parseInt(resumeDataId)
       }
     });
@@ -157,7 +162,7 @@ async function deleteSection(req, res) {
 
 async function editSection(req, res) {
   const sectionId = parseInt(req.params.id);
-  const { name, visible} = req.body;
+  const {name, visible} = req.body;
 
   try {
     const updatedSection = await prisma.resumeSection.update({
@@ -187,61 +192,61 @@ async function getExperienceByID(req, res) {
 }
 
 async function createExperience(req, res) {
-  const { name, sectionId } = req.body;
+  const {title, subTitle, timePeriod, location, skillsUsed, bulletPoints, visible, sectionId} = req.body;
   try {
     const existingExperience = await prisma.resumeExperience.findFirst({
       where: {
-        name,
+        title, 
         sectionId: parseInt(sectionId)
       }
     });
     if (existingExperience) {
       return res.status(400).json({ error: 'Experience with this ID already exists for this section!'});
     }
-    const newSection = await prisma.resumeExperience.create({
+    const newExperience = await prisma.resumeExperience.create({
       data: {
-        name,
-        resumeData: {
+        title, subTitle, timePeriod, location, skillsUsed, bulletPoints, visible,
+        section: {
           connect: {
-            id: parseInt(resumeDataId)
+            id: parseInt(sectionId)
           }
         }
       }
     });
-    res.status(201).json(newSection);
+    res.status(201).json(newExperience);
   } catch (error) {
-    console.error("Error creating ResumeSection:", error);
-    res.status(500).json({ error: 'Failed to create resume section' });
+    console.error("Error creating ResumeExperience:", error);
+    res.status(500).json({ error: 'Failed to create resume experience' });
   }
 }
 
 async function deleteExperience(req, res) {
   const id = parseInt(req.params.id);
   try {
-    const deleted = await prisma.resumeSection.delete({
+    const deleted = await prisma.resumeExperience.delete({
       where: { id }
     });
-    res.status(200).json({ message: 'Section deleted', id: deleted.id });
+    res.status(200).json({ message: 'Experience deleted', id: deleted.id });
   } catch (error) {
-    console.error("Error deleting section:", error);
-    res.status(500).json({ error: 'Failed to delete section' });
+    console.error("Error deleting experience:", error);
+    res.status(500).json({ error: 'Failed to delete experience' });
   }
 }
 
 async function editExperience(req, res) {
-  const sectionId = parseInt(req.params.id);
-  const { name, visible} = req.body;
+  const experienceId = parseInt(req.params.id);
+  const {title, subTitle, timePeriod, location, skillsUsed, bulletPoints, visible} = req.body;
 
   try {
-    const updatedSection = await prisma.resumeSection.update({
-      where: { id: sectionId },
-      data: {name, visible}
+    const updatedExperience = await prisma.resumeExperience.update({
+      where: { id: experienceId },
+      data: {title, subTitle, timePeriod, location, skillsUsed, bulletPoints, visible,}
     });
-    console.log("Updated section:", updatedSection);
-    res.status(200).json(updatedSection);
+    console.log("Updated experience:", updatedExperience);
+    res.status(200).json(updatedExperience);
   } catch (error) {
-    console.error("Error updating section:", error);
-    res.status(500).json({ error: "Failed to update section" });
+    console.error("Error updating experience:", error);
+    res.status(500).json({ error: "Failed to update experience" });
   }
 }
 
