@@ -14,7 +14,7 @@
 
   // For backend
   // Section
-  async function prismaAddSection(section: ResumeSection) {
+  async function prismaAddSection(section: ResumeSection): Promise<number> {
     const res = await fetch('/api/sections/', {
       method: 'POST',
       headers: {'Content-Type': 'application/json',},
@@ -26,9 +26,12 @@
     });
 
     if (res.ok) {
+      const json = await res.json();
       console.log("Created section!");
+      return json.id;
     } else {
       console.error("Failed to create section");
+      return 0;
     }
   }
 
@@ -68,10 +71,9 @@
       openSecModal = false;
   }
 
-  const addSectionItem = () => {
+  const addSectionItem = async () => {
     if (editSection == -1) {
-      prismaAddSection(newSection);
-      newSection.id = ++secCount;
+      newSection.id = await prismaAddSection(newSection);
       $data.sections.push(newSection.clone()); $data.sections = $data.sections;
       $data = $data;
       console.log($data);
