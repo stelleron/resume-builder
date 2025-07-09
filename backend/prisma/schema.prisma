@@ -28,7 +28,7 @@ model ResumeData {
   email      String
   github     String
   linkedin   String
-  user       UserData       @relation(fields: [userId], references: [id])
+  user       UserData       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     Int            @unique
   sections   ResumeSection[]
 }
@@ -37,7 +37,7 @@ model ResumeSection {
   id           Int                @id @default(autoincrement())
   name         String
   visible      Boolean            @default(true)
-  resumeData   ResumeData         @relation(fields: [resumeDataId], references: [id])
+  resumeData   ResumeData         @relation(fields: [resumeDataId], references: [id], onDelete: Cascade)
   resumeDataId Int
   experiences  ResumeExperience[] 
 }
@@ -51,6 +51,6 @@ model ResumeExperience {
   skillsUsed   String
   bulletPoints String[]       // array of strings
   visible      Boolean        @default(true)
-  section      ResumeSection  @relation(fields: [sectionId], references: [id])
+  section      ResumeSection  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   sectionId    Int
 }
