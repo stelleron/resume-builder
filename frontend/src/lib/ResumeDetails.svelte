@@ -8,8 +8,29 @@
   import SectionModal from './SectionModal.svelte';
 
   import { writable, type Writable } from 'svelte/store';
+  import { get } from 'svelte/store';
 
   export let data: Writable<ResumeData>;
+
+  // For backend
+  // Section
+  async function prismaAddSection(section: ResumeSection) {
+    const res = await fetch('/api/sections/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSON.stringify({
+        name: section.name,
+        resumeDataId: $data.id,
+        visible: section.visible,
+      })
+    });
+
+    if (res.ok) {
+      console.log("Resume updated!");
+    } else {
+      console.error("Failed to save resume");
+    }
+  }
 
   // For Section
   let secCount = 0;
@@ -27,6 +48,7 @@
       $data.sections.push(newSection.clone()); $data.sections = $data.sections;
       $data = $data;
       console.log($data);
+      prismaAddSection(newSection);
     } else {
       $data.sections[editSection] = newSection.clone();
       $data = $data;
@@ -109,7 +131,6 @@
   const refresh = () => {
     $data = $data;
   }
-
 </script>
 
 <main>

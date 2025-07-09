@@ -61,7 +61,7 @@ async function getResumeByID(req, res) {
 }
 
 async function createResume(req, res) {
-  const { name, phone, email, github, linkedin, userId } = req.body;
+  const { name, phone, email, github, linkedin, userId} = req.body;
   try {
     const existingResume = await prisma.resumeData.findFirst({
       where: { user: {id: parseInt(userId)}}
@@ -83,7 +83,7 @@ async function createResume(req, res) {
 
 async function editResume(req, res) {
   const resumeId = parseInt(req.params.id);
-  const { name, phone, email, github, linkedin } = req.body;
+  const { name, phone, email, github, linkedin} = req.body;
 
   try {
     const updatedResume = await prisma.resumeData.update({
@@ -97,6 +97,51 @@ async function editResume(req, res) {
     res.status(500).json({ error: "Failed to update resume" });
   }
 }
+
+// == Resume sections
+async function getAllSections(req, res) {
+  const sections = await prisma.resumeSection.findMany();
+  res.json(sections);
+}
+
+async function getSectionByID(req, res) {
+  const sectionId = parseInt(req.params.id);
+  const sections = await prisma.resumeSection.findUnique({
+    where: {id : sectionId,},
+    include: {experiences: true},
+  })
+  res.json(sections);
+}
+
+async function createSection(req, res) {
+  const { name, resumeDataId } = req.body;
+  try {
+    const existingSection = await prisma.resumeSection.findFirst({
+      where: {
+        name,
+        resumeDataId: parseInt(resumeDataId)
+      }
+    });
+    if (existingSection) {
+      return res.status(400).json({ error: 'Section with this name already exists for this resume!' });
+    }
+    const newSection = await prisma.resumeSection.create({
+      data: {
+        name,
+        resumeData: {
+          connect: {
+            id: parseInt(resumeDataId)
+          }
+        }
+      }
+    });
+    res.status(201).json(newSection);
+  } catch (error) {
+    console.error("Error creating ResumeSection:", error);
+    res.status(500).json({ error: 'Failed to create resume section' });
+  }
+}
+
 
 
 // Router
@@ -114,6 +159,11 @@ app.use('/api', express.Router()
     .get('/resumedata/:id', getResumeByID)
     .post('/resumedata', createResume)
     .put('/resumedata/:id', editResume)
+
+    // Resume secitons
+    .get('/sections', getAllSections)
+    .get('/sections/:id', getSectionByID)
+    .post('/sections', createSection)
 );
 
 // Listen to indicate it's working
