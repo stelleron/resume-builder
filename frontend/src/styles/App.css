@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+.section-box {
+  flex: 1;
+  padding: 20px;
+}
+

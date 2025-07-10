@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model UserData {
+  id       Int         @id @default(autoincrement())
+  username String      @unique
+  password String
+  resume   ResumeData? 
+}
+
+model ResumeData {
+  id         Int            @id @default(autoincrement())
+  name       String
+  phone      String
+  email      String
+  github     String
+  linkedin   String
+  user       UserData       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int            @unique
+  sections   ResumeSection[]
+}
+
+model ResumeSection {
+  id           Int                @id @default(autoincrement())
+  name         String
+  visible      Boolean            @default(true)
+  resumeData   ResumeData         @relation(fields: [resumeDataId], references: [id], onDelete: Cascade)
+  resumeDataId Int
+  experiences  ResumeExperience[] 
+}
+
+model ResumeExperience {
+  id           Int            @id @default(autoincrement())
+  title        String
+  subTitle     String
+  timePeriod   String
+  location     String
+  skillsUsed   String
+  bulletPoints String[]       // array of strings
+  visible      Boolean        @default(true)
+  section      ResumeSection  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId    Int
+}

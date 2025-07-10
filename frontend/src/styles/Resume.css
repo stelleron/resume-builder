@@ -1,0 +1,128 @@
+body {
+  margin: 0px;
+}
+
+#resume-preview {
+  color: #202020;
+  margin: 0 auto;
+  padding: 20pt;
+  background: rgb(204, 204, 204);
+  display: flex;
+  flex-direction: column;
+  padding-top: 0px;
+}
+
+.section-box {
+  flex: 1;
+  padding: 20px;
+}
+
+:root {
+  --bleeding: 0.5cm;
+  --margin: 1cm;
+}
+
+@page {
+  size: letter;
+  margin: 0;
+}
+* {
+  box-sizing: border-box;
+}
+
+#page {
+  display: inline-block;
+  position: relative;
+  height: 11in;
+  width: 8.5in;
+  font-size: 10pt;
+  margin: 2em auto;
+  padding: calc(var(--bleeding) + var(--margin) - 30px);
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+  background: white;
+  font-family: "PT Serif", sans-serif; 
+}
+
+
+@media screen {
+  #page::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: calc(100% - var(--bleeding) * 2);
+    height: calc(100% - var(--bleeding) * 2);
+    margin: var(--bleeding);
+    pointer-events: none;
+    z-index: 9999;
+  }
+}
+
+@media print {
+  #page {
+    margin: 0;
+    overflow: hidden;
+  }
+}
+
+.resume-name {
+  font-size: 18pt;
+  font-weight: bold;
+  text-align: center;
+}
+
+.resume-key-details {
+  margin-top: 2pt;
+  max-width: fit-content;
+  margin-inline: auto;
+}
+
+.resume-section-title {
+  font-weight: bold;
+  font-size: 12pt;
+  margin-top: 5pt;
+  margin-bottom: 0pt;
+}
+
+hr {
+  margin-top: 0px;
+  margin-bottom: 3px;
+}
+
+.resume-exp {
+  margin-bottom: -5px;
+}
+
+.exp-title {
+  font-weight: bold;
+}
+
+.exp-subtitle {
+  font-weight: normal;
+  font-style: italic;
+}
+
+.exp-time {
+  font-weight: normal;
+  font-style: italic;
+  float: right;
+}
+
+.exp-location {
+  font-weight: normal;
+  float: right;
+}
+
+ul {
+  list-style-position: inside;
+  padding-left: 0px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  overflow: visible;
+}
+
+li {
+  position: relative;
+  padding-left: 20px; /* Space for custom bullet */
+  text-indent: -15px; /* Align text after bullet */
+}
