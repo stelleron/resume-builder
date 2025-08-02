@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ResumeData, ResumeSection, ResumeExperience} from '../scripts/ResumeData';
+    import { ResumeData, ResumeSection, ResumeExperience} from '$lib/ResumeData';
     import { writable, type Writable } from 'svelte/store';
 
     export let data: Writable<ResumeData>;

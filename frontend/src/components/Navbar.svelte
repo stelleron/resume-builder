@@ -1,5 +1,5 @@
 <style>
-  @import '../styles/App.css';
+  @import '../app.css';
 </style>
 
 <script lang="ts">

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import ResumePreview from "./lib/ResumePreview.svelte";
-  import HeaderForm from "./lib/HeaderForm.svelte";
-  import Navbar from "./lib/Navbar.svelte"
+  import ResumePreview from "./ResumePreview.svelte";
+  import HeaderForm from "./HeaderForm.svelte";
+  import Navbar from "./Navbar.svelte"
   
   import { writable, type Writable } from 'svelte/store';
-  import { ResumeData } from './scripts/ResumeData';
+  import { ResumeData } from '$lib/ResumeData';
   import { onMount } from 'svelte';
 
   let data: Writable<ResumeData> = writable(new ResumeData());
