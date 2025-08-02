@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ResumeSection } from "../scripts/ResumeData";
+    import type { ResumeSection } from "$lib/ResumeData";
 
     export let open: boolean;
     export let close: () => void;

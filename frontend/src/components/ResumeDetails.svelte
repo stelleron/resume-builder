@@ -1,9 +1,9 @@
 <style>
-  @import '../styles/App.css';
+  @import '../app.css';
 </style>
 
 <script lang='ts'>
-  import { ResumeData, ResumeExperience, ResumeSection } from '../scripts/ResumeData';
+  import { ResumeData, ResumeExperience, ResumeSection } from '$lib/ResumeData';
   import ExperienceModal from './ExperienceModal.svelte';
   import SectionModal from './SectionModal.svelte';
 

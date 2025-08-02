@@ -1,6 +1,6 @@
 <script lang='ts'>
-    import ResumeDetails from "../lib/ResumeDetails.svelte";
-    import { ResumeData } from '../scripts/ResumeData';
+    import ResumeDetails from "./ResumeDetails.svelte";
+    import { ResumeData } from '$lib/ResumeData';
 
     import { get } from 'svelte/store';
     import { writable, type Writable } from 'svelte/store';
@@ -26,7 +26,7 @@
 </script>
 
 <style>
-  @import '../styles/App.css';
+  @import '../app.css';
 </style>
 
 <main>

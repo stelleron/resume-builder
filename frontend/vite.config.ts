@@ -1,13 +1,13 @@
-import { defineConfig } from 'vite';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
-import tailwindcss from '@tailwindcss/vite';
+import tailwindcss from "@tailwindcss/vite";
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [svelte(), tailwindcss()],
+  plugins: [tailwindcss(), sveltekit()],
   server: {
     proxy: {
       '/api': 'http://localhost:3000', // Proxy API to backend
-      
+
     },
   },
 });
