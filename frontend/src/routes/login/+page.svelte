@@ -4,10 +4,13 @@
 
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import { writable, type Writable } from 'svelte/store';
+  import { userId } from '../../lib/UserId';
 
   let username = '';
   let password = '';
   let unableLogIn = false;
+
 
   async function login() {
     const data = new URLSearchParams();
@@ -25,9 +28,12 @@
 
 		if (res.ok) {
       unableLogIn = false;
+      let buf = await res.json();
+      userId.set(buf.userId);
 			goto('/');
 		} else {
 			unableLogIn = true;
+      userId.set(null);
 		}
   }
 </script>

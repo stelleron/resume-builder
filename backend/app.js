@@ -54,7 +54,11 @@ passport.deserializeUser(async (id, done) => {
 
 // Login and signup
 async function authLogin(req, res) {
-  res.status(200).send({ message: 'Logged in' });
+  if (req.isAuthenticated()) {
+    res.status(200).json({ userId: req.user.id });
+  } else {
+    res.status(401).json({ message: 'Not authenticated' });
+  }
 }
 
 // CORS for using from Svelte
