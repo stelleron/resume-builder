@@ -60,7 +60,6 @@ async function authLogin(req, res) {
     res.status(401).json({ message: 'Not authenticated' });
   }
 }
-
 // CORS for using from Svelte
 const cors = require('cors');
 app.use(cors());
@@ -83,10 +82,21 @@ async function getUserByID(req, res) {
 
 async function createUser(req, res) {
   const { username, password } = req.body;
-  const newUser = await prisma.userData.create({
-    data: { username, password },
-  });
-  res.status(201).json(newUser);
+  try {
+    const newUser = await prisma.userData.create({
+      data: { username, password },
+    });
+    res.status(201).json(newUser);
+  } catch (error) {
+    if (
+      error.code === 'P2002' &&
+      error.meta?.target?.includes('username')
+    ) {
+      res.status(409).json({ error: 'Username already exists' });
+    } else {
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
 }
 
 // == Test user
@@ -290,6 +300,9 @@ async function editExperience(req, res) {
 app.use('/api', express.Router()
     // Login
     .post('/login', passport.authenticate('local'), authLogin)
+
+    // Signup
+    .post('/signup', createUser)
 
     // Userdata
     .get('/userdata', getAllUsers)
