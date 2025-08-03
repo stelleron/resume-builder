@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: shreyasdonti
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: resume_gen
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DB_USER: shreyasdonti
+      DB_HOST: db
+      DB_DATABASE: resume_gen
+      DB_PORT: 5432
+      DB_URL: postgresql://shreyasdonti:password@db:5432/resume_gen
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

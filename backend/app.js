@@ -5,6 +5,9 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
 
+require('dotenv').config();
+console.log('DB_URL:', process.env.DB_URL);
+
 // Basic init
 const app = express();
 app.use(express.json()); 
