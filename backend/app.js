@@ -52,6 +52,11 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+// Login and signup
+async function authLogin(req, res) {
+  res.status(200).send({ message: 'Logged in' });
+}
+
 // CORS for using from Svelte
 const cors = require('cors');
 app.use(cors());
@@ -280,9 +285,7 @@ async function editExperience(req, res) {
 // Router
 app.use('/api', express.Router()
     // Login
-    .post('/login', passport.authenticate('local'), (req, res) => {
-      res.status(200).send({ message: 'Logged in' });
-    })
+    .post('/login', passport.authenticate('local'), authLogin)
 
     // Userdata
     .get('/userdata', getAllUsers)

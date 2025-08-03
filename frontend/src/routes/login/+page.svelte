@@ -7,6 +7,7 @@
 
   let username = '';
   let password = '';
+  let unableLogIn = false;
 
   async function login() {
     const data = new URLSearchParams();
@@ -22,11 +23,11 @@
 			}
     });
 
-
 		if (res.ok) {
+      unableLogIn = false;
 			goto('/');
 		} else {
-			console.error('Login failed');
+			unableLogIn = true;
 		}
   }
 </script>
@@ -40,5 +41,9 @@
   <label class="label">Password</label>
   <input type="password" class="input" placeholder="Password" bind:value={password}/>
 
-  <button class="btn btn-neutral mt-4" on:click={() => login()}>Login</button>
+  {#if unableLogIn}
+    <div class="text-red-700 font-bold">Error: Unable to log in!</div>
+  {/if}
+
+  <button class="btn btn-neutral" on:click={() => login()}>Login</button>
 </fieldset>
