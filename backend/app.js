@@ -99,15 +99,6 @@ async function createUser(req, res) {
   }
 }
 
-// == Test user
-async function getTestData(req, res) {
-  const testuser = await prisma.userData.findUnique({
-    where: {id : 1,},
-    include: { resume: true }, 
-  })
-  res.json(testuser);
-}
-
 // == Resume data
 async function getAllResumes(req, res) {
   const users = await prisma.resumeData.findMany();
@@ -308,9 +299,6 @@ app.use('/api', express.Router()
     .get('/userdata', getAllUsers)
     .get('/userdata/:id', getUserByID)
     .post('/userdata', createUser)
-
-    // For testing - before adding accounts
-    .get('/testdata', getTestData)
 
     // Resume data 
     .get('/resumedata', getAllResumes)
