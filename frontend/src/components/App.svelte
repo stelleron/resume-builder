@@ -33,6 +33,8 @@
           userId: parseInt(user_data.id),
         })
       });
+      const resume_json = await resume_res.json();
+      data.set(ResumeData.fromJSON(resume_json));
     } else {
       // Else load up it's resume
       console.log("Has resume!");
