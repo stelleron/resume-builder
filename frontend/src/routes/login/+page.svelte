@@ -42,6 +42,8 @@
     <label class="label">Password</label>
     <input type="password" class="input" placeholder="Password" bind:value={password}/>
 
+    <div class="">Don't have an account? <a href="/signup" class="text-blue-300">Sign Up</a></div>
+
     {#if unableLogIn}
       <div class="text-red-700 font-bold">Error: Unable to log in!</div>
     {/if}
