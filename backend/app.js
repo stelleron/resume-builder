@@ -1,12 +1,56 @@
 // Imports
 const express = require("express");
 const { PrismaClient } = require('./generated/prisma'); 
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require('passport-local').Strategy;
 
 // Basic init
 const app = express();
 app.use(express.json()); 
 const prisma = new PrismaClient();
 const PORT = 3000;
+
+// Authentication
+app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
+
+// Setting up local strategy
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const user = await prisma.userData.findFirst({
+        where: {username: username}
+      });
+
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+      if (user.password !== password) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+      return done(null, user);
+    } catch(err) {
+      return done(err);
+    }
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await prisma.userData.findFirst({
+      where: {id: id}
+    });
+    done(null, user);
+  } catch(err) {
+    done(err);
+  }
+});
 
 // CORS for using from Svelte
 const cors = require('cors');
@@ -235,6 +279,11 @@ async function editExperience(req, res) {
 
 // Router
 app.use('/api', express.Router()
+    // Login
+    .post('/login', passport.authenticate('local'), (req, res) => {
+      res.status(200).send({ message: 'Logged in' });
+    })
+
     // Userdata
     .get('/userdata', getAllUsers)
     .get('/userdata/:id', getUserByID)
