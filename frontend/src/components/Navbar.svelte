@@ -35,7 +35,7 @@
 <main>
   <div class="navbar bg-base-100 shadow-sm">
     <div class="flex-1">
-      <h1 class="btn btn-ghost text-2xl">Resume Generator</h1>
+      <h1 class="btn btn-ghost text-2xl">ResumeGen</h1>
     </div>
     <div class="flex-none">
       <!-- Download Button with Tooltip -->

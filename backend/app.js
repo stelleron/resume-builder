@@ -1,6 +1,9 @@
 // Imports
 const express = require("express");
 const { PrismaClient } = require('./generated/prisma'); 
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require('passport-local').Strategy;
 
 // Basic init
 const app = express();
@@ -8,6 +11,55 @@ app.use(express.json());
 const prisma = new PrismaClient();
 const PORT = 3000;
 
+// Authentication
+app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
+
+// Setting up local strategy
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const user = await prisma.userData.findFirst({
+        where: {username: username}
+      });
+
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+      if (user.password !== password) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+      return done(null, user);
+    } catch(err) {
+      return done(err);
+    }
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await prisma.userData.findFirst({
+      where: {id: id}
+    });
+    done(null, user);
+  } catch(err) {
+    done(err);
+  }
+});
+
+// Login and signup
+async function authLogin(req, res) {
+  if (req.isAuthenticated()) {
+    res.status(200).json({ userId: req.user.id });
+  } else {
+    res.status(401).json({ message: 'Not authenticated' });
+  }
+}
 // CORS for using from Svelte
 const cors = require('cors');
 app.use(cors());
@@ -30,19 +82,21 @@ async function getUserByID(req, res) {
 
 async function createUser(req, res) {
   const { username, password } = req.body;
-  const newUser = await prisma.userData.create({
-    data: { username, password },
-  });
-  res.status(201).json(newUser);
-}
-
-// == Test user
-async function getTestData(req, res) {
-  const testuser = await prisma.userData.findUnique({
-    where: {id : 1,},
-    include: { resume: true }, 
-  })
-  res.json(testuser);
+  try {
+    const newUser = await prisma.userData.create({
+      data: { username, password },
+    });
+    res.status(201).json(newUser);
+  } catch (error) {
+    if (
+      error.code === 'P2002' &&
+      error.meta?.target?.includes('username')
+    ) {
+      res.status(409).json({ error: 'Username already exists' });
+    } else {
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
 }
 
 // == Resume data
@@ -235,13 +289,16 @@ async function editExperience(req, res) {
 
 // Router
 app.use('/api', express.Router()
+    // Login
+    .post('/login', passport.authenticate('local'), authLogin)
+
+    // Signup
+    .post('/signup', createUser)
+
     // Userdata
     .get('/userdata', getAllUsers)
     .get('/userdata/:id', getUserByID)
     .post('/userdata', createUser)
-
-    // For testing - before adding accounts
-    .get('/testdata', getTestData)
 
     // Resume data 
     .get('/resumedata', getAllResumes)

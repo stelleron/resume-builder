@@ -6,13 +6,14 @@
   import { writable, type Writable } from 'svelte/store';
   import { ResumeData } from '$lib/ResumeData';
   import { onMount } from 'svelte';
+  import {userId} from '$lib/UserId'
 
   let data: Writable<ResumeData> = writable(new ResumeData());
 
   // Create resume for user if one doesn't exist
-  onMount(async () => {
+  onMount(async () => {;
     // Fetch test user
-    const user_res = await fetch('/api/testdata');
+    const user_res = await fetch(`/api/userdata/${$userId}`);
     const user_data = await user_res.json();
 
     // If user doesn't have a resume attached, create a new one
@@ -32,6 +33,8 @@
           userId: parseInt(user_data.id),
         })
       });
+      const resume_json = await resume_res.json();
+      data.set(ResumeData.fromJSON(resume_json));
     } else {
       // Else load up it's resume
       console.log("Has resume!");
