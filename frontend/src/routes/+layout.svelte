@@ -12,6 +12,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+  <title>ResumeGen</title>
 </svelte:head>
 
 {@render children?.()}
