@@ -32,18 +32,20 @@
   }
 </script>
 
-<fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-  <legend class="fieldset-legend">Log In to ResumeGen</legend>
+<div class="flex items-center justify-center h-screen">
+  <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+    <legend class="fieldset-legend">Log In to ResumeGen</legend>
 
-  <label class="label">Email</label>
-  <input type="email" class="input" placeholder="Email" bind:value={username}/>
+    <label class="label">Email</label>
+    <input type="email" class="input" placeholder="Email" bind:value={username}/>
 
-  <label class="label">Password</label>
-  <input type="password" class="input" placeholder="Password" bind:value={password}/>
+    <label class="label">Password</label>
+    <input type="password" class="input" placeholder="Password" bind:value={password}/>
 
-  {#if unableLogIn}
-    <div class="text-red-700 font-bold">Error: Unable to log in!</div>
-  {/if}
+    {#if unableLogIn}
+      <div class="text-red-700 font-bold">Error: Unable to log in!</div>
+    {/if}
 
-  <button class="btn btn-neutral" on:click={() => login()}>Login</button>
-</fieldset>
+    <button class="btn btn-neutral" on:click={() => login()}>Login</button>
+  </fieldset>
+</div>
