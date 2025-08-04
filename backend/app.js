@@ -4,6 +4,7 @@ const { PrismaClient } = require('./generated/prisma');
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require("bcryptjs");
 
 // Basic init
 const app = express();
@@ -27,7 +28,8 @@ passport.use(
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
       }
-      if (user.password !== password) {
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
         return done(null, false, { message: "Incorrect password" });
       }
       return done(null, user);
@@ -83,8 +85,9 @@ async function getUserByID(req, res) {
 async function createUser(req, res) {
   const { username, password } = req.body;
   try {
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await prisma.userData.create({
-      data: { username, password },
+      data: { username, password: hashedPassword },
     });
     res.status(201).json(newUser);
   } catch (error) {

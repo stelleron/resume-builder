@@ -26,3 +26,5 @@ frontend/*.sw?
 test
 
 backend/.env
+
+docker.sh
