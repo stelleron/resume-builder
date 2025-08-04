@@ -3,7 +3,7 @@ ResumeGen is a web application built using SvelteKit + Express.js + PostgreSQL t
 ## Usage Instructions
 - Install Docker on your computer
 - `git clone` this repository
-- `cd` into this project and run `docker-compose  down  -v && docker-compose  up  --build`
+- `cd` into this project and run `docker-compose down -v && docker-compose up --build`
 - Go to `https://localhost:5173` and use this app!
 
 Credit to:
