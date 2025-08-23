@@ -35,12 +35,26 @@
                         {#each section.experiences as exp}
                             {#if exp.visible}
                             <div class="resume-exp">
-                                {#if exp.skills_used == ''}
-                                    <div class="exp-title">{exp.title}<span class="exp-time">{exp.time_period}</span></div>
-                                {:else}
-                                    <div class="exp-title">{exp.title} | <span class="exp-skills-used">{exp.skills_used}</span> <span class="exp-time">{exp.time_period}</span></div>
-                                {/if}
-                                <div><span class="exp-subtitle">{exp.sub_title}</span> <span class="exp-location">{exp.location}</span></div>
+                                <div class="exp-details">
+                                    <div class="exp-left">
+                                        <span class="exp-title">{exp.title}</span>
+                                        {#if exp.skills_used != ''}
+                                        <span class="exp-skills-used"> | {exp.skills_used}</span>
+                                        {/if}
+                                    </div>
+                                    <div class="exp-right">
+                                        <span class="exp-time">{exp.time_period}</span>
+                                    </div>
+                                    </div>
+
+                                    <div class="exp-details">
+                                    <div class="exp-left">
+                                        <span class="exp-subtitle">{exp.sub_title}</span>
+                                    </div>
+                                    <div class="exp-right">
+                                        <span class="exp-location">{exp.location}</span>
+                                    </div>
+                                </div>
                                 <ul>
                                 {#each exp.bullet_points as bullet_point}
                                     <li><span>{@html bullet_point.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</span></li>

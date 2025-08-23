@@ -36,7 +36,7 @@
   padding: calc(var(--bleeding) + var(--margin) - 30px);
   box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
   background: white;
-  font-family: "PT Serif", sans-serif; 
+  font-family: "PT Serif", sans-serif;
 }
 
 
@@ -89,29 +89,37 @@ hr {
   margin-bottom: -5px;
 }
 
+.exp-details {
+  display: flex;
+  justify-content: space-between;
+}
+
 .exp-title {
   font-weight: bold;
+  text-align: left;
 }
 
 .exp-subtitle {
   font-weight: normal;
   font-style: italic;
+  text-align: left;
 }
 
 .exp-skills-used {
   font-weight: normal;
   font-style: italic;
+  text-align: left;
 }
 
 .exp-time {
   font-weight: normal;
   font-style: italic;
-  float: right;
+  text-align: right;
 }
 
 .exp-location {
   font-weight: normal;
-  float: right;
+  text-align: right;
 }
 
 ul {
@@ -123,7 +131,6 @@ ul {
 }
 
 li {
-  position: relative;
   padding-left: 20px; /* Space for custom bullet */
   text-indent: -15px; /* Align text after bullet */
 }

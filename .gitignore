@@ -28,3 +28,6 @@ test
 backend/.env
 
 docker.sh
+test.css
+test.html
+test.txt
