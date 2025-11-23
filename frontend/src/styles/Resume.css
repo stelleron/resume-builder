@@ -2,6 +2,16 @@ body {
   margin: 0px;
 }
 
+@media print {
+  a[href] {
+    color: black !important;
+  }
+  /* Remove the URL that Chrome appends */
+  a[href]::after {
+    content: none !important;
+  }
+}
+
 #resume-preview {
   color: #202020;
   margin: 0 auto;
@@ -35,9 +45,9 @@ body {
   position: relative;
   height: 11in;
   width: 8.5in;
-  font-size: 10pt;
+  font-size: 9pt;
   margin: 2em auto;
-  padding: calc(var(--bleeding) + var(--margin) - 30px);
+  padding: 4.5em;
   box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
   background: white;
   font-family: "PT Serif", sans-serif;
